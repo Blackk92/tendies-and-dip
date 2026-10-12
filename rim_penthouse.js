@@ -6,8 +6,8 @@
 if (!window.RIM || !window.RIM.on) return;
 const R_ = window.RIM, P = R_.P;
 const { box, circ, ell, line, poly, hex, rug, wallSeg, glassSeg, plant, chair, screen, planks, tiles } = P;
-const { wtext, floorDir, frame, bunting, mug, deskTop } = R_.D;
-R_.stairHere = "penthouse";
+const { wtext, frame, bunting, mug, deskTop } = R_.D;
+R_.stairs = [{ tile: 15, label: "TRADING FLOOR", dir: "down", kind: "gold" }];
 const X = () => P.ctx(), tx = (n) => n * TS;
 const hourF = () => { try { return etNow().h; } catch (e) { return 12; } };
 function nightFactor(h) {
@@ -59,36 +59,29 @@ function officeGlass(wx) {
   glassSeg(x, y0, x, door - 8); glassSeg(x, door + 8, x, y1);
   for (let y = 3; y <= 8; y++) if (y !== 6) circ(x, tx(y), 0.9, "#c79a3a", { shadow: false, lw: 0.25 });
 }
-function plate(px, py, label) {
-  box(px, py, 16, 3.1, 0.4, "#e7c56a", { lw: 0.25, shadow: false });
-  wtext(label, px + 8, py + 1.55, { size: R_.small() ? 3.4 : 2.5, col: "#3a2a10", align: "center", base: "middle", w: 800, maxW: 15, shrink: 2 });
-}
-function cash(px, py) {
-  box(px, py, 8, 5, 0.5, "#3f8f4e", { lw: 0.25 });
-  box(px + 1.2, py + 1.1, 8, 5, 0.5, "#4fa65d", { lw: 0.25 });
-  line([px + 2.4, py + 2.4, px + 7.2, py + 2.4], "#d9f5df", 0.25);
+function carpet(x, y, w, h, fill, edge, dot) {
+  box(x, y, w, h, 0, fill, { shadow: false, shade: false, stroke: false });
+  const c = X();
+  c.strokeStyle = edge; c.lineWidth = 1.15; c.strokeRect(x + 2, y + 2, w - 4, h - 4);
+  c.strokeStyle = "rgba(255,255,255,.32)"; c.lineWidth = 0.4; c.strokeRect(x + 4, y + 4, w - 8, h - 8);
+  for (let yy = y + 9; yy < y + h - 5; yy += 11) for (let xx = x + 9; xx < x + w - 5; xx += 11) circ(xx, yy, 0.55, dot, { shadow: false, stroke: false, shade: false });
 }
 
 function drawStatic() {
   const x = X(), rnd = R_.rng(9091), th = theme();
   planks(16, 48, LW - 32, LH - 64, "#e4c07a", "rgba(80,48,10,.34)", rnd);
-  box(tx(19), tx(3), tx(6), tx(5), 0, "#f6d36a", { shadow: false, shade: false, stroke: false });
-  box(tx(1), tx(3), tx(6), tx(5), 0, "#b6ebc4", { shadow: false, shade: false, stroke: false });
-  x.strokeStyle = "#c79a3a"; x.lineWidth = 0.8;
-  x.strokeRect(tx(19) + 3, tx(3) + 3, tx(6) - 6, tx(5) - 6);
-  x.strokeRect(tx(1) + 3, tx(3) + 3, tx(6) - 6, tx(5) - 6);
-  for (let yy = tx(3) + 10; yy < tx(8) - 4; yy += 8) for (let xx = tx(20) + 6; xx < tx(25) - 4; xx += 8) circ(xx, yy, 0.7, "#e7c56a", { shadow: false, stroke: false, shade: false });
-  for (let yy = tx(3) + 10; yy < tx(8) - 4; yy += 8) for (let xx = tx(2) + 6; xx < tx(7) - 4; xx += 8) circ(xx, yy, 0.55, "#1f8a4a", { shadow: false, stroke: false, shade: false });
-  rug(tx(1) + 2, tx(9), tx(4) - 2, tx(2) + 8, "#fff4d2", "#c79a3a");
-  rug(tx(20) + 2, tx(9), tx(4) + 2, tx(2) + 8, "#fff4d2", "#c79a3a");
-  rug(tx(9) + 2, tx(10) + 2, tx(6) - 4, tx(4) - 4, "#f8e7b8", "#c79a3a");
+  carpet(tx(1) + 3, tx(3) + 2, tx(6) - 8, tx(5) - 8, "#146b45", "#e7c56a", "#d9ffe6");
+  carpet(tx(19) + 3, tx(3) + 2, tx(6) - 8, tx(5) - 8, "#7a1e32", "#e7c56a", "#f2c14e");
+  carpet(tx(8) + 4, tx(4) + 2, tx(9) - 6, tx(4) + 8, "#1a4a78", "#e7c56a", "#d5e6f8");
+  carpet(tx(9), tx(10) + 2, tx(7), tx(4) - 2, "#0c6a62", "#e7c56a", "#d8fff6");
+  rug(tx(1) + 4, tx(9) + 2, tx(4) - 4, tx(2) + 2, "#243056", "#e7c56a");
+  rug(tx(20) + 4, tx(9) + 2, tx(4), tx(2) + 2, "#c45c28", "#f6e2a8");
   x.fillStyle = "#f8efd4"; x.fillRect(0, 0, LW, 48);
   x.fillStyle = "rgba(255,255,255,.22)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
   x.fillStyle = "#e7b23a"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#fff1c2"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(90,60,10,.2)"; x.fillRect(0, 46.6, LW, 1.4);
   const wc = "#e6c98a";
   wallSeg(0, 0, LW, 3.2, "#c79a3a"); wallSeg(0, 0, 16, LH, wc); wallSeg(LW - 16, 0, 16, LH, wc);
   wallSeg(0, LH - 16, tx(15) - 1, 16, wc); wallSeg(tx(18) + 1, LH - 16, LW - tx(18) - 17, 16, wc);
-  for (let i = 0; i < 4; i++) box(tx(15), LH - 7 - i * 4, 48, 3.4, 0.3, hex("#f0d48a", 1 - i * 0.06), { shadow: false, lw: 0.25, stroke: "#c79a3a" });
   frame(132, 6, 40, 28, "#9fc6d8", "#c79a3a");
   frame(180, 6, 40, 28, "#9fc6d8", "#c79a3a");
   frame(228, 6, 40, 28, "#9fc6d8", "#c79a3a");
@@ -206,7 +199,7 @@ R_.pawnHook = function (c, k, hx, hy, r, view, dir) {
 };
 R_.floor = {
   drawStatic, drawDynamic, drawPost,
-  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["wealth1", th.k, th.weather, th.id, th.party || "", e].join("|"); },
+  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["stair2", th.k, th.weather, th.id, th.party || "", e].join("|"); },
 };
 layout();
 })();

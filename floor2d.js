@@ -1629,8 +1629,8 @@ function showCard(id, refresh) {
 $("cardX").onclick = () => { $("card").classList.add("hidden"); selected = null; };
 const HOT = [ { id: "awardwall", x: 19 * TS, y: 7 * TS, w: 6 * TS, h: 2 * TS }, { id: "whiteboard", x: 15 * TS, y: 0, w: 4 * TS, h: 3 * TS },
   { id: "swing", x: 12 * TS - 10, y: 4 * TS, w: 36, h: 2 * TS } ];
-HOT.push({ id: "phstair", x: 15 * TS, y: 15 * TS, w: 3 * TS, h: TS });
-HOT.push({ id: "research", x: 15 * TS, y: 17 * TS, w: 3 * TS, h: TS });
+HOT.push({ id: "phstair", x: 11 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
+HOT.push({ id: "research", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect();
   const lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
@@ -1797,7 +1797,7 @@ function riFade(top, sub, start) {
 function goB1(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
   const f = riFade("&#9660; GOING DOWN", "RESEARCH INC. &middot; B1", "0"); f.offsetWidth; f.style.opacity = "1";
-  setTimeout(() => { location.href = "b1.html"; }, 500);
+  setTimeout(() => { location.href = "b1.html?v=stair2"; }, 500);
 }
 (function () {
   const b = document.getElementById("b1Btn"); if (b) b.addEventListener("click", goB1);

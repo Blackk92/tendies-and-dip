@@ -6,8 +6,11 @@
 if (!window.RIM || !window.RIM.on) return;
 const R_ = window.RIM, P = R_.P;
 const { rr, shadow, box, circ, ell, line, poly, hex, mute, planks, tiles, speckle, rug, wallSeg, glassSeg, plant, chair, screen, INK, RIC } = P;
-const { wtext, marquee, short, money0, stairSign, floorDir, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote } = R_.D;
-R_.stairHere = "trading";
+const { wtext, marquee, short, money0, stairSign, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote } = R_.D;
+R_.stairs = [
+  { tile: 11, label: "PENTHOUSE", dir: "up", kind: "gold" },
+  { tile: 15, label: "RESEARCH", dir: "down", kind: "cyan" },
+];
 const X = () => P.ctx(), tx = (n) => n * TS, S5 = () => R_.season();
 const hourF = () => { try { return etNow().h; } catch (e) { return 12; } };
 const wins = () => { try { return winners(); } catch (e) { return {}; } };
@@ -58,9 +61,7 @@ function drawStatic() {
   x.fillStyle = "#3f5a4b"; x.fillRect(0, 0, LW, 48); x.fillStyle = "rgba(0,0,0,.06)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
   x.fillStyle = "#5a3a24"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#8a5f3a"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(0,0,0,.25)"; x.fillRect(0, 46.6, LW, 1.4);
   const wc = "#3c4a42"; wallSeg(0, 0, LW, 3.2, "#26302b"); wallSeg(0, 0, 16, LH, wc); wallSeg(LW - 16, 0, 16, LH, wc);
-  wallSeg(0, LH - 16, tx(15) - 1, 16, wc); wallSeg(tx(18) + 1, LH - 16, tx(23) - tx(18) - 2, 16, wc); wallSeg(tx(25) + 1, LH - 16, LW - tx(25) - 1, 16, wc);
-  for (let i = 0; i < 4; i++) box(tx(15), LH - 7.6 - i * 4 + 4, 48, 4, 0.4, hex("#6d8794", 1 - i * 0.14), { shadow: false, lw: 0.3 });
-  line([tx(15) - 0.5, 240, tx(15) - 0.5, LH], "#c79a3a", 1.4); line([tx(18) + 0.5, 238, tx(18) + 0.5, LH], "#c79a3a", 1.4);
+  wallSeg(0, LH - 16, tx(11) - 1, 16, wc); wallSeg(tx(14), LH - 16, 16, 16, wc); wallSeg(tx(18) + 1, LH - 16, tx(23) - tx(18) - 2, 16, wc); wallSeg(tx(25) + 1, LH - 16, LW - tx(25) - 1, 16, wc);
   box(tx(23), LH - 16, tx(2), 16, 0, "#8a6440", { shadow: false, lw: 0.3 }); line([tx(23) - 0.5, LH - 17, tx(23) - 0.5, LH], "#c79a3a", 1.4); line([tx(25) + 0.5, LH - 17, tx(25) + 0.5, LH], "#c79a3a", 1.4);   // entrance door
   // north wall pieces (frames; glass + screens animate in dynamic)
   frame(20, 8, 26, 22, "#9fc6d8", "#3b3127"); frame(108, 6, 36, 28, "#16261e", "#5a3b22"); frame(210, 8, 28, 24, "#9fc6d8", "#3b3127");   // 108: STRATEGY wall board frame(322, 6, 60, 28, "#9fc6d8", "#2a1e14");

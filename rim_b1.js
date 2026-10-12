@@ -9,8 +9,8 @@ const { rr, shadow, box, circ, ell, line, poly, hex, mute, planks, tiles, speckl
 const X = () => P.ctx();
 const T16 = TS, tx = (n) => n * T16;
 const S5 = () => R_.season();
-const { wtext, marquee, short, money0, stairSign, floorDir, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD } = R_.D;
-R_.stairHere = "research";
+const { wtext, marquee, short, money0, stairSign, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD } = R_.D;
+R_.stairs = [{ tile: 15, label: "TRADING FLOOR", dir: "up", kind: "cyan" }];
 const isUp = (id) => { const c = chars[id]; if (!c || !c.hidden) return false; if (id === "nancy") return true; try { return !!activeTrip(id); } catch (e) { return false; } };
 
 // ---------------------------------------------------------------- decorative wall pieces (no text)
@@ -39,8 +39,6 @@ function drawStatic() {
   x.fillStyle = "rgba(0,0,0,.25)"; x.fillRect(0, 46.6, LW, 1.4);
   wallSeg(0, 0, LW, 3.2, "#2f383b"); wallSeg(0, 0, 16, LH, wcol); wallSeg(LW - 16, 0, 16, LH, wcol);
   wallSeg(0, LH - 16, tx(15) - 1, 16, wcol); wallSeg(tx(18) + 1, LH - 16, LW - tx(18) - 1, 16, wcol);
-  for (let i = 0; i < 4; i++) { const yy = LH - 4 - i * 4; box(tx(15), yy - 3.6, 48, 4, 0.4, hex("#7d929b", 1 - i * 0.12), { shadow: false, lw: 0.3 }); }
-  line([tx(15) - 0.5, 240, tx(15) - 0.5, LH], "#c79a3a", 1.4); line([tx(18) + 0.5, 238, tx(18) + 0.5, LH], "#c79a3a", 1.4);
   // north wall boards (decorative)
   frame(14, 5, 84, 30, "#1a1f24", "#33302c");                                         // news wall: 6 TVs (animated in dynamic)
   frame(102, 10, 18, 14, "#174a54", "#2a3c40"); wtext("B1", 111, 11, { size: 6, col: RIC, align: "center", w: 800 }); wtext("RI", 111, 18, { size: 4, col: "#bff8ff", align: "center", w: 800 });   // B1 / RI sign
