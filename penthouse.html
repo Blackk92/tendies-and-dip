@@ -2,81 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#14110c">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="0;url=top.html">
 <title>Top floor - Tendies and Dip</title>
-<style>
-:root{--bg:#0d1210;--panel:#121a17;--line:#24332c;--ink:#e8e2cf;--dim:#8f9a8f;--gold:#f2c14e;--up:#3ddc84;--dn:#ff5c5c;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:12px;-webkit-text-size-adjust:100%}
-a{color:var(--gold)}
-#top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:6px 10px;
-  padding-top:max(6px,env(safe-area-inset-top));background:linear-gradient(#241c12,#14110c);border-bottom:2px solid #6b5428}
-.brand{display:flex;align-items:center;gap:7px;font-weight:800;letter-spacing:.08em}
-.logo{display:inline-grid;place-items:center;width:22px;height:22px;background:var(--gold);color:#1a1205;border:2px solid #7a5a12;font-size:9px;font-weight:900}
-.brand b{color:var(--gold);font-size:13px}
-.paper{font-size:9px;color:#111;background:#e7c56a;padding:1px 4px;border:1px solid #7a5a12}
-#clock{margin-left:auto;font-weight:800;font-size:15px;color:var(--gold)}
-.pill{font-weight:800;letter-spacing:.06em;padding:2px 7px;border:2px solid #c79a3a;color:#1a1205;background:var(--gold);font-size:11px}
-#main{display:block}
-#floorWrap{position:relative;background:#070a09;display:flex;justify-content:center;align-items:center;overflow:hidden}
-#floorWrap.zoomed{justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch}
-#cv{display:block;image-rendering:auto;touch-action:manipulation;cursor:pointer;flex:none}
-#floorBtns{position:absolute;right:6px;top:6px;display:flex;gap:6px}
-#floorBtns button,#floorBtns a{font:inherit;font-size:10px;font-weight:800;color:#1a1205;background:#f2c14edd;border:1px solid #7a5a12;padding:3px 7px;text-decoration:none}
-#floorBtns a.b1{color:#03262c;background:#00e5ffdd;border-color:#0a6e78}
-#panel{background:var(--panel);padding:6px 8px 20px}
-details{border:1px solid var(--line);background:#0f1613;margin:0 0 6px}
-summary{cursor:pointer;list-style:none;padding:6px 8px;font-weight:800;letter-spacing:.1em;color:var(--gold);background:#1c1810}
-summary::-webkit-details-marker{display:none}
-.sec{padding:6px 8px;line-height:1.45}
-.row{display:flex;gap:6px;align-items:center;padding:3px 0;border-bottom:1px dotted #1f2b25}
-.sw{width:10px;height:10px;flex:none;border:1px solid #000}
-.nm{font-weight:800;min-width:64px}
-.grow{flex:1;min-width:0}
-.mut{color:var(--dim)}
-.up{color:var(--up)}.dn{color:var(--dn)}
-footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
-#card{position:fixed;z-index:50;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(380px,calc(100vw - 20px));max-height:70vh;overflow:auto;
-  background:#fbf3dc;color:#1d1a12;border:3px solid #1d1a12;box-shadow:5px 5px 0 #000;padding:10px 12px}
-#card.hidden{display:none}
-#card h3{margin:0 0 4px}
-#card .x{position:absolute;right:8px;top:4px;font-weight:900;cursor:pointer}
-@media (min-width:760px) and (min-aspect-ratio:1/1){
-  html,body{height:100%;overflow:hidden}body{display:flex;flex-direction:column}
-  #main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 390px}
-  #floorWrap,#panel{height:100%}#panel{overflow:auto;border-left:2px solid #6b5428}
-}
-</style>
+<script>location.replace("top.html");</script>
 </head>
-<body>
-<header id="top">
-  <div class="brand"><span class="logo">PH</span><b>TOP FLOOR</b><span class="paper">EXEC</span></div>
-  <span class="pill" id="themePill">EXECUTIVE</span>
-  <span id="clock">--:-- ET</span>
-</header>
-<div id="main">
-  <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Executive penthouse"></canvas>
-    <div id="floorBtns"><a id="downBtn" href="index.html">FLOOR &#9660;</a><a id="b1Btn" class="b1" href="b1.html">B1 &#9660;</a><button id="zoomBtn" type="button">ZOOM</button></div>
-  </section>
-  <aside id="panel">
-    <details open><summary>TODAY</summary><div class="sec" id="agenda">loading...</div></details>
-    <details open><summary>WHO'S HERE</summary><div class="sec" id="roster"></div></details>
-    <details><summary>THE BOARD</summary><div class="sec" id="board"></div></details>
-    <footer>Top floor. Same building, same paper-money office. El Jefe meets Vance. Nancy meets Mags. One of them comes downstairs most weeks.
-      <br><a href="index.html">&#9660; trading floor</a> &middot; <a href="b1.html" style="color:#00e5ff">&#9660; Research Inc. B1</a>
-      <br><span id="upd"></span></footer>
-  </aside>
-</div>
-<div id="card" class="hidden"><span class="x" id="cardX">&times;</span><div id="cardBody"></div></div>
-<script src="promo.js?v=promo1"></script>
-<script src="exec_clock.js?v=ph1"></script>
-<script src="penthouse.js?v=top2"></script>
-<script src="rim_common.js?v=ph3"></script>
-<script src="rim_penthouse.js?v=top2"></script>
+<body style="background:#100e0a;color:#f2c14e;font-family:sans-serif;padding:24px">
+<p>This floor moved.</p>
+<p><a href="top.html" style="color:#f2c14e;font-weight:800">Open the top floor</a></p>
 </body>
 </html>
