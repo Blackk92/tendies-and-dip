@@ -144,8 +144,8 @@ function drawStatic() {
   carpet(160, 164, 96, 56, "#246a63", "#e7c56a", "#3d7d74");
   carpet(24, 216, 96, 48, "#3f3834", "#c79a3a", "#524840");
   carpet(296, 216, 96, 48, "#3f3834", "#c79a3a", "#524840");
-  carpet(36, 136, 72, 48, "#6e2633", "#c79a3a", "#8a3644");
-  carpet(308, 136, 72, 48, "#2d4f72", "#d9b45a", "#3c6288");
+  carpet(36, 150, 72, 48, "#6e2633", "#c79a3a", "#8a3644");
+  carpet(308, 150, 72, 48, "#2d4f72", "#d9b45a", "#3c6288");
   x.fillStyle = "#6e2436"; x.fillRect(0, 0, LW, 48);
   x.fillStyle = "rgba(255,220,180,.07)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
   x.fillStyle = "#4a1c28"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#e7c56a"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(0,0,0,.28)"; x.fillRect(0, 46.6, LW, 1.4);
@@ -300,7 +300,7 @@ R_.pawnHook = function (c, k, hx, hy, r, view, dir) {
 };
 R_.floor = {
   drawStatic, drawDynamic, drawPost,
-  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec3", th.k, th.weather, th.id, th.party || "", e].join("|"); },
+  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec4", th.k, th.weather, th.id, th.party || "", e].join("|"); },
 };
 layout();
 })();
