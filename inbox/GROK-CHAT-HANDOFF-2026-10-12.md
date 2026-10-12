@@ -108,15 +108,26 @@ Drift is not hired, so do not put on an earnings-drift trade just because the ca
 
 Grok chat cannot run this floor. Do not wait for it to send orders.
 
-## GUI added after this note (do not delete it)
+## GUI lock (cosmetic only — do not revert, do not "fix")
 
-Ryan asked for a penthouse. It is cosmetic. It does not read or write the book.
+Ryan asked for an executive floor. It is cosmetic. It does not read or write the paper book. Do not hire, fire, trade, backfill October, or grant titles because of it. October 2026 chairs stay empty. `?promo=close` is a preview only.
 
-Keep these files if your disk tree is older than this commit. Pull them from GitHub before a full-tree snapshot push, or the site loses the top floor:
+CEO display name is **Ryan** (name tags **RYAN**). The internal id stays **`vance`** (`LOOK.vance`, `chair_vance`, `who === "vance"`, `seated("vance")`, `EXEC.ceoNow`). Do not rename the id to ryan. Do not change the name back to Vance.
 
-- `penthouse.html`, `penthouse.js`
-- `exec_clock.js`, `exec_main.js`, `exec_b1.js`
-- the PH buttons and script tags in `index.html` and `b1.html`
-- the Chair trip in `b1_nancy.js` (`EXEC.chairNow`)
+June (CEO secretary) and Hollis (Chair secretary) are cosmetic. They are not trading bots. Do not hire them. Owl, Snapback, and Payday stay not hired. Dash, Vee, and Snap stay laid off.
 
-Do not revert them. Do not put them in `state.json`. El Jefe meets Vance (CEO). Nancy meets Mags (board chair). One board member sometimes comes downstairs. Lower floors still run seasons and office parties.
+Pull GUI from GitHub (`main`, commit that introduced `?v=exec5`) before any full-tree snapshot push. Do not overwrite these files with an older disk tree. Do not put GUI into `state.json`. Do not pop git stashes (`stash@{0}` "ph-files", `stash@{1}` "local-stairs-handoff"). Do not restore old `ph_stairs`. Do not move El Jefe's private elevator (`F("elev", 24, 4)`, `SPOTS.elev_door` 23,4).
+
+Floors, no skipping: executive ⇄ trading ⇄ research. Header says EXECUTIVE, not penthouse and not TOP FLOOR.
+
+- Trading floor: LEFT tiles 11–13 cyan RESEARCH down. RIGHT tiles 15–17 gold EXECUTIVE up. Stair HOT is tested before pawn hitboxes. `window.goPH` is assigned in `exec_main.js`.
+- Research / B1: one UP stair, tiles 11–13. LED and marquee end before x=176 so they do not cover the stair.
+- Executive: one DOWN stair, tiles 15–17 (right). Guests appear at `SPOTS.elev` (16,16). Do not move that spot.
+
+Executive floor only: oak planks `#9c7650` (same as the trading floor). Walls maroon, not the trading floor's green. Gold rail stays. Rugs are the subtle trading-floor style (thin gold stroke, faint inner line, small dots), not thick bright borders. Reception rugs (Hollis and June) sit at y=150 so oak shows under the office wall. Do not move them back to y=136.
+
+North wall: gilt abstract, windows, the real swing book chart (`window.PHBOOK`, `accounts.swing` starting cash → equity, about $20,021 — do not splice the old ~$10k curve under that label), city painting, still life. Full bar and a pool table (bottom left). Furniture is a symmetric grid around room center x=208. Do not reflow it.
+
+Files you must not revert: `top.html`, `penthouse.html`, `penthouse.js`, `exec_clock.js`, `exec_main.js`, `exec_b1.js`, `rim_common.js`, `rim_penthouse.js`, `rim_floor.js`, `rim_b1.js`, `floor2d.js`, `b1.js`, `b1_nancy.js`, `index.html`, `b1.html`. Cache query is `?v=exec5` (including `exec_clock.js`).
+
+El Jefe meets Ryan (CEO) daily. Nancy meets Mags (board chair) daily. One board member sometimes comes downstairs. Lower floors still run seasons and office parties.

@@ -288,7 +288,7 @@ function drawBg() {
   ptext(gb, "CITY", 336, 10, "#f2c14e", 1);
   ptext(gb, th.weather === "snow" ? "SNOW" : th.weather === "rain" ? "RAIN" : "CLEAR", 370, 10, "#e8e2cf", 1);
   if (th.weather !== "clear") R(gb, 332, 16, 66, 12, th.weather === "rain" ? "rgba(80,100,120,.45)" : "rgba(230,240,255,.25)");
-  ptextC(gb, "VANCE", 22 * TS + 8, 3 * TS - 10, "#f2c14e", 1);
+  ptextC(gb, "RYAN", 22 * TS + 8, 3 * TS - 10, "#f2c14e", 1);
   ptextC(gb, "MAGS", 4 * TS, 3 * TS - 10, "#93c5fd", 1);
   ptext(gb, "ELEVATOR DOWN", 15 * TS, 16 * TS + 4, "#1a1205", 1);
   bgKey = th.k + th.weather;
@@ -398,7 +398,7 @@ function renderPanel() {
     return `<div class="row" data-id="${id}"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow">${c.hidden ? '<span class="mut">' + where + "</span>" : where}</span></div>`;
   }).join("");
   $("board").innerHTML = RES.map((id) => `<div class="row"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow mut">${CAST[id].role}</span></div>`).join("") +
-    `<div class="mut" style="margin-top:6px">Corner offices. June sits outside Vance. Hollis sits outside Mags. Wade, Priya, and Otto have the board table.</div>` +
+    `<div class="mut" style="margin-top:6px">Corner offices. June sits outside Ryan. Hollis sits outside Mags. Wade, Priya, and Otto have the board table.</div>` +
     floorPromoHtml();
   const e = etNow();
   $("clock").textContent = ((e.hh % 12) || 12) + ":" + String(e.mm).padStart(2, "0") + (e.h < 12 ? " AM" : " PM") + " ET";
@@ -472,7 +472,7 @@ function fadeTo(href, nav, html) {
 }
 function goFloor(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("index.html?v=exec4", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
+  fadeTo("index.html?v=exec5", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
 }
 $("downBtn").addEventListener("click", goFloor);
 cv.addEventListener("click", (ev) => {

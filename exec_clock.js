@@ -9,7 +9,7 @@
   const ovHour = Q.has("hour") && isFinite(+Q.get("hour")) ? +Q.get("hour") : null;
   const force = new Set(String(Q.get("meet") || "").toLowerCase().split(",").filter(Boolean));
   const LOOK = {
-    vance: { name: "VANCE", role: "CEO", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", acc: "ceo" },
+    vance: { name: "RYAN", role: "CEO", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", acc: "ceo" },
     mags: { name: "MAGS", role: "Board chair", skin: "#f1d0b5", hair: "#6b3048", shirt: "#1e3a5f", pants: "#1e3a5f", long: 1, acc: "pearls" },
     wade: { name: "WADE", role: "Board · finance", skin: "#c68642", hair: "#3a2a1a", shirt: "#14532d", pants: "#14261c", tie: "#e7c56a" },
     priya: { name: "PRIYA", role: "Board · risk", skin: "#8d5524", hair: "#1a1a1a", shirt: "#7f1d1d", pants: "#3b1515", long: 1 },
