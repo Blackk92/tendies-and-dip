@@ -60,6 +60,6 @@
     ev.preventDefault();
     const f = document.getElementById("fade");
     if (f) { f.classList.remove("off"); f.innerHTML = "<span>&#9650; EXECUTIVE</span><small>PAST THE TRADING FLOOR</small>"; }
-    setTimeout(() => { location.href = "top.html?v=exec2"; }, 420);
+    setTimeout(() => { location.href = "top.html?v=exec3"; }, 420);
   });
 })();

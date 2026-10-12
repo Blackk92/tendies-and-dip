@@ -61,22 +61,22 @@ B(7, 3, 7, 8); B(7, 6, 7, 6, 0); B(1, 8, 7, 8);
 
 const FURN = [];
 function F(type, x, y, w = 1, h = 1, o = {}) { FURN.push(Object.assign({ type, x, y, w, h }, o)); B(x, y, x + w - 1, y + h - 1); }
-F("cdesk", 21, 5, 3, 1); F("plant", 24, 3, 1, 1, { big: 1 }); F("shelf", 20, 3); F("trophy", 24, 7);
-F("mdesk", 3, 5, 3, 1); F("plant", 1, 3, 1, 1, { big: 1 });
-F("sdesk", 2, 10, 2, 1, { who: "hollis" }); F("sdesk", 21, 10, 2, 1, { who: "june" });
-F("couch", 8, 4, 3, 1); F("bull", 13, 4, 2, 2);
-F("btable", 10, 11, 4, 2); F("bar", 19, 13, 5, 1);
-F("pool", 1, 14, 5, 2); F("plant", 8, 14);
+F("cdesk", 20, 5, 3, 1); F("plant", 24, 3, 1, 1, { big: 1 }); F("shelf", 20, 3); F("trophy", 24, 7);
+F("mdesk", 3, 5, 3, 1); F("plant", 1, 3, 1, 1, { big: 1 }); F("shelf", 5, 3); F("trophy", 1, 7);
+F("sdesk", 3, 10, 3, 1, { who: "hollis" }); F("sdesk", 20, 10, 3, 1, { who: "june" });
+F("couch", 9, 4, 3, 1); F("bull", 14, 4, 3, 2);
+F("btable", 11, 11, 4, 2); F("bar", 19, 14, 5, 1);
+F("pool", 2, 14, 5, 2);
 
 const SPOTS = {};
 function S_(key, x, y, face = "S", pose = "stand") { SPOTS[key] = { key, x, y, face, pose }; }
-S_("chair_vance", 22, 4, "S", "sit"); S_("front_vance", 22, 6, "N"); S_("pace_v", 21, 7, "E");
+S_("chair_vance", 21, 4, "S", "sit"); S_("front_vance", 21, 6, "N"); S_("pace_v", 23, 7, "W");
 S_("chair_mags", 4, 4, "S", "sit"); S_("front_mags", 4, 6, "N"); S_("pace_m", 2, 7, "E");
-S_("seat_wade", 9, 11, "E", "sit"); S_("seat_priya", 14, 12, "W", "sit"); S_("seat_otto", 12, 13, "N", "sit");
-S_("chair_hollis", 3, 9, "S", "sit"); S_("chair_june", 22, 9, "S", "sit");
-S_("bar_1", 21, 14, "N"); S_("bar_2", 22, 14, "N"); S_("window", 12, 3, "N"); S_("elev", 16, 16, "S");
+S_("seat_wade", 10, 12, "E", "sit"); S_("seat_priya", 15, 12, "W", "sit"); S_("seat_otto", 12, 13, "N", "sit");
+S_("chair_hollis", 4, 9, "S", "sit"); S_("chair_june", 21, 9, "S", "sit");
+S_("bar_1", 20, 15, "N"); S_("bar_2", 22, 15, "N"); S_("window", 12, 3, "N"); S_("elev", 16, 16, "S");
 for (const k of ["chair_vance", "chair_mags", "seat_wade", "seat_priya", "seat_otto", "chair_hollis", "chair_june"]) seat[I(SPOTS[k].x, SPOTS[k].y)] = 1;
-const CHAIRS = { vance: [22, 4], mags: [4, 4], wade: [9, 11], priya: [14, 12], otto: [12, 13], hollis: [3, 9], june: [22, 9] };
+const CHAIRS = { vance: [21, 4], mags: [4, 4], wade: [10, 12], priya: [15, 12], otto: [12, 13], hollis: [4, 9], june: [21, 9] };
 
 const RES = ["vance", "mags", "wade", "priya", "otto"];
 const SEC = ["hollis", "june"];
@@ -472,7 +472,7 @@ function fadeTo(href, nav, html) {
 }
 function goFloor(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("index.html?v=exec2", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
+  fadeTo("index.html?v=exec3", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
 }
 $("downBtn").addEventListener("click", goFloor);
 cv.addEventListener("click", (ev) => {
