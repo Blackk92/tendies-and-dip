@@ -135,7 +135,7 @@
     }
     f.innerHTML = "&#9650; PENTHOUSE<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.1em\">CEO AND THE BOARD</small>";
     try { sessionStorage.setItem("floorNav", "toPH"); } catch (e) { /* private */ }
-    setTimeout(() => { location.href = "top.html?v=wealth1"; }, 420);
+    setTimeout(() => { location.href = "top.html?v=stair2"; }, 420);
   }
   const b = document.getElementById("phBtn"); if (b) b.addEventListener("click", goPH);
   const l = document.getElementById("phLink"); if (l) l.addEventListener("click", goPH);

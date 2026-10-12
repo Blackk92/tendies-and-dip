@@ -7,8 +7,7 @@ const cv = $("cv");
 const ctx = cv.getContext("2d");
 let SC = 2, DPR = 1, LP = 2, selected = null;
 const HOT = [
-  { id: "floor", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: TS },
-  { id: "b1", x: 15 * TS, y: 17 * TS, w: 3 * TS, h: TS },
+  { id: "floor", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS },
 ];
 const bg = document.createElement("canvas"); bg.width = LW; bg.height = LH;
 const gb = bg.getContext("2d"); gb.imageSmoothingEnabled = false;
@@ -467,18 +466,13 @@ function fadeTo(href, nav, html) {
 }
 function goFloor(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("index.html?v=wealth1", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
-}
-function goB1stair(ev) {
-  if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("b1.html?v=wealth1", "fromPH", "&#9660; RESEARCH<small style=\"color:#7fbfc8;font-size:11px;letter-spacing:.08em\">TWO FLIGHTS DOWN</small>");
+  fadeTo("index.html?v=stair2", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
 }
 $("downBtn").addEventListener("click", goFloor);
-const b1Btn = $("b1Btn"); if (b1Btn) b1Btn.addEventListener("click", goB1stair);
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect();
   const lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
-  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "b1" ? goB1stair() : goFloor();
+  for (const h of HOT) if (h.id === "floor" && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return goFloor();
   let best = null;
   for (const id of ORDER) {
     const c = chars[id]; if (c.hidden) continue;
@@ -489,6 +483,6 @@ cv.addEventListener("click", (ev) => {
     $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">On the penthouse.</div>`;
     $("card").classList.remove("hidden"); return;
   }
-  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "b1" ? goB1stair() : goFloor();
+  for (const h of HOT) if (h.id === "floor" && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return goFloor();
   $("card").classList.add("hidden"); selected = null;
 });
