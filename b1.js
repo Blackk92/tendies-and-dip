@@ -764,7 +764,7 @@ function goUp(ev) {
   if (ev) ev.preventDefault();
   const f = $("fade"); f.querySelector("span").textContent = "▲ TRADING FLOOR"; f.querySelector("small").textContent = "ONE FLIGHT UP"; f.classList.remove("off");
   try { sessionStorage.setItem("floorNav", "fromB1"); } catch (e) { /* private mode */ }
-  setTimeout(() => { location.href = "index.html?v=exec3"; }, 500);
+  setTimeout(() => { location.href = "index.html?v=exec4"; }, 500);
 }
 $("upBtn").addEventListener("click", goUp); $("upBtn2").addEventListener("click", goUp);
 const HOT = [{ id: "up", x: 11 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-briefs", x: 12, y: 2, w: 90, h: 36 }, { id: "s-signals", x: 124, y: 4, w: 142, h: 32 },
