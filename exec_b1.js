@@ -4,7 +4,7 @@
 (function () {
   if (!window.EXEC || typeof window.__b1 !== "object" || typeof director !== "function") return;
   const LOOK = {
-    vance: { name: "VANCE", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", long: 0 },
+    vance: { name: "RYAN", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", long: 0 },
     mags: { name: "MAGS", skin: "#f1d0b5", hair: "#6b3048", shirt: "#1e3a5f", pants: "#1e3a5f", long: 1 },
     wade: { name: "WADE", skin: "#c68642", hair: "#3a2a1a", shirt: "#14532d", pants: "#14261c" },
     priya: { name: "PRIYA", skin: "#8d5524", hair: "#1a1a1a", shirt: "#7f1d1d", pants: "#3b1515", long: 1 },
@@ -60,6 +60,6 @@
     ev.preventDefault();
     const f = document.getElementById("fade");
     if (f) { f.classList.remove("off"); f.innerHTML = "<span>&#9650; EXECUTIVE</span><small>PAST THE TRADING FLOOR</small>"; }
-    setTimeout(() => { location.href = "top.html?v=exec4"; }, 420);
+    setTimeout(() => { location.href = "top.html?v=exec5"; }, 420);
   });
 })();

@@ -300,7 +300,7 @@ R_.pawnHook = function (c, k, hx, hy, r, view, dir) {
 };
 R_.floor = {
   drawStatic, drawDynamic, drawPost,
-  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec4", th.k, th.weather, th.id, th.party || "", e].join("|"); },
+  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec5", th.k, th.weather, th.id, th.party || "", e].join("|"); },
 };
 layout();
 })();

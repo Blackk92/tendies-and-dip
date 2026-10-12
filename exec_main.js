@@ -1,7 +1,7 @@
 "use strict";
-/* Trading floor add-on: private elevator to the penthouse.
-   El Jefe goes up for his daily meeting with Vance. A board member sometimes comes down.
-   Loaded last. Does not touch the paper book. */
+/* Trading floor add-on: private elevator to the executive floor.
+   El Jefe goes up for his daily meeting with Ryan, the CEO. A board member sometimes comes down.
+   Display name is Ryan. The id stays "vance". Do not rename the id. Does not touch the paper book. */
 (function () {
   if (typeof director !== "function" || !window.EXEC || typeof F !== "function") return;
   F("elev", 24, 4);
@@ -17,7 +17,7 @@
   };
 
   const LOOK = {
-    vance: { name: "VANCE", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", acc: "jefe" },
+    vance: { name: "RYAN", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", acc: "jefe" },
     mags: { name: "MAGS", skin: "#f1d0b5", hair: "#6b3048", shirt: "#1e3a5f", pants: "#1e3a5f", long: 1 },
     wade: { name: "WADE", skin: "#c68642", hair: "#3a2a1a", shirt: "#14532d", pants: "#14261c", tie: "#e7c56a" },
     priya: { name: "PRIYA", skin: "#8d5524", hair: "#1a1a1a", shirt: "#7f1d1d", pants: "#3b1515", long: 1 },
@@ -58,7 +58,7 @@
   };
   const _where = whereIs;
   whereIs = function (id) {
-    if (id === "grok" && chars.grok.upstairs) return "upstairs with Vance, the CEO";
+    if (id === "grok" && chars.grok.upstairs) return "upstairs with Ryan, the CEO";
     if (id === "exec") return chars.exec.hidden ? "up on executive" : "visiting from executive";
     return _where(id);
   };
@@ -135,7 +135,7 @@
     }
     f.innerHTML = "&#9650; EXECUTIVE<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.1em\">CEO AND THE BOARD</small>";
     try { sessionStorage.setItem("floorNav", "toPH"); } catch (e) { /* private */ }
-    setTimeout(() => { location.href = "top.html?v=exec4"; }, 420);
+    setTimeout(() => { location.href = "top.html?v=exec5"; }, 420);
   }
   const b = document.getElementById("phBtn"); if (b) b.addEventListener("click", goPH);
   const l = document.getElementById("phLink"); if (l) l.addEventListener("click", goPH);
