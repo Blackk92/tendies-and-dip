@@ -60,6 +60,6 @@
     ev.preventDefault();
     const f = document.getElementById("fade");
     if (f) { f.classList.remove("off"); f.innerHTML = "<span>&#9650; PENTHOUSE</span><small>PAST THE TRADING FLOOR</small>"; }
-    setTimeout(() => { location.href = "penthouse.html"; }, 420);
+    setTimeout(() => { location.href = "penthouse.html?v=top2"; }, 420);
   });
 })();

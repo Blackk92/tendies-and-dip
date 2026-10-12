@@ -1,20 +1,14 @@
 "use strict";
-/* Trading floor add-on: private elevator to the penthouse.
-   El Jefe goes up for his daily meeting with Vance. A board member sometimes comes down.
+/* Trading floor add-on: the penthouse stairs, right beside the Research Inc. stairs.
+   El Jefe takes them up for his daily meeting with Vance. A board member sometimes comes down the same flight.
    Loaded last. Does not touch the paper book. */
 (function () {
   if (typeof director !== "function" || !window.EXEC || typeof F !== "function") return;
-  F("elev", 24, 4);
-  S_("elev_door", 23, 4, "E");
-  AREAS.unshift([23, 3, 24, 4, "private elevator"]);
-  DRAW.elev = function (f) {
-    const px = f.x * TS, py = f.y * TS;
-    R(g, px + 1, py - 18, 14, 34, "#c79a3a");
-    R(g, px + 3, py - 16, 10, 28, "#2a241c");
-    R(g, px + 3, py - 16, 4, 28, "#3a3328");
-    R(g, px + 8, py - 4, 2, 2, "#f2c14e");
-    ptext(g, "PH", px + 4, py - 14, "#f2c14e", 1);
-  };
+  const PH_KEYS = ["ph_stairs", "ph_stairs_2", "ph_stairs_3"];
+  function phSpot(id) {
+    const k = (typeof freeSpot === "function" && freeSpot(PH_KEYS, id)) || "ph_stairs";
+    return SPOTS[k] || SPOTS.ph_stairs;
+  }
 
   const LOOK = {
     vance: { name: "VANCE", skin: "#e0ac69", hair: "#d5d5d5", shirt: "#1c2430", pants: "#1c2430", tie: "#c79a3a", acc: "jefe" },
@@ -46,14 +40,14 @@
   present = function (id) {
     if (id === "exec") return false;
     if (id === "grok" && chars.grok.upstairs) return false;
-    // Stale weekend snapshots still let him walk to the elevator for the real CEO meeting.
+    // Stale weekend snapshots still let him walk to the stairs for the real CEO meeting.
     if (id === "grok" && EXEC.ceoNow() && !(EXEC.downNow() && EXEC.downNow().who === "vance")) return true;
     return _present(id);
   };
   const _amb = amb;
   amb = function (id, msg) {
-    if (id === "grok" && chars.grok.upstairs && msg === "heads home") msg = "takes the elevator up to the CEO";
-    if (id === "exec" && msg === "heads home") msg = "heads back up to the penthouse";
+    if (id === "grok" && chars.grok.upstairs && msg === "heads home") msg = "takes the stairs up to the CEO";
+    if (id === "exec" && msg === "heads home") msg = "heads back up the penthouse stairs";
     _amb(id, msg);
   };
   const _where = whereIs;
@@ -72,15 +66,16 @@
   function sendUp(c) {
     if (c.hidden) return;
     if (c.task && (c.task.label === "up to the CEO" || c.task.label === "leave")) return;
-    setTask("grok", [{ spot: SPOTS.elev_door, dur: 0, say: "CEO'S CALLING.", onArrive: () => { c.upstairs = true; }, leave: true }], "up to the CEO");
+    const sp = phSpot("grok"); if (!sp) return;
+    setTask("grok", [{ spot: sp, dur: 0, say: "STAIRS. CEO'S CALLING.", onArrive: () => { c.upstairs = true; }, leave: true }], "up to the CEO");
   }
   function comeDown(c) {
     c.upstairs = false;
-    const sp = SPOTS.elev_door;
+    const sp = phSpot("grok");
     if (c.hidden && sp && !occ.has(I(sp.x, sp.y))) {
-      c.hidden = false; place(c, sp.x, sp.y); c.pose = "stand"; c.face = "W"; c.task = null; c.goal = null;
+      c.hidden = false; place(c, sp.x, sp.y); c.pose = "stand"; c.face = "N"; c.task = null; c.goal = null;
       say("grok", "BACK. RISK STILL FIRST.", 4);
-      amb("grok", "comes down from the CEO");
+      amb("grok", "comes down the penthouse stairs");
     }
   }
   function execVisit(c) {
@@ -88,18 +83,18 @@
     const here = win && win.floor === "main";
     if (!here) {
       if (!c.hidden) {
-        if (!(c.task && c.task.steps.some((s) => s.leave))) setTask("exec", [{ spot: SPOTS.elev_door, dur: 0, say: "BACK UPSTAIRS", leave: true }], "back to the penthouse");
+        if (!(c.task && c.task.steps.some((s) => s.leave))) setTask("exec", [{ spot: phSpot("exec"), dur: 0, say: "BACK UP THE STAIRS", leave: true }], "back to the penthouse");
         if (c.task) runTask(c);
       }
       return;
     }
     applyWho(win.who);
     if (c.hidden) {
-      const sp = SPOTS.elev_door;
+      const sp = phSpot("exec");
       if (!sp || occ.has(I(sp.x, sp.y))) return;
-      c.hidden = false; place(c, sp.x, sp.y); c.face = "W"; c.pose = "stand"; c.task = null;
+      c.hidden = false; place(c, sp.x, sp.y); c.face = "N"; c.pose = "stand"; c.task = null;
       const dest = chars.grok && !chars.grok.hidden && !chars.grok.upstairs ? SPOTS.front_grok : SPOTS.center;
-      amb("exec", EXEC.name(win.who) + " comes down from the penthouse");
+      amb("exec", EXEC.name(win.who) + " comes down the penthouse stairs");
       setTask("exec", [
         { spot: dest, dur: 16, say: pick(EXEC.downLine(win.who)), onArrive: () => {
           if (chars.grok && !chars.grok.hidden) say("grok", "COME IN.", 3);
@@ -135,8 +130,9 @@
     }
     f.innerHTML = "&#9650; PENTHOUSE<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.1em\">CEO AND THE BOARD</small>";
     try { sessionStorage.setItem("floorNav", "toPH"); } catch (e) { /* private */ }
-    setTimeout(() => { location.href = "penthouse.html"; }, 420);
+    setTimeout(() => { location.href = "penthouse.html?v=top2"; }, 420);
   }
+  window.goPH = goPH;
   const b = document.getElementById("phBtn"); if (b) b.addEventListener("click", goPH);
   const l = document.getElementById("phLink"); if (l) l.addEventListener("click", goPH);
   let from = null; try { from = sessionStorage.getItem("floorNav"); } catch (e) { /* private */ }

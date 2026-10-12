@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:,">
-<title>Penthouse - Tendies and Dip</title>
+<title>Top floor - Tendies and Dip</title>
 <style>
 :root{--bg:#0d1210;--panel:#121a17;--line:#24332c;--ink:#e8e2cf;--dim:#8f9a8f;--gold:#f2c14e;--up:#3ddc84;--dn:#ff5c5c;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace}
@@ -25,9 +25,10 @@ a{color:var(--gold)}
 #main{display:block}
 #floorWrap{position:relative;background:#070a09;display:flex;justify-content:center;align-items:center;overflow:hidden}
 #floorWrap.zoomed{justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch}
-#cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;touch-action:manipulation;cursor:pointer;flex:none}
+#cv{display:block;image-rendering:auto;touch-action:manipulation;cursor:pointer;flex:none}
 #floorBtns{position:absolute;right:6px;top:6px;display:flex;gap:6px}
 #floorBtns button,#floorBtns a{font:inherit;font-size:10px;font-weight:800;color:#1a1205;background:#f2c14edd;border:1px solid #7a5a12;padding:3px 7px;text-decoration:none}
+#floorBtns a.b1{color:#03262c;background:#00e5ffdd;border-color:#0a6e78}
 #panel{background:var(--panel);padding:6px 8px 20px}
 details{border:1px solid var(--line);background:#0f1613;margin:0 0 6px}
 summary{cursor:pointer;list-style:none;padding:6px 8px;font-weight:800;letter-spacing:.1em;color:var(--gold);background:#1c1810}
@@ -54,13 +55,13 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
 </head>
 <body>
 <header id="top">
-  <div class="brand"><span class="logo">PH</span><b>PENTHOUSE</b><span class="paper">BOARD</span></div>
+  <div class="brand"><span class="logo">PH</span><b>TOP FLOOR</b><span class="paper">EXEC</span></div>
   <span class="pill" id="themePill">EXECUTIVE</span>
   <span id="clock">--:-- ET</span>
 </header>
 <div id="main">
   <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Executive penthouse"></canvas>
-    <div id="floorBtns"><a id="downBtn" href="index.html">&#9660; FLOOR</a><button id="zoomBtn" type="button">ZOOM</button></div>
+    <div id="floorBtns"><a id="downBtn" href="index.html">FLOOR &#9660;</a><a id="b1Btn" class="b1" href="b1.html">B1 &#9660;</a><button id="zoomBtn" type="button">ZOOM</button></div>
   </section>
   <aside id="panel">
     <details open><summary>TODAY</summary><div class="sec" id="agenda">loading...</div></details>
@@ -72,7 +73,10 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
   </aside>
 </div>
 <div id="card" class="hidden"><span class="x" id="cardX">&times;</span><div id="cardBody"></div></div>
+<script src="promo.js?v=promo1"></script>
 <script src="exec_clock.js?v=ph1"></script>
-<script src="penthouse.js?v=ph1"></script>
+<script src="penthouse.js?v=top2"></script>
+<script src="rim_common.js?v=ph3"></script>
+<script src="rim_penthouse.js?v=top2"></script>
 </body>
 </html>
