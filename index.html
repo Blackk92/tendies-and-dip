@@ -101,7 +101,7 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
 <div id="ticker"><div id="tickInner">loading tape...</div></div>
 <div id="main">
   <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Trading floor"></canvas>
-    <div id="floorBtns"><button id="b1Btn" type="button" title="Research Inc. office, one floor below" style="color:#03262c;background:#00e5ffdd;border-color:#bff8ff">B1 &#9660;</button><button id="zoomBtn" type="button">ZOOM</button></div></section>
+    <div id="floorBtns"><button id="phBtn" type="button" title="Penthouse: CEO and the board" style="color:#1a1205;background:#f2c14edd;border-color:#7a5a12">PH &#9650;</button><button id="b1Btn" type="button" title="Research Inc. office, one floor below" style="color:#03262c;background:#00e5ffdd;border-color:#bff8ff">B1 &#9660;</button><button id="zoomBtn" type="button">ZOOM</button></div></section>
   <aside id="panel">
     <details open id="s-desks"><summary>DESKS <span class="cnt" id="c-desks"></span></summary><div class="sec" id="desks"></div></details>
     <details open id="s-squawk"><summary>SQUAWK <span class="cnt" id="c-squawk"></span></summary><div class="sec" id="squawk"></div></details>
@@ -113,7 +113,7 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
     <details open id="s-trades"><summary>RECENT TRADES <span class="cnt" id="c-trades"></span></summary><div class="sec" id="trades"></div></details>
     <details open id="s-awards"><summary>EMPLOYEE OF THE WEEK / MONTH</summary><div class="sec lb" id="awards"></div></details>
     <details id="s-rd"><summary>R&amp;D: KNOBS + QUALIFICATION</summary><div class="sec" id="rd"></div></details>
-    <footer><a id="b1Link" href="b1.html" style="color:#00e5ff;font-weight:800">&#9660; Research Inc. B1 (floor below)</a> &middot; Simulated money only. Deterministic engine, zero tokens; this page just reads <code>state.json</code> (every 3 s live, every ~45 s on the always-on github.io copy).
+    <footer><a id="phLink" href="penthouse.html" style="color:#f2c14e;font-weight:800">&#9650; Penthouse</a> &middot; <a id="b1Link" href="b1.html" style="color:#00e5ff;font-weight:800">&#9660; Research Inc. B1 (floor below)</a> &middot; Simulated money only. Deterministic engine, zero tokens; this page just reads <code>state.json</code> (every 3 s live, every ~45 s on the always-on github.io copy).
       <br><span id="upd"></span></footer>
   </aside>
 </div>
@@ -125,5 +125,7 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
 <script src="rim_common.js?v=r4"></script>
 <script src="rim_floor.js?v=aisles2"></script>
 <script src="office_life.js?v=h2"></script>
+<script src="exec_clock.js?v=ph1"></script>
+<script src="exec_main.js?v=ph1"></script>
 </body>
 </html>
