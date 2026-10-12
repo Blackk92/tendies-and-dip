@@ -88,7 +88,7 @@ S_("cooler", 5, 4, "N"); S_("vending", 1, 4, "N"); S_("copier", 4, 15, "S"); S_(
 S_("award_1", 20, 9, "N"); S_("award_2", 22, 9, "N"); S_("award_3", 23, 9, "N");
 S_("center", 13, 11, "S"); S_("door", 23, 16, "S");
 // Research Inc. stairwell (the department one floor below) at the bottom edge, between the bull and the plant
-S_("ri_stairs", 16, 16, "N"); S_("ri_stairs_2", 17, 16, "N"); S_("ri_stairs_3", 15, 16, "N");
+S_("ri_stairs", 12, 16, "N"); S_("ri_stairs_2", 13, 16, "N"); S_("ri_stairs_3", 11, 16, "N");
 S_("chat_1", 6, 11, "E"); S_("chat_2", 20, 12, "W"); S_("chat_3", 18, 8, "S"); S_("chat_4", 20, 15, "W"); S_("chat_5", 6, 14, "E"); S_("chat_6", 15, 7, "S");
 const BREAK = [[2, 4, "S", "sit"], [3, 4, "S", "sit"], [2, 6, "N", "sit"], [3, 6, "N", "sit"], [4, 5, "W", "sit"], [5, 5, "W", "stand"], [1, 7, "E", "stand"], [4, 7, "N", "stand"]];
 BREAK.forEach((b, i) => S_("break_" + i, b[0], b[1], b[2], b[3], { stool: b[3] === "sit" }));
@@ -96,7 +96,7 @@ const AREAS = [   // for the roster "location" column
   [1, 3, 5, 7, "break room"], [20, 3, 24, 7, "El Jefe's office"], [1, 9, 3, 11, "espresso bar"], [1, 12, 3, 15, "server rack"],
   [4, 14, 6, 16, "copier"], [7, 4, 13, 6, "lounge"], [15, 3, 18, 3, "R&D whiteboard"], [21, 9, 24, 12, "front desk"],
   [6, 9, 20, 15, "swing desk"], [16, 4, 18, 6, "R&D desk"], [4, 12, 5, 13, "data desk"], [21, 13, 24, 16, "entrance"]];
-AREAS.unshift([15, 16, 17, 16, "Research Inc. stairs"]);
+AREAS.unshift([11, 16, 13, 16, "Research Inc. stairs"]);
 function areaOf(x, y) { for (const a of AREAS) if (x >= a[0] && x <= a[2] && y >= a[1] && y <= a[3]) return a[4]; return "trading floor"; }
 
 // ============================================================== A* (4-way). seats only as goal; optional dynamic blockers
@@ -1204,7 +1204,7 @@ function drawChar(c, t) {
 
 // ---------- Research Inc. stairwell + visitor details (lanyard/ID badge, headwear, folder)
 function drawRIStairs(t) {
-  const x = 15 * TS, y = 16 * TS, by = 17 * TS;
+  const x = 11 * TS, y = 16 * TS, by = 17 * TS;
   for (let i = 0; i < 4; i++) { R(g, x + 1, by + i * 4, 46, 4, shade("#3a4a52", 1 - i * 0.18)); R(g, x + 1, by + i * 4, 46, 1, shade("#6d8794", 1 - i * 0.18)); }
   R(g, x - 1, by - 2, 2, TS + 2, "#c79a3a"); R(g, x + 47, by - 2, 2, TS + 2, "#c79a3a");
   R(g, x + 1, y + 1, 46, 15, "#0b3b44"); g.strokeStyle = RI_TAG; g.lineWidth = 1; g.strokeRect(x + 1.5, y + 1.5, 45, 14);
@@ -1629,8 +1629,8 @@ function showCard(id, refresh) {
 $("cardX").onclick = () => { $("card").classList.add("hidden"); selected = null; };
 const HOT = [ { id: "awardwall", x: 19 * TS, y: 7 * TS, w: 6 * TS, h: 2 * TS }, { id: "whiteboard", x: 15 * TS, y: 0, w: 4 * TS, h: 3 * TS },
   { id: "swing", x: 12 * TS - 10, y: 4 * TS, w: 36, h: 2 * TS } ];
-HOT.push({ id: "phstair", x: 11 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
-HOT.push({ id: "research", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
+HOT.push({ id: "research", x: 11 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
+HOT.push({ id: "phstair", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect();
   const lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
@@ -1797,7 +1797,7 @@ function riFade(top, sub, start) {
 function goB1(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
   const f = riFade("&#9660; GOING DOWN", "RESEARCH INC. &middot; B1", "0"); f.offsetWidth; f.style.opacity = "1";
-  setTimeout(() => { location.href = "b1.html?v=stair2"; }, 500);
+  setTimeout(() => { location.href = "b1.html?v=exec1"; }, 500);
 }
 (function () {
   const b = document.getElementById("b1Btn"); if (b) b.addEventListener("click", goB1);

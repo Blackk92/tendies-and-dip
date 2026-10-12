@@ -66,9 +66,9 @@ S_("archive_1", 5, 13, "N"); S_("archive_2", 6, 13, "N"); S_("archive_3", 7, 13,
 S_("printer_1", 5, 15, "S"); S_("printer_2", 6, 15, "S");
 S_("huddle_1", 10, 11, "E"); S_("huddle_2", 14, 11, "W"); S_("huddle_3", 12, 10, "S"); S_("huddle_4", 12, 13, "N"); S_("huddle_5", 10, 12, "E"); S_("huddle_6", 14, 12, "W");
 S_("pong_1", 1, 5, "E"); S_("pong_2", 5, 6, "W");
-S_("up_1", 16, 16, "S"); S_("up_2", 15, 16, "S"); S_("up_3", 17, 16, "S");
+S_("up_1", 12, 16, "S"); S_("up_2", 11, 16, "S"); S_("up_3", 13, 16, "S");
 const STAIRS = ["up_1", "up_2", "up_3"], HUDDLE = ["huddle_1", "huddle_2", "huddle_3", "huddle_4", "huddle_5", "huddle_6"];
-const AREAS = [[14, 15, 18, 16, "the stairs"], [1, 3, 6, 4, "the news wall"], [7, 3, 11, 4, "the earnings board"], [12, 3, 16, 4, "the ideas board"],
+const AREAS = [[11, 16, 13, 16, "the stairs"], [1, 3, 6, 4, "the news wall"], [7, 3, 11, 4, "the earnings board"], [12, 3, 16, 4, "the ideas board"],
   [19, 3, 24, 4, "Proof's whiteboard"], [9, 10, 15, 13, "the meeting table"], [1, 13, 4, 16, "the coffee nook"], [1, 8, 4, 12, "the server rack"],
   [5, 12, 8, 13, "the archive"], [22, 5, 24, 8, "the calls scoreboard"], [5, 14, 7, 16, "the printer"], [6, 4, 14, 9, "the research pod"], [18, 4, 21, 8, "the quality desk"], [1, 4, 5, 8, "the game corner"]];
 const areaOf = (x, y) => { for (const a of AREAS) if (x >= a[0] && x <= a[2] && y >= a[1] && y <= a[3]) return a[4]; return "the B1 floor"; };
@@ -366,7 +366,7 @@ function drawBackground() {
   R(c, 9 * TS + 4, 10 * TS + 4, 7 * TS - 8, 4 * TS - 8, "#173b44"); c.strokeStyle = RI_TAG; c.lineWidth = 1; c.strokeRect(9 * TS + 6.5, 10 * TS + 6.5, 7 * TS - 13, 4 * TS - 13);   // meeting rug
   R(c, 4 * TS + 4, 12 * TS + 4, 5 * TS - 8, 2 * TS - 6, "#3a3328");   // archive mat
   // stairs up (bottom wall) + landing mat
-  const sx = 15 * TS, sy = 16 * TS, by = 17 * TS;
+  const sx = 11 * TS, sy = 16 * TS, by = 17 * TS;
   R(c, sx + 1, sy + 2, 46, 13, "#0b3b44"); c.strokeStyle = RI_TAG; c.strokeRect(sx + 1.5, sy + 2.5, 45, 12);
   ptextC(c, "^ UP TO", sx + 24, sy + 3, RI_TAG, 1); ptextC(c, "THE FLOOR", sx + 24, sy + 9, "#bff8ff", 1);
   // walls
@@ -388,7 +388,7 @@ function drawBackground() {
   for (let i = 0; i < 40; i++) R(c, 199 + ((i * 37) % 64), 7 + ((i * 17) % 26), 1, 1, "#8f6a3e");
   R(c, 300, 6, 82, 28, "#9aa3a8"); R(c, 302, 8, 78, 24, "#f4f6f2"); R(c, 312, 33, 60, 2, "#7a8288");   // Proof's whiteboard
   R(c, 102, 10, 18, 14, "#0b3b44"); c.strokeStyle = RI_TAG; c.strokeRect(102.5, 10.5, 17, 13); ptextC(c, "B1", 111, 12, RI_TAG, 1); ptextC(c, "RI", 111, 18, "#bff8ff", 1);
-  R(c, 132, (GH - 1) * TS + 3, 100, 12, "#05080a"); frame(c, 132, (GH - 1) * TS + 3, 100, 12, "#2b2b2b");   // LED sign frame
+  R(c, 20, (GH - 1) * TS + 3, 148, 12, "#05080a"); frame(c, 20, (GH - 1) * TS + 3, 148, 12, "#2b2b2b");   // LED sign frame
 }
 function marquee(c, s, x, y, w, col, t, speed = 14) {
   const tw0 = tw(s, 1);
@@ -441,7 +441,7 @@ function drawWallLive(t) {
   c.strokeStyle = "#a00"; c.beginPath(); c.moveTo(394, 18); c.lineTo(394 + Math.sin(a2) * 5, 18 - Math.cos(a2) * 5); c.stroke();
   // ---- LED next-shift sign (bottom wall)
   const nx = nextShift();
-  marquee(c, nx ? `${nextShiftShort()} ${nx.day === "today" ? "" : nx.day.toUpperCase()} - IN ${cd(nx.mins)}` : "NO SHIFT SCHEDULED", 134, (GH - 1) * TS + 6, 96, "#ff9d3b", t, 12);
+  marquee(c, nx ? `${nextShiftShort()} ${nx.day === "today" ? "" : nx.day.toUpperCase()} - IN ${cd(nx.mins)}` : "NO SHIFT SCHEDULED", 22, (GH - 1) * TS + 6, 144, "#ff9d3b", t, 12);
 }
 function monitor(c, x, y, w, h, mode, seed, t) {
   R(c, x, y, w, h, "#15151b"); R(c, x + w / 2 - 1, y + h, 2, 2, "#2a2a30");
@@ -764,11 +764,11 @@ function goUp(ev) {
   if (ev) ev.preventDefault();
   const f = $("fade"); f.querySelector("span").textContent = "▲ TRADING FLOOR"; f.querySelector("small").textContent = "ONE FLIGHT UP"; f.classList.remove("off");
   try { sessionStorage.setItem("floorNav", "fromB1"); } catch (e) { /* private mode */ }
-  setTimeout(() => { location.href = "index.html?v=stair2"; }, 500);
+  setTimeout(() => { location.href = "index.html?v=exec1"; }, 500);
 }
 $("upBtn").addEventListener("click", goUp); $("upBtn2").addEventListener("click", goUp);
-const HOT = [{ id: "up", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-briefs", x: 12, y: 2, w: 90, h: 36 }, { id: "s-signals", x: 124, y: 4, w: 142, h: 32 },
-  { id: "s-lessons", x: 298, y: 4, w: 86, h: 32 }, { id: "s-calls", x: 22 * TS, y: 5 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-shifts", x: 130, y: 17 * TS, w: 104, h: TS }, { id: "s-squawk", x: 19 * TS, y: 14 * TS, w: TS, h: 3 * TS }];
+const HOT = [{ id: "up", x: 11 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-briefs", x: 12, y: 2, w: 90, h: 36 }, { id: "s-signals", x: 124, y: 4, w: 142, h: 32 },
+  { id: "s-lessons", x: 298, y: 4, w: 86, h: 32 }, { id: "s-calls", x: 22 * TS, y: 5 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-shifts", x: 20, y: 17 * TS, w: 148, h: TS }, { id: "s-squawk", x: 19 * TS, y: 14 * TS, w: TS, h: 3 * TS }];
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect(), lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
   for (const h of HOT) if (h.id === "up" && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return goUp();

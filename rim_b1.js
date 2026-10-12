@@ -10,7 +10,7 @@ const X = () => P.ctx();
 const T16 = TS, tx = (n) => n * T16;
 const S5 = () => R_.season();
 const { wtext, marquee, short, money0, stairSign, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD } = R_.D;
-R_.stairs = [{ tile: 15, label: "TRADING FLOOR", dir: "up", kind: "cyan" }];
+R_.stairs = [{ tile: 11, label: "TRADING FLOOR", dir: "up", kind: "cyan" }];
 const isUp = (id) => { const c = chars[id]; if (!c || !c.hidden) return false; if (id === "nancy") return true; try { return !!activeTrip(id); } catch (e) { return false; } };
 
 // ---------------------------------------------------------------- decorative wall pieces (no text)
@@ -38,7 +38,7 @@ function drawStatic() {
   x.fillStyle = "#3d3329"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#5c4d3d"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = RIC; x.fillRect(0, 37.4, LW, 0.7);
   x.fillStyle = "rgba(0,0,0,.25)"; x.fillRect(0, 46.6, LW, 1.4);
   wallSeg(0, 0, LW, 3.2, "#2f383b"); wallSeg(0, 0, 16, LH, wcol); wallSeg(LW - 16, 0, 16, LH, wcol);
-  wallSeg(0, LH - 16, tx(15) - 1, 16, wcol); wallSeg(tx(18) + 1, LH - 16, LW - tx(18) - 1, 16, wcol);
+  wallSeg(0, LH - 16, tx(11) - 1, 16, wcol); wallSeg(tx(14) + 1, LH - 16, LW - tx(14) - 1, 16, wcol);
   // north wall boards (decorative)
   frame(14, 5, 84, 30, "#1a1f24", "#33302c");                                         // news wall: 6 TVs (animated in dynamic)
   frame(102, 10, 18, 14, "#174a54", "#2a3c40"); wtext("B1", 111, 11, { size: 6, col: RIC, align: "center", w: 800 }); wtext("RI", 111, 18, { size: 4, col: "#bff8ff", align: "center", w: 800 });   // B1 / RI sign
@@ -50,7 +50,7 @@ function drawStatic() {
   frame(300, 7, 82, 26, "#f4f6f2", "#8f989d");                                          // Proof's whiteboard: scribbles + checkmarks
   box(310, 32.5, 50, 1.6, 0.5, "#7a8288", { shadow: false, lw: 0.2 });
   circ(394, 18, 6.2, "#efe8d2", { lw: 0.6 });   // wall clock (hands in dynamic)
-  frame(132, LH - 13, 100, 9, "#0b0f12", "#2b2b2b");   // LED strip on the south wall (dots animate)
+  frame(20, LH - 13, 148, 9, "#0b0f12", "#2b2b2b");   // LED strip, left of the stair
   frame(tx(21) + 1, LH - 12, 46, 7, "#c79a3a", "#7a5a12"); wtext("N. OFFICE", tx(21) + 24, LH - 8.5, { size: 4.2, col: "#5a1e3a", align: "center", base: "middle", w: 800, maxW: 42 });   // Nancy's brass plaque
   // wall art: small framed prints on the side walls
   frame(3, 70, 9, 13, "#e9c46a", "#4a3a2c"); poly([4.5, 81, 7.5, 74, 10.5, 81], "#2a9d8f", { lw: 0.25 });
@@ -165,7 +165,7 @@ function drawDynamic(t) {
   { const et = typeof etNow === "function" ? etNow() : { hh: 12, mm: 0 }, hh = et.hh != null ? et.hh : et.h, mm = et.mm != null ? et.mm : 0, a1 = ((hh % 12) + mm / 60) / 12 * Math.PI * 2, a2 = mm / 60 * Math.PI * 2;
     line([394, 18, 394 + Math.sin(a1) * 3.2, 18 - Math.cos(a1) * 3.2], "#2a2620", 0.8); line([394, 18, 394 + Math.sin(a2) * 4.8, 18 - Math.cos(a2) * 4.8], "#b3261e", 0.45); circ(394, 18, 0.6, "#2a2620", { shadow: false, stroke: false, shade: false }); }
   // LED strip: travelling dots (decorative, no text)
-  { const nx = nextShift(); marquee(nx ? `${nextShiftShort()} ${nx.day === "today" ? "" : String(nx.day).toUpperCase()} - IN ${cd(nx.mins)}`.replace(/\s+/g, " ") : "NO SHIFT SCHEDULED", 134, LH - 10.9, 96, { size: sm ? 4.6 : 4, col: "#ff9d3b", mono: true, center: true }, t, 12); }
+  { const nx = nextShift(); marquee(nx ? `${nextShiftShort()} ${nx.day === "today" ? "" : String(nx.day).toUpperCase()} - IN ${cd(nx.mins)}`.replace(/\s+/g, " ") : "NO SHIFT SCHEDULED", 22, LH - 10.9, 144, { size: sm ? 4.6 : 4, col: "#ff9d3b", mono: true, center: true }, t, 12); }
   for (const f of FURN) { const fn = ART[f.type]; if (fn && fn.d) try { fn.d(f, t); } catch (e) { /* decor only */ } }
   try { lifeFx(t); } catch (e) { /* decor only */ }
 }

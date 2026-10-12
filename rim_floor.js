@@ -8,8 +8,8 @@ const R_ = window.RIM, P = R_.P;
 const { rr, shadow, box, circ, ell, line, poly, hex, mute, planks, tiles, speckle, rug, wallSeg, glassSeg, plant, chair, screen, INK, RIC } = P;
 const { wtext, marquee, short, money0, stairSign, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote } = R_.D;
 R_.stairs = [
-  { tile: 11, label: "PENTHOUSE", dir: "up", kind: "gold" },
-  { tile: 15, label: "RESEARCH", dir: "down", kind: "cyan" },
+  { tile: 11, label: "RESEARCH", dir: "down", kind: "cyan" },
+  { tile: 15, label: "EXECUTIVE", dir: "up", kind: "gold" },
 ];
 const X = () => P.ctx(), tx = (n) => n * TS, S5 = () => R_.season();
 const hourF = () => { try { return etNow().h; } catch (e) { return 12; } };
