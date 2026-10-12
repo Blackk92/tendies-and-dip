@@ -7,8 +7,8 @@ const cv = $("cv");
 const ctx = cv.getContext("2d");
 let SC = 2, DPR = 1, LP = 2, selected = null;
 const HOT = [
-  { id: "floor", x: 14 * TS, y: 14 * TS, w: 4 * TS, h: 4 * TS },
-  { id: "b1", x: 18 * TS, y: 14 * TS, w: 4 * TS, h: 4 * TS },
+  { id: "floor", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: TS },
+  { id: "b1", x: 15 * TS, y: 17 * TS, w: 3 * TS, h: TS },
 ];
 const bg = document.createElement("canvas"); bg.width = LW; bg.height = LH;
 const gb = bg.getContext("2d"); gb.imageSmoothingEnabled = false;
@@ -62,9 +62,11 @@ B(7, 3, 7, 8); B(7, 6, 7, 6, 0); B(1, 8, 7, 8);
 
 const FURN = [];
 function F(type, x, y, w = 1, h = 1, o = {}) { FURN.push(Object.assign({ type, x, y, w, h }, o)); B(x, y, x + w - 1, y + h - 1); }
-F("cdesk", 21, 5, 3, 1); F("plant", 24, 3, 1, 1, { big: 1 }); F("shelf", 20, 3);
+F("cdesk", 21, 5, 3, 1); F("plant", 24, 3, 1, 1, { big: 1 }); F("shelf", 20, 3); F("trophy", 24, 7);
 F("mdesk", 3, 5, 3, 1); F("plant", 1, 3, 1, 1, { big: 1 });
-F("btable", 10, 11, 4, 2); F("bar", 21, 13, 3, 1); F("trophy", 23, 10);
+F("sdesk", 2, 10, 2, 1, { who: "hollis" }); F("sdesk", 21, 10, 2, 1, { who: "june" });
+F("couch", 8, 4, 3, 1); F("bull", 13, 4, 2, 2);
+F("btable", 10, 11, 4, 2); F("bar", 21, 13, 3, 1);
 F("plant", 8, 14); F("plant", 1, 15, 1, 1, { big: 1 });
 
 const SPOTS = {};
@@ -72,19 +74,23 @@ function S_(key, x, y, face = "S", pose = "stand") { SPOTS[key] = { key, x, y, f
 S_("chair_vance", 22, 4, "S", "sit"); S_("front_vance", 22, 6, "N"); S_("pace_v", 21, 7, "E");
 S_("chair_mags", 4, 4, "S", "sit"); S_("front_mags", 4, 6, "N"); S_("pace_m", 2, 7, "E");
 S_("seat_wade", 9, 11, "E", "sit"); S_("seat_priya", 14, 12, "W", "sit"); S_("seat_otto", 12, 13, "N", "sit");
+S_("chair_hollis", 3, 9, "S", "sit"); S_("chair_june", 22, 9, "S", "sit");
 S_("bar_1", 21, 14, "N"); S_("bar_2", 22, 14, "N"); S_("window", 12, 3, "N"); S_("elev", 16, 16, "S");
-for (const k of ["chair_vance", "chair_mags", "seat_wade", "seat_priya", "seat_otto"]) seat[I(SPOTS[k].x, SPOTS[k].y)] = 1;
-const CHAIRS = { vance: [22, 4], mags: [4, 4], wade: [9, 11], priya: [14, 12], otto: [12, 13] };
+for (const k of ["chair_vance", "chair_mags", "seat_wade", "seat_priya", "seat_otto", "chair_hollis", "chair_june"]) seat[I(SPOTS[k].x, SPOTS[k].y)] = 1;
+const CHAIRS = { vance: [22, 4], mags: [4, 4], wade: [9, 11], priya: [14, 12], otto: [12, 13], hollis: [3, 9], june: [22, 9] };
 
 const RES = ["vance", "mags", "wade", "priya", "otto"];
-const HOME = { vance: "chair_vance", mags: "chair_mags", wade: "seat_wade", priya: "seat_priya", otto: "seat_otto" };
+const SEC = ["hollis", "june"];
+const HOME = { vance: "chair_vance", mags: "chair_mags", wade: "seat_wade", priya: "seat_priya", otto: "seat_otto", hollis: "chair_hollis", june: "chair_june" };
 const CAST = {
   vance: EXEC.look("vance"), mags: EXEC.look("mags"), wade: EXEC.look("wade"), priya: EXEC.look("priya"), otto: EXEC.look("otto"),
+  hollis: { name: "HOLLIS", role: "Chair secretary", skin: "#f6dccb", hair: "#6b4423", shirt: "#1e4b7a", pants: "#1e4b7a", tie: "#e7c56a", acc: "pearls" },
+  june: { name: "JUNE", role: "CEO secretary", skin: "#f1c9a5", hair: "#3a2618", shirt: "#f2c14e", pants: "#f6edd4", tie: "#7a1f2b" },
   grok: { name: "EL JEFE", role: "Floor boss", skin: "#e0ac69", hair: "#3a2a1a", shirt: "#23232b", pants: "#1c1917", tie: "#f2c14e", acc: "jefe" },
   nancy: { name: "NANCY", role: "Research Inc.", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", long: 1, acc: "pearls" },
 };
-const COL = { vance: "#f2c14e", mags: "#93c5fd", wade: "#4ade80", priya: "#fca5a5", otto: "#d4d4d8", grok: "#f2c14e", nancy: "#f7a8c8" };
-const ORDER = RES.concat(["grok", "nancy"]);
+const COL = { vance: "#f2c14e", mags: "#93c5fd", wade: "#4ade80", priya: "#fca5a5", otto: "#d4d4d8", hollis: "#7eb6e0", june: "#f2c14e", grok: "#f2c14e", nancy: "#f7a8c8" };
+const ORDER = RES.concat(SEC, ["grok", "nancy"]);
 const chars = {};
 for (const id of ORDER) chars[id] = { id, tx: 0, ty: 0, x: 0, y: 0, path: [], moving: false, face: "S", pose: "stand", hidden: true, task: null, goal: null, bubble: null, walkT: 0, speed: 3.2, next: 0 };
 let T = 0, rng = 1234567;
@@ -228,6 +234,14 @@ function resident(c) {
 }
 function director(c) {
   const preview = EXEC.ceoNow() || EXEC.chairNow() || EXEC.downNow();
+  if (SEC.includes(c.id)) {
+    if (!EXEC.workday() && !EXEC.ovHour && !preview) {
+      if (!c.hidden && !(c.task && c.task.label === "leave")) setTask(c.id, [{ spot: SPOTS.elev, dur: 0, leave: true }], "leave");
+      if (c.task) runTask(c);
+      return;
+    }
+    return resident(c);
+  }
   if (!EXEC.workday() && !EXEC.ovHour && !preview) {
     if (c.id === "otto" && !c.hidden && !c.task) { /* Otto lives here */ }
     else if (!RES.includes(c.id) && !c.hidden) { guest(c, false); return; }
@@ -381,7 +395,7 @@ function renderPanel() {
     return `<div class="row" data-id="${id}"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow">${c.hidden ? '<span class="mut">' + where + "</span>" : where}</span></div>`;
   }).join("");
   $("board").innerHTML = RES.map((id) => `<div class="row"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow mut">${CAST[id].role}</span></div>`).join("") +
-    `<div class="mut" style="margin-top:6px">Vance is El Jefe's boss. Mags is Nancy's. Wade, Priya, and Otto sit the board table. One of them drops downstairs on the days the agenda says so.</div>` +
+    `<div class="mut" style="margin-top:6px">Corner offices. June sits outside Vance. Hollis sits outside Mags. Wade, Priya, and Otto have the board table.</div>` +
     floorPromoHtml();
   const e = etNow();
   $("clock").textContent = ((e.hh % 12) || 12) + ":" + String(e.mm).padStart(2, "0") + (e.h < 12 ? " AM" : " PM") + " ET";
@@ -453,17 +467,18 @@ function fadeTo(href, nav, html) {
 }
 function goFloor(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("index.html", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
+  fadeTo("index.html?v=wealth1", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
 }
 function goB1stair(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("b1.html", "fromPH", "&#9660; RESEARCH INC.<small style=\"color:#7fbfc8;font-size:11px;letter-spacing:.08em\">B1 · TWO FLIGHTS DOWN</small>");
+  fadeTo("b1.html?v=wealth1", "fromPH", "&#9660; RESEARCH<small style=\"color:#7fbfc8;font-size:11px;letter-spacing:.08em\">TWO FLIGHTS DOWN</small>");
 }
 $("downBtn").addEventListener("click", goFloor);
 const b1Btn = $("b1Btn"); if (b1Btn) b1Btn.addEventListener("click", goB1stair);
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect();
   const lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
+  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "b1" ? goB1stair() : goFloor();
   let best = null;
   for (const id of ORDER) {
     const c = chars[id]; if (c.hidden) continue;

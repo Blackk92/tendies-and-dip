@@ -1629,14 +1629,20 @@ function showCard(id, refresh) {
 $("cardX").onclick = () => { $("card").classList.add("hidden"); selected = null; };
 const HOT = [ { id: "awardwall", x: 19 * TS, y: 7 * TS, w: 6 * TS, h: 2 * TS }, { id: "whiteboard", x: 15 * TS, y: 0, w: 4 * TS, h: 3 * TS },
   { id: "swing", x: 12 * TS - 10, y: 4 * TS, w: 36, h: 2 * TS } ];
-HOT.push({ id: "research", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS });
+HOT.push({ id: "phstair", x: 15 * TS, y: 15 * TS, w: 3 * TS, h: TS });
+HOT.push({ id: "research", x: 15 * TS, y: 17 * TS, w: 3 * TS, h: TS });
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect();
   const lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
+  for (const h of HOT) if ((h.id === "phstair" || h.id === "research") && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "research" ? goB1() : (window.goPH && window.goPH());
   let best = null;
   for (const id of ORDER) { const c = chars[id]; if (c.hidden) continue; if (lx >= c.x - 9 && lx <= c.x + 9 && ly >= c.y - 22 && ly <= c.y + 8) if (!best || c.y > best.y) best = c; }
   if (best) return showCard(best.id);
-  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return showCard(h.id);
+  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) {
+    if (h.id === "research") return goB1();
+    if (h.id === "phstair") return window.goPH ? window.goPH() : null;
+    return showCard(h.id);
+  }
   $("card").classList.add("hidden"); selected = null;
 });
 $("roster").addEventListener("click", (ev) => { const r = ev.target.closest("[data-bot]"); if (r) showCard(r.dataset.bot); });

@@ -6,7 +6,8 @@
 if (!window.RIM || !window.RIM.on) return;
 const R_ = window.RIM, P = R_.P;
 const { rr, shadow, box, circ, ell, line, poly, hex, mute, planks, tiles, speckle, rug, wallSeg, glassSeg, plant, chair, screen, INK, RIC } = P;
-const { wtext, marquee, short, money0, stairSign, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote } = R_.D;
+const { wtext, marquee, short, money0, stairSign, floorDir, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote } = R_.D;
+R_.stairHere = "trading";
 const X = () => P.ctx(), tx = (n) => n * TS, S5 = () => R_.season();
 const hourF = () => { try { return etNow().h; } catch (e) { return 12; } };
 const wins = () => { try { return winners(); } catch (e) { return {}; } };
@@ -59,7 +60,7 @@ function drawStatic() {
   const wc = "#3c4a42"; wallSeg(0, 0, LW, 3.2, "#26302b"); wallSeg(0, 0, 16, LH, wc); wallSeg(LW - 16, 0, 16, LH, wc);
   wallSeg(0, LH - 16, tx(15) - 1, 16, wc); wallSeg(tx(18) + 1, LH - 16, tx(23) - tx(18) - 2, 16, wc); wallSeg(tx(25) + 1, LH - 16, LW - tx(25) - 1, 16, wc);
   for (let i = 0; i < 4; i++) box(tx(15), LH - 7.6 - i * 4 + 4, 48, 4, 0.4, hex("#6d8794", 1 - i * 0.14), { shadow: false, lw: 0.3 });
-  line([tx(15) - 0.5, LH - 18, tx(15) - 0.5, LH], "#c79a3a", 1.2); line([tx(18) + 0.5, LH - 18, tx(18) + 0.5, LH], "#c79a3a", 1.2);
+  line([tx(15) - 0.5, 240, tx(15) - 0.5, LH], "#c79a3a", 1.4); line([tx(18) + 0.5, 238, tx(18) + 0.5, LH], "#c79a3a", 1.4);
   box(tx(23), LH - 16, tx(2), 16, 0, "#8a6440", { shadow: false, lw: 0.3 }); line([tx(23) - 0.5, LH - 17, tx(23) - 0.5, LH], "#c79a3a", 1.4); line([tx(25) + 0.5, LH - 17, tx(25) + 0.5, LH], "#c79a3a", 1.4);   // entrance door
   // north wall pieces (frames; glass + screens animate in dynamic)
   frame(20, 8, 26, 22, "#9fc6d8", "#3b3127"); frame(108, 6, 36, 28, "#16261e", "#5a3b22"); frame(210, 8, 28, 24, "#9fc6d8", "#3b3127");   // 108: STRATEGY wall board frame(322, 6, 60, 28, "#9fc6d8", "#2a1e14");
@@ -199,10 +200,7 @@ function drawDynamic(t) {
     const AL = { position_scale: "SIZE", risk_per_trade_pct: "RISK", breakout_lookback_days: "LOOKBK", trail_atr: "TRAIL", rsi_max: "RSI MAX", max_hold_days: "HOLD", rsi_entry: "RSI IN", rsi_exit: "RSI OUT", stop_atr: "STOP", target_atr: "TGT", reward_risk: "R:R", max_stop_pct: "STOP%", opening_range_minutes: "OR MIN", min_trend_pct: "TREND", min_gap_pct: "GAP", bb_k: "BB K", lookback_days: "LOOKBK", top_n: "TOP N", exit_rank: "EXIT#" };
     wtext("R&D", 248, 9, { size: sm ? 5.2 : 3.8, col: "#2f6fdb", w: 800 }); wtext(tu.running ? "TUNING" : "OOS > IS", 298, 9, { size: sm ? 4.4 : 3.4, col: "#d03030", align: "right", w: 800 });
     if (!sm) for (let i = 0; i < 2; i++) { const c = ch[ch.length - 1 - i]; wtext(c ? `${String(c.bot || "").toUpperCase()} ${AL[c.param] || String(c.param || "").replace(/_/g, " ").toUpperCase()}` : ["SHARPE - DD", "WALK FORWARD"][i], 248, 15.6 + i * 5, { size: 3.3, col: i === 0 ? "#222" : "#555", maxW: 50 }); } }
-  stairSign(tx(15) + 1, tx(16) + 1, 46, 14, ["RESEARCH INC.", "B1", "B1 ▼"], false, t);   // clickable stairwell (HOT unchanged)
-  // RI stair light: solid while Research Inc. staff are up here, blinking otherwise
-  const vis = RI_IDS.some((id) => chars[id] && !chars[id].hidden); circ(tx(15) + 45, tx(17) + 2, 1.1, vis || Math.floor(t * 2) % 2 ? RIC : "#0b3b44", { shadow: false, lw: 0.25 });
-  for (const lx of [9, 13, 17, 22]) { box(tx(lx) + 5, 45, 6, 3, 1, "#c79a3a", { shadow: false, lw: 0.25 }); }   // pendant lamps
+  for (const lx of [9, 13, 22]) { box(tx(lx) + 5, 45, 6, 3, 1, "#c79a3a", { shadow: false, lw: 0.25 }); }   // pendant lamps (the stair column owns x=15..17)
   for (const f of FURN) { const fn = ART[f.type]; if (fn && fn.d) try { fn.d(f, t); } catch (e) { /* decor only */ } }
   try { lifeFx(t); } catch (e) { /* decor only */ }
 }
