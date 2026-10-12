@@ -62,9 +62,9 @@ function officeGlass(wx) {
 function carpet(x, y, w, h, fill, edge, dot) {
   box(x, y, w, h, 0, fill, { shadow: false, shade: false, stroke: false });
   const c = X();
-  c.strokeStyle = edge; c.lineWidth = 2.4; c.strokeRect(x + 1.3, y + 1.3, w - 2.6, h - 2.6);
-  c.strokeStyle = "rgba(255,246,220,.7)"; c.lineWidth = 0.7; c.strokeRect(x + 4.2, y + 4.2, w - 8.4, h - 8.4);
-  for (let yy = y + 9; yy < y + h - 5; yy += 11) for (let xx = x + 9; xx < x + w - 5; xx += 11) circ(xx, yy, 0.6, dot, { shadow: false, stroke: false, shade: false });
+  c.strokeStyle = edge; c.lineWidth = 0.9; c.strokeRect(x + 2.2, y + 2.2, w - 4.4, h - 4.4);
+  c.strokeStyle = "rgba(255,236,190,.28)"; c.lineWidth = 0.35; c.strokeRect(x + 5, y + 5, w - 10, h - 10);
+  for (let yy = y + 8; yy < y + h - 5; yy += 8) for (let xx = x + 8; xx < x + w - 5; xx += 8) circ(xx, yy, 0.45, dot, { shadow: false, stroke: false, shade: false });
 }
 function gilt(a, b, w, h, fill) {
   frame(a, b, w, h, fill, "#c79a3a");
@@ -138,14 +138,14 @@ function artBook(a, b, w, h) {
 function drawStatic() {
   const x = X(), rnd = R_.rng(9091), th = theme();
   planks(16, 48, LW - 32, LH - 64, "#9c7650", "rgba(50,30,14,.35)", rnd);
-  carpet(32, 50, 80, 74, "#0f8a52", "#f6e2a8", "#e7fff2");
-  carpet(320, 50, 80, 74, "#f4e7c8", "#6e2436", "#e7c56a");
-  carpet(120, 58, 64, 36, "#1d4ed8", "#f6e2a8", "#dbe7ff");
-  carpet(200, 58, 48, 44, "#10243a", "#f6e2a8", "#9bb4d6");
-  carpet(144, 164, 96, 56, "#0f9d8e", "#f6e2a8", "#e7fff8");
-  carpet(16, 218, 88, 44, "#141c2e", "#f6e2a8", "#9bb0d4");
-  carpet(18, 148, 60, 32, "#1e3fbf", "#f6e2a8", "#dbe6ff");
-  carpet(322, 148, 60, 32, "#e36a2c", "#fff1c8", "#ffe0c4");
+  carpet(28, 50, 88, 72, "#6e2633", "#c79a3a", "#8a3644");
+  carpet(300, 50, 88, 72, "#2d4f72", "#d9b45a", "#3c6288");
+  carpet(128, 54, 160, 44, "#3c4650", "#c79a3a", "#4e5964");
+  carpet(160, 164, 96, 56, "#246a63", "#e7c56a", "#3d7d74");
+  carpet(24, 216, 96, 48, "#3f3834", "#c79a3a", "#524840");
+  carpet(296, 216, 96, 48, "#3f3834", "#c79a3a", "#524840");
+  carpet(36, 136, 72, 48, "#6e2633", "#c79a3a", "#8a3644");
+  carpet(308, 136, 72, 48, "#2d4f72", "#d9b45a", "#3c6288");
   x.fillStyle = "#6e2436"; x.fillRect(0, 0, LW, 48);
   x.fillStyle = "rgba(255,220,180,.07)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
   x.fillStyle = "#4a1c28"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#e7c56a"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(0,0,0,.28)"; x.fillRect(0, 46.6, LW, 1.4);
@@ -165,8 +165,8 @@ function drawStatic() {
   wallSeg(tx(19), tx(8) - 2, tx(6), 11, wc);
   box(54, tx(8) - 8, 36, 7, 1, "#e7c56a", { lw: 0.35 });
   wtext("CHAIR", 72, tx(8) - 4.6, { size: R_.small() ? 4.6 : 3.4, col: "#3a2a10", align: "center", base: "middle", w: 800, maxW: 34 });
-  box(344, tx(8) - 8, 32, 7, 1, "#e7c56a", { lw: 0.35 });
-  wtext("CEO", 360, tx(8) - 4.6, { size: R_.small() ? 4.8 : 3.5, col: "#3a2a10", align: "center", base: "middle", w: 800 });
+  box(326, tx(8) - 8, 36, 7, 1, "#e7c56a", { lw: 0.35 });
+  wtext("CEO", 344, tx(8) - 4.6, { size: R_.small() ? 4.8 : 3.5, col: "#3a2a10", align: "center", base: "middle", w: 800 });
   const FACE = { vance: 0, mags: 0, wade: Math.PI / 2, priya: -Math.PI / 2, otto: Math.PI, june: 0, hollis: 0 };
   const CCOL = { vance: "#8d2433", mags: "#1f7a4a", wade: "#1f7a4a", priya: "#a33b3b", otto: "#c79a3a", june: "#f2c14e", hollis: "#1e4b7a" };
   for (const id in CHAIRS) { const [cx, cy] = CHAIRS[id]; chair(tx(cx) + 8, tx(cy) + 9, FACE[id] || 0, CCOL[id] || "#c79a3a"); }
@@ -194,11 +194,11 @@ const ART = {
       box(px + 4, py + 3, 8, 5, 0.6, "#3f8f4e", { lw: 0.25 }); box(px + 5, py + 4, 8, 5, 0.6, "#4fa65d", { lw: 0.25 });
       mug(px + 42, py + 4.5, "#fff"); },
     d(f) { const px = tx(f.x), py = tx(f.y); if (!seated("mags")) return; screen(px + 24, py + 7.4, 16, true, "#3ddc84"); glowAt(px + 24, py + 4, 14, "rgba(61,220,132,.26)"); } },
-  sdesk: { s(f) { const px = tx(f.x), py = tx(f.y); deskTop(px, py, 32, "#f1dfe8"); X().fillStyle = "#c79a3a"; X().fillRect(px + 1, py + 11.2, 30, 0.6);
-      box(px + 6, py + 2.2, 11, 3, 0.6, "#e7e2ea", { shadow: false, lw: 0.25 }); screen(px + 12, py + 7.2, 13, false, "#f2c14e");
-      box(px + 21, py + 8, 7, 2.4, 0.5, "#c79a3a", { lw: 0.25 }); mug(px + 26, py + 4, "#fff");
-      for (let i = 0; i < 4; i++) circ(px + 3 + i * 1.2, py + 9.5, 0.45, "#fbf7ee", { shadow: false, lw: 0.12 }); },
-    d(f) { const px = tx(f.x), py = tx(f.y); if (!seated(f.who)) return; screen(px + 12, py + 7.2, 13, true, "#f2c14e"); glowAt(px + 12, py + 4, 11, "rgba(242,193,78,.26)"); } },
+  sdesk: { s(f) { const px = tx(f.x), py = tx(f.y); deskTop(px, py, 48, "#f1dfe8"); X().fillStyle = "#c79a3a"; X().fillRect(px + 1, py + 11.2, 46, 0.6);
+      box(px + 8, py + 2.2, 16, 3, 0.6, "#e7e2ea", { shadow: false, lw: 0.25 }); screen(px + 24, py + 7.2, 14, false, "#f2c14e");
+      box(px + 34, py + 8, 8, 2.4, 0.5, "#c79a3a", { lw: 0.25 }); mug(px + 42, py + 4, "#fff");
+      for (let i = 0; i < 4; i++) circ(px + 4 + i * 1.2, py + 9.5, 0.45, "#fbf7ee", { shadow: false, lw: 0.12 }); },
+    d(f) { const px = tx(f.x), py = tx(f.y); if (!seated(f.who)) return; screen(px + 24, py + 7.2, 14, true, "#f2c14e"); glowAt(px + 24, py + 4, 12, "rgba(242,193,78,.26)"); } },
   btable: { s(f) { const px = tx(f.x), py = tx(f.y), w = tx(f.w), h = tx(f.h);
       box(px + 1, py + 1, w - 2, h - 2, 5, "#c4923a", { blur: 2.2, oy: 1.2 });
       box(px + 4, py + 4, w - 8, h - 8, 3.5, "#f0cb7a", { shadow: false, stroke: "rgba(90,50,10,.35)", lw: 0.35 });
@@ -236,7 +236,7 @@ const ART = {
       box(px - 1, py + 6, 5, 17, 2, "#c79a3a", { lw: 0.35, blur: 1 });
       box(px + w - 4, py + 6, 5, 17, 2, "#c79a3a", { lw: 0.35, blur: 1 });
       for (let i = 0; i < 3; i++) box(px + 4.5 + i * (w - 9) / 3, py + 11, (w - 9) / 3 - 1, 11, 2, "#f2c14e", { shadow: false, lw: 0.3 }); } },
-  bull: { s(f) { const px = tx(f.x), py = tx(f.y);
+  bull: { s(f) { const px = tx(f.x) + (tx(f.w) - 32) / 2, py = tx(f.y);
       box(px + 2, py + 6, 28, 22, 2, "#5a4630", { blur: 2.4, oy: 1.2 });
       box(px + 4, py + 8, 24, 18, 1.4, "#6b5438", { shadow: false, lw: 0.3 });
       ell(px + 15, py + 15, 9.5, 5.5, 0, "#e0b050", { lw: 0.45, shadow: true });
@@ -279,7 +279,7 @@ function drawDynamic(t) {
   for (const lx of [4, 12, 22]) box(tx(lx) + 5, 45, 6, 3, 1, "#c79a3a", { shadow: false, lw: 0.25 });
   for (const f of FURN) { const fn = ART[f.type]; if (fn && fn.d) try { fn.d(f, t); } catch (e) { /* decor */ } }
 }
-const LAMPS = [[4, 5], [22, 5], [4, 10], [22, 10], [13, 12], [16, 15]];
+const LAMPS = [[4, 5], [21, 5], [4, 10], [21, 10], [12, 12], [16, 15]];
 function drawPost(t) {
   const x = X(), n = nightFactor(hourF());
   if (n > 0) { x.fillStyle = `rgba(40,28,10,${0.28 * n})`; x.fillRect(16, 48, LW - 32, LH - 64); }
@@ -300,7 +300,7 @@ R_.pawnHook = function (c, k, hx, hy, r, view, dir) {
 };
 R_.floor = {
   drawStatic, drawDynamic, drawPost,
-  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec2", th.k, th.weather, th.id, th.party || "", e].join("|"); },
+  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec3", th.k, th.weather, th.id, th.party || "", e].join("|"); },
 };
 layout();
 })();
