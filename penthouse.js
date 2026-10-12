@@ -4,6 +4,12 @@
 const TS = 16, GW = 26, GH = 18, LW = GW * TS, LH = GH * TS;
 const $ = (id) => document.getElementById(id);
 const cv = $("cv");
+const ctx = cv.getContext("2d");
+let SC = 2, DPR = 1, LP = 2, selected = null;
+const HOT = [
+  { id: "floor", x: 14 * TS, y: 14 * TS, w: 4 * TS, h: 4 * TS },
+  { id: "b1", x: 18 * TS, y: 14 * TS, w: 4 * TS, h: 4 * TS },
+];
 const bg = document.createElement("canvas"); bg.width = LW; bg.height = LH;
 const gb = bg.getContext("2d"); gb.imageSmoothingEnabled = false;
 const frame = document.createElement("canvas"); frame.width = LW; frame.height = LH;
@@ -68,6 +74,7 @@ S_("chair_mags", 4, 4, "S", "sit"); S_("front_mags", 4, 6, "N"); S_("pace_m", 2,
 S_("seat_wade", 9, 11, "E", "sit"); S_("seat_priya", 14, 12, "W", "sit"); S_("seat_otto", 12, 13, "N", "sit");
 S_("bar_1", 21, 14, "N"); S_("bar_2", 22, 14, "N"); S_("window", 12, 3, "N"); S_("elev", 16, 16, "S");
 for (const k of ["chair_vance", "chair_mags", "seat_wade", "seat_priya", "seat_otto"]) seat[I(SPOTS[k].x, SPOTS[k].y)] = 1;
+const CHAIRS = { vance: [22, 4], mags: [4, 4], wade: [9, 11], priya: [14, 12], otto: [12, 13] };
 
 const RES = ["vance", "mags", "wade", "priya", "otto"];
 const HOME = { vance: "chair_vance", mags: "chair_mags", wade: "seat_wade", priya: "seat_priya", otto: "seat_otto" };
@@ -296,6 +303,8 @@ function drawFurn(f, t) {
     for (let i = 0; i < 4; i++) R(g, px + 3, py - 12 + i * 7, 10, 4, ["#7f1d1d", "#1e3a5f", "#14532d", "#a16207"][i]);
   } else if (f.type === "trophy") {
     R(g, px + 4, py - 10, 8, 14, "#3a2a1a"); R(g, px + 5, py - 18, 6, 8, "#f2c14e"); R(g, px + 3, py - 16, 2, 4, "#f2c14e"); R(g, px + 11, py - 16, 2, 4, "#f2c14e");
+    const md = promoView && promoView.executive;
+    ptextC(g, md ? "MD" : "OPEN", px + 8, py + 5, "#f2c14e", 1);
   } else if (f.type === "plant") {
     R(g, px + 4, py + 6, 8, 8, "#7c4a2d");
     for (let i = 0; i < 5; i++) R(g, px + 2 + (i % 3) * 4, py + 2 - i, 5, 6, i % 2 ? "#166534" : "#22c55e");
@@ -350,9 +359,9 @@ function render(t) {
   for (const id of ORDER) { const c = chars[id]; if (!c.hidden) items.push({ y: c.y + 6, c }); }
   items.sort((a, b) => a.y - b.y);
   for (const it of items) { if (it.f) drawFurn(it.f, t); else drawChar(it.c, t); }
-  const ctx = cv.getContext("2d"); ctx.imageSmoothingEnabled = false;
-  ctx.clearRect(0, 0, cv.width, cv.height);
-  ctx.drawImage(frame, 0, 0, LW, LH, 0, 0, cv.width, cv.height);
+  const ctx2 = cv.getContext("2d"); ctx2.imageSmoothingEnabled = false;
+  ctx2.clearRect(0, 0, cv.width, cv.height);
+  ctx2.drawImage(frame, 0, 0, LW, LH, 0, 0, cv.width, cv.height);
 }
 function renderPanel() {
   const a = EXEC.agenda(), th = theme();
@@ -372,11 +381,37 @@ function renderPanel() {
     return `<div class="row" data-id="${id}"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow">${c.hidden ? '<span class="mut">' + where + "</span>" : where}</span></div>`;
   }).join("");
   $("board").innerHTML = RES.map((id) => `<div class="row"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow mut">${CAST[id].role}</span></div>`).join("") +
-    `<div class="mut" style="margin-top:6px">Vance is El Jefe's boss. Mags is Nancy's. Wade, Priya, and Otto sit the board table. One of them drops downstairs on the days the agenda says so.</div>`;
+    `<div class="mut" style="margin-top:6px">Vance is El Jefe's boss. Mags is Nancy's. Wade, Priya, and Otto sit the board table. One of them drops downstairs on the days the agenda says so.</div>` +
+    floorPromoHtml();
   const e = etNow();
   $("clock").textContent = ((e.hh % 12) || 12) + ":" + String(e.mm).padStart(2, "0") + (e.h < 12 ? " AM" : " PM") + " ET";
   $("upd").textContent = "cosmetic floor · zero tokens · " + a.day;
 }
+
+let promoView = null;
+function floorPromoHtml() {
+  if (!promoView || !window.PROMO) return `<div class="mut" style="margin-top:8px">Floor promotions load with the month board.</div>`;
+  const m = promoView.manager, e = promoView.executive;
+  const pend = (promoView.pendingLog || []).filter((x) => x.to !== "associate");
+  const risk = (promoView.pendingLog || []).filter((x) => x.to === "associate");
+  let h = `<div style="margin-top:8px;font-weight:800;color:var(--gold)">FROM THE FLOOR</div>`;
+  h += `<div class="row"><span class="nm">MGR</span><span class="grow">${m ? escPh(m.name) + " · " + escPh(m.title) : "OPEN"}</span></div>`;
+  h += `<div class="row"><span class="nm">MD</span><span class="grow">${e ? escPh(e.name) + " · Managing Director" : "OPEN"}</span></div>`;
+  if (promoView.monthOpen && pend.length) h += `<div class="mut">If ${escPh(promoView.period)} closed today: ${pend.map((x) => escPh((promoView.people[x.bot] && promoView.people[x.bot].name) || x.bot) + " would make " + x.title).join("; ")}. Not final.</div>`;
+  else h += `<div class="mut">Earned off the month board, not appointed. Titles wait for a final month.</div>`;
+  if (risk.length) h += `<div class="mut">Chair at risk: back to Associate if the month closed today. Not a firing.</div>`;
+  return h;
+}
+function escPh(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, (m) => m === "&" ? "&" + "amp;" : m === "<" ? "&" + "lt;" : m === ">" ? "&" + "gt;" : "&" + "quot;"); }
+async function pollPromo() {
+  try {
+    const r = await fetch("state.json?ts=" + Date.now(), { cache: "no-store" });
+    if (!r.ok) return;
+    promoView = PROMO.review(await r.json());
+  } catch (e) { /* no book on this snapshot */ }
+}
+pollPromo();
+setInterval(pollPromo, 20000);
 
 let acc = 0, last = performance.now();
 function tick(now) {
@@ -396,16 +431,49 @@ function layout() {
   cv.width = LW * sc; cv.height = LH * sc; cv.style.width = (LW * sc) + "px"; cv.style.height = (LH * sc) + "px";
 }
 $("zoomBtn").onclick = () => { ZOOM = ZOOM > 1 ? 1 : 1.6; $("floorWrap").classList.toggle("zoomed", ZOOM > 1); layout(); };
-addEventListener("resize", layout); layout();
-$("cardX").onclick = () => $("card").classList.add("hidden");
+addEventListener("resize", () => layout()); layout();
+$("cardX").onclick = () => { $("card").classList.add("hidden"); selected = null; };
 $("roster").addEventListener("click", (ev) => {
   const row = ev.target.closest("[data-id]"); if (!row) return;
   const id = row.dataset.id, k = CAST[id], c = chars[id];
+  selected = id;
   $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">${c.hidden ? "Not on this floor right now." : "On the penthouse."}</div>`;
   $("card").classList.remove("hidden");
 });
-$("downBtn").addEventListener("click", (ev) => {
-  ev.preventDefault();
-  try { sessionStorage.setItem("floorNav", "fromPH"); } catch (e) { /* private */ }
-  location.href = "index.html";
+function fadeTo(href, nav, html) {
+  let f = document.getElementById("phFade");
+  if (!f) {
+    f = document.createElement("div"); f.id = "phFade";
+    f.style.cssText = "position:fixed;inset:0;z-index:80;background:#100e0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:#f2c14e;font-weight:900;letter-spacing:.14em;font-size:15px;text-align:center;pointer-events:none";
+    document.body.appendChild(f);
+  }
+  f.innerHTML = html;
+  try { sessionStorage.setItem("floorNav", nav); } catch (e) { /* private */ }
+  setTimeout(() => { location.href = href; }, 420);
+}
+function goFloor(ev) {
+  if (ev && ev.preventDefault) ev.preventDefault();
+  fadeTo("index.html", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
+}
+function goB1stair(ev) {
+  if (ev && ev.preventDefault) ev.preventDefault();
+  fadeTo("b1.html", "fromPH", "&#9660; RESEARCH INC.<small style=\"color:#7fbfc8;font-size:11px;letter-spacing:.08em\">B1 · TWO FLIGHTS DOWN</small>");
+}
+$("downBtn").addEventListener("click", goFloor);
+const b1Btn = $("b1Btn"); if (b1Btn) b1Btn.addEventListener("click", goB1stair);
+cv.addEventListener("click", (ev) => {
+  const r = cv.getBoundingClientRect();
+  const lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
+  let best = null;
+  for (const id of ORDER) {
+    const c = chars[id]; if (c.hidden) continue;
+    if (lx >= c.x - 9 && lx <= c.x + 9 && ly >= c.y - 22 && ly <= c.y + 8) if (!best || c.y > best.y) best = c;
+  }
+  if (best) {
+    selected = best.id; const k = CAST[best.id];
+    $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">On the penthouse.</div>`;
+    $("card").classList.remove("hidden"); return;
+  }
+  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "b1" ? goB1stair() : goFloor();
+  $("card").classList.add("hidden"); selected = null;
 });
