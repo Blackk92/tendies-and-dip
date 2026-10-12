@@ -102,6 +102,8 @@ const TRAITS = {
   beats:  { skin: "#e8b48a", hair: "#b5651d", style: "curlylong", bw: 1.18, bh: 0.92, hs: 1.02, hw: 1.03, hh: 0.98 },
   sage:   { skin: "#a86b42", hair: "#d9d9d9", style: "short",   bw: 1.12, bh: 1.0, hs: 1.02, hw: 1.04, hh: 0.98, beard: "full" },
   proof:  { skin: "#fbe3d0", hair: "#3a2a1a", style: "bald",    bw: 1.0, bh: 0.92, hs: 1.0, hw: 1.02, hh: 0.99 },
+  june:   { skin: "#f1c9a5", hair: "#3a2618", style: "bob",     bw: 0.92, bh: 0.94, hs: 0.97, hw: 0.96, hh: 1.04 },
+  hollis: { skin: "#f6dccb", hair: "#6b4423", style: "sidepart", bw: 1.02, bh: 1.0, hs: 1.0, hw: 1.0, hh: 1.0 },
 };
 const STYLES = ["short", "crop", "curly", "bob", "ponytail", "bald", "sidepart", "bun", "wavy"], HAIRS = ["#1b1b1b", "#3a2618", "#6b4423", "#a0703a", "#d8b46a", "#9a9a9a", "#7a2e1a"];
 function traitsOf(id) {
@@ -351,6 +353,7 @@ render = function (t) {
   const vis = ORDER.map((id) => chars[id]).filter((c) => c && !c.hidden).sort((a, b) => a.y - b.y);
   for (const c of vis) { try { drawPawn(c, t); } catch (e) { if (!R_.pawnErr) { R_.pawnErr = 1; console.warn("rim pawn", c.id, e); } } }
   if (F.drawPost) F.drawPost(t);
+  if (R_.stairHere) try { floorDir(R_.stairHere, t); } catch (e) { /* stair is decoration */ }
   overlay(); R_.frames++;
 };
 R_.overlay = overlay;
@@ -413,6 +416,41 @@ function stairSign(a, b, w, h, lines, arrowUp, t) {   // cyan clickable stair si
   if (sm) wtext(lines[2] || lines[0], tx0 + tw / 2, b + h / 2 + 0.3, { size: 6.4, col: "#dffbff", align: "center", base: "middle", maxW: tw, shrink: 4.5, w: 800 });
   else { wtext(lines[0], tx0 + tw / 2, b + h / 2 - 0.5, { size: 3.6, col: RIC, align: "center", base: "bottom", maxW: tw, shrink: 2.8, w: 800 }); wtext(lines[1], tx0 + tw / 2, b + h / 2 + 0.6, { size: 3.6, col: "#dffbff", align: "center", base: "top", maxW: tw, shrink: 2.6, w: 800 }); }
 }
+// Same stair on every floor. Three landings at x=15..17, y=15..17.
+// Top to bottom: PENTHOUSE, TRADING FLOOR, RESEARCH. Current floor is the bright gold landing.
+function floorDir(here, t) {
+  const x0 = 15 * 16, rows = [
+    { id: "penthouse", label: "PENTHOUSE" },
+    { id: "trading", label: "TRADING FLOOR" },
+    { id: "research", label: "RESEARCH" },
+  ];
+  box(x0, 238, 48, 50, 0, "#8a6230", { shadow: false, shade: false, stroke: false });
+  line([x0 + 2, 236, x0 + 2, 288], "#5a3e14", 2.4);
+  line([x0 + 46, 236, x0 + 46, 288], "#5a3e14", 2.4);
+  line([x0 + 4.5, 236, x0 + 4.5, 288], "#f2c14e", 1.1);
+  line([x0 + 43.5, 236, x0 + 43.5, 288], "#f2c14e", 1.1);
+  rows.forEach((row, i) => {
+    const y = 240 + i * 16, mine = row.id === here, a = x0 + 4, w = 40;
+    const hov = !mine && R_.hoverIn(x0, y, 48, 16);
+    const pulse = 0.35 + 0.3 * Math.sin(t * 3 + i);
+    let arrow = null;
+    if (!mine && row.id === "penthouse") arrow = "up";
+    else if (!mine && row.id === "research") arrow = "down";
+    else if (!mine && row.id === "trading") arrow = here === "research" ? "up" : "down";
+    const gold = row.id === "penthouse";
+    const tread = mine ? "#ffe08a" : row.id === "research" ? (hov ? "#2aa0ae" : "#14606c") : gold ? (hov ? "#ffd86a" : "#f0b429") : (hov ? "#fffdf4" : "#fff1c9");
+    const nose = mine ? "#fff6cf" : row.id === "research" ? "#8fd4de" : gold ? "#ffe7a0" : "#fffaf0";
+    const edge = mine || gold ? "#6b4a12" : row.id === "research" ? "#bff8ff" : "#8a6420";
+    const ink = !mine && row.id === "research" ? "#f4feff" : "#3a2a10";
+    box(x0 + 5, y + 0.6, 38, 3.1, 0.4, nose, { shadow: false, lw: 0.25, stroke: edge });
+    if (!mine) { x.save(); x.shadowColor = (gold ? "rgba(242,193,78," : "rgba(63,208,220,") + (hov ? 0.95 : pulse) + ")"; x.shadowBlur = (hov ? 6 : 3) * (R_.k || 1); rr(a, y + 4, w, 8.2, 1.3); x.fillStyle = tread; x.fill(); x.restore(); }
+    box(a, y + 4.2, w, 7.6, 1.1, tread, { shadow: false, lw: hov || mine ? 0.8 : 0.4, stroke: edge });
+    box(x0 + 5, y + 12.4, 38, 2.8, 0.3, hex(tread, 0.82), { shadow: false, lw: 0.2, stroke: edge });
+    if (arrow) { x.save(); x.translate(x0 + 40, y + 2.1); if (arrow === "down") x.rotate(Math.PI); icoArrowUp(0, 0, 0.42, "#3a2a10"); x.restore(); }
+    else circ(x0 + 10, y + 2.1, 1.15, "#8a6420", { shadow: false, lw: 0.2 });
+    wtext(row.label, x0 + 24, y + 8, { size: 2.85, col: ink, align: "center", base: "middle", w: 800, maxW: 38, shrink: 2.3 });
+  });
+}
 // ---------------------------------------------------------------- office life + daily happenings (shared drawing; data comes from office_life.js)
 const LFE = () => window.LIFE || null;
 function balloonsAt(a, b, t, n = 4) { const cols = ["#e5534b", "#4a8fe0", "#f2c94c", "#5fb37a", "#c77ddb"]; for (let i = 0; i < n; i++) { const bx = a + (i - (n - 1) / 2) * 3.4, by = b - 14 - (i % 2) * 3.4 + Math.sin(t * 1.4 + i) * 0.8; line([bx, by + 2.6, a, b], "rgba(255,255,255,.75)", 0.25); ell(bx, by, 2.2, 2.7, 0, cols[i % cols.length], { lw: 0.3, shadow: true }); ell(bx - 0.7, by - 0.9, 0.5, 0.8, -0.4, "rgba(255,255,255,.5)", { stroke: false }); } }
@@ -470,7 +508,7 @@ R_.lifeOver = function (t) {
   const pl = L.on("planes"); if (pl && pl.data && pl.data.from) pl.data.from.forEach((id, n) => { const c = chars[id]; if (!c || c.hidden) return; const k = ((T - pl.t0) / 4 + n * 0.37) % 1, dir = n % 2 ? -1 : 1, a = c.x + dir * k * 130, b = c.y - 10 - Math.sin(k * Math.PI) * 26 + k * 18;
     if (a < 18 || a > LW - 18) return; x.save(); x.translate(a, b); x.scale(dir, 1); x.rotate(0.15 - k * 0.3); poly([3.4, 0, -2.6, -1.8, -1.4, 0, -2.6, 1.8], "#fbfaf6", { lw: 0.3 }); line([3.4, 0, -1.4, 0], "rgba(0,0,0,.25)", 0.25); x.restore(); });
 };
-R_.D = { wtext, marquee, short, money0, stairSign, MONO, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD };
+R_.D = { wtext, marquee, short, money0, stairSign, floorDir, MONO, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD };
 R_.P = { rr, shadow, box, circ, ell, line, poly, hex, mute, planks, tiles, speckle, rug, wallSeg, glassSeg, plant, chair, screen, FONT, INK, RIC, ctx: () => x };
 // the engines bound resize to the original layout(); re-run ours afterwards so DPR >= 2 sticks
 addEventListener("resize", () => layout()); addEventListener("orientationchange", () => setTimeout(() => layout(), 260));

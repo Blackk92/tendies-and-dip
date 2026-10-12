@@ -9,7 +9,8 @@ const { rr, shadow, box, circ, ell, line, poly, hex, mute, planks, tiles, speckl
 const X = () => P.ctx();
 const T16 = TS, tx = (n) => n * T16;
 const S5 = () => R_.season();
-const { wtext, marquee, short, money0, stairSign, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD } = R_.D;
+const { wtext, marquee, short, money0, stairSign, floorDir, frame, icoMagnifier, icoArrowUp, scribble, bunting, deskTop, mug, balloons, upNote, WOOD } = R_.D;
+R_.stairHere = "research";
 const isUp = (id) => { const c = chars[id]; if (!c || !c.hidden) return false; if (id === "nancy") return true; try { return !!activeTrip(id); } catch (e) { return false; } };
 
 // ---------------------------------------------------------------- decorative wall pieces (no text)
@@ -39,7 +40,7 @@ function drawStatic() {
   wallSeg(0, 0, LW, 3.2, "#2f383b"); wallSeg(0, 0, 16, LH, wcol); wallSeg(LW - 16, 0, 16, LH, wcol);
   wallSeg(0, LH - 16, tx(15) - 1, 16, wcol); wallSeg(tx(18) + 1, LH - 16, LW - tx(18) - 1, 16, wcol);
   for (let i = 0; i < 4; i++) { const yy = LH - 4 - i * 4; box(tx(15), yy - 3.6, 48, 4, 0.4, hex("#7d929b", 1 - i * 0.12), { shadow: false, lw: 0.3 }); }
-  line([tx(15) - 0.5, LH - 18, tx(15) - 0.5, LH], "#c79a3a", 1.2); line([tx(18) + 0.5, LH - 18, tx(18) + 0.5, LH], "#c79a3a", 1.2);
+  line([tx(15) - 0.5, 240, tx(15) - 0.5, LH], "#c79a3a", 1.4); line([tx(18) + 0.5, 238, tx(18) + 0.5, LH], "#c79a3a", 1.4);
   // north wall boards (decorative)
   frame(14, 5, 84, 30, "#1a1f24", "#33302c");                                         // news wall: 6 TVs (animated in dynamic)
   frame(102, 10, 18, 14, "#174a54", "#2a3c40"); wtext("B1", 111, 11, { size: 6, col: RIC, align: "center", w: 800 }); wtext("RI", 111, 18, { size: 4, col: "#bff8ff", align: "center", w: 800 });   // B1 / RI sign
@@ -167,10 +168,6 @@ function drawDynamic(t) {
     line([394, 18, 394 + Math.sin(a1) * 3.2, 18 - Math.cos(a1) * 3.2], "#2a2620", 0.8); line([394, 18, 394 + Math.sin(a2) * 4.8, 18 - Math.cos(a2) * 4.8], "#b3261e", 0.45); circ(394, 18, 0.6, "#2a2620", { shadow: false, stroke: false, shade: false }); }
   // LED strip: travelling dots (decorative, no text)
   { const nx = nextShift(); marquee(nx ? `${nextShiftShort()} ${nx.day === "today" ? "" : String(nx.day).toUpperCase()} - IN ${cd(nx.mins)}`.replace(/\s+/g, " ") : "NO SHIFT SCHEDULED", 134, LH - 10.9, 96, { size: sm ? 4.6 : 4, col: "#ff9d3b", mono: true, center: true }, t, 12); }
-  stairSign(tx(15) + 1, tx(16) + 1.5, 46, 13, ["UP TO", "TENDIES AND DIP", "▲ UP"], true, t);   // clickable stairs (HOT "up" unchanged)
-  // stair light
-  const going = ORDER.some((id) => chars[id].task && chars[id].task.label === "goingup");
-  circ(tx(16) + 13, tx(17) + 2, 1.1, going || Math.floor(t * 2) % 2 ? RIC : "#0b3b44", { shadow: false, lw: 0.25 });
   for (const f of FURN) { const fn = ART[f.type]; if (fn && fn.d) try { fn.d(f, t); } catch (e) { /* decor only */ } }
   try { lifeFx(t); } catch (e) { /* decor only */ }
 }

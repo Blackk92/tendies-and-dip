@@ -762,19 +762,25 @@ function openSec(id) { const el = $(id); if (!el) return; el.open = true; el.scr
 // ============================================================== navigation (stairs up, deep link back)
 function goUp(ev) {
   if (ev) ev.preventDefault();
-  const f = $("fade"); f.querySelector("span").textContent = "▲ GOING UP"; f.querySelector("small").textContent = "TO THE TRADING FLOOR"; f.classList.remove("off");
+  const f = $("fade"); f.querySelector("span").textContent = "▲ TRADING FLOOR"; f.querySelector("small").textContent = "ONE FLIGHT UP"; f.classList.remove("off");
   try { sessionStorage.setItem("floorNav", "fromB1"); } catch (e) { /* private mode */ }
-  setTimeout(() => { location.href = "index.html"; }, 500);
+  setTimeout(() => { location.href = "index.html?v=wealth1"; }, 500);
+}
+function goPenthouse(ev) {
+  if (ev) ev.preventDefault();
+  const f = $("fade"); f.querySelector("span").textContent = "▲ PENTHOUSE"; f.querySelector("small").textContent = "PAST THE TRADING FLOOR"; f.classList.remove("off");
+  setTimeout(() => { location.href = "top.html?v=wealth1"; }, 420);
 }
 $("upBtn").addEventListener("click", goUp); $("upBtn2").addEventListener("click", goUp);
-const HOT = [{ id: "up", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-briefs", x: 12, y: 2, w: 90, h: 36 }, { id: "s-signals", x: 124, y: 4, w: 142, h: 32 },
+const HOT = [{ id: "phstair", x: 15 * TS, y: 15 * TS, w: 3 * TS, h: TS }, { id: "up", x: 15 * TS, y: 16 * TS, w: 3 * TS, h: TS }, { id: "s-briefs", x: 12, y: 2, w: 90, h: 36 }, { id: "s-signals", x: 124, y: 4, w: 142, h: 32 },
   { id: "s-lessons", x: 298, y: 4, w: 86, h: 32 }, { id: "s-calls", x: 22 * TS, y: 5 * TS, w: 3 * TS, h: 2 * TS }, { id: "s-shifts", x: 130, y: 17 * TS, w: 104, h: TS }, { id: "s-squawk", x: 19 * TS, y: 14 * TS, w: TS, h: 3 * TS }];
 cv.addEventListener("click", (ev) => {
   const r = cv.getBoundingClientRect(), lx = (ev.clientX - r.left) * (cv.width / r.width) / SC, ly = (ev.clientY - r.top) * (cv.height / r.height) / SC;
+  for (const h of HOT) if ((h.id === "phstair" || h.id === "up") && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "up" ? goUp() : goPenthouse();
   let best = null;
   for (const id of ORDER) { const c = chars[id]; if (c.hidden) continue; if (lx >= c.x - 9 && lx <= c.x + 9 && ly >= c.y - 22 && ly <= c.y + 8) if (!best || c.y > best.y) best = c; }
   if (best) return showCard(best.id);
-  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "up" ? goUp() : openSec(h.id);
+  for (const h of HOT) if (lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return h.id === "up" ? goUp() : h.id === "phstair" ? goPenthouse() : openSec(h.id);
   $("card").classList.add("hidden"); selected = null;
 });
 $("cardX").onclick = () => { $("card").classList.add("hidden"); selected = null; };
