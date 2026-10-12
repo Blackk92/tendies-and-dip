@@ -65,7 +65,7 @@ F("cdesk", 21, 5, 3, 1); F("plant", 24, 3, 1, 1, { big: 1 }); F("shelf", 20, 3);
 F("mdesk", 3, 5, 3, 1); F("plant", 1, 3, 1, 1, { big: 1 });
 F("sdesk", 2, 10, 2, 1, { who: "hollis" }); F("sdesk", 21, 10, 2, 1, { who: "june" });
 F("couch", 8, 4, 3, 1); F("bull", 13, 4, 2, 2);
-F("btable", 10, 11, 4, 2); F("bar", 21, 13, 3, 1);
+F("btable", 10, 11, 4, 2); F("bar", 19, 13, 5, 1);
 F("plant", 8, 14); F("plant", 1, 15, 1, 1, { big: 1 });
 
 const SPOTS = {};
@@ -420,7 +420,9 @@ async function pollPromo() {
   try {
     const r = await fetch("state.json?ts=" + Date.now(), { cache: "no-store" });
     if (!r.ok) return;
-    promoView = PROMO.review(await r.json());
+    const json = await r.json();
+    window.PHBOOK = json;
+    promoView = PROMO.review(json);
   } catch (e) { /* no book on this snapshot */ }
 }
 pollPromo();
@@ -450,7 +452,7 @@ $("roster").addEventListener("click", (ev) => {
   const row = ev.target.closest("[data-id]"); if (!row) return;
   const id = row.dataset.id, k = CAST[id], c = chars[id];
   selected = id;
-  $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">${c.hidden ? "Not on this floor right now." : "On the penthouse."}</div>`;
+  $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">${c.hidden ? "Not on this floor right now." : "On the executive floor."}</div>`;
   $("card").classList.remove("hidden");
 });
 function fadeTo(href, nav, html) {
@@ -466,7 +468,7 @@ function fadeTo(href, nav, html) {
 }
 function goFloor(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("index.html?v=stair2", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
+  fadeTo("index.html?v=exec1", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
 }
 $("downBtn").addEventListener("click", goFloor);
 cv.addEventListener("click", (ev) => {
@@ -480,7 +482,7 @@ cv.addEventListener("click", (ev) => {
   }
   if (best) {
     selected = best.id; const k = CAST[best.id];
-    $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">On the penthouse.</div>`;
+    $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">On the executive floor.</div>`;
     $("card").classList.remove("hidden"); return;
   }
   for (const h of HOT) if (h.id === "floor" && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return goFloor();

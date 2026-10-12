@@ -13,7 +13,7 @@
     R(g, px + 3, py - 16, 10, 28, "#2a241c");
     R(g, px + 3, py - 16, 4, 28, "#3a3328");
     R(g, px + 8, py - 4, 2, 2, "#f2c14e");
-    ptext(g, "PH", px + 4, py - 14, "#f2c14e", 1);
+    ptext(g, "EX", px + 4, py - 14, "#f2c14e", 1);
   };
 
   const LOOK = {
@@ -25,7 +25,7 @@
   };
   CAST.exec = Object.assign({ visitor: 1 }, LOOK.vance);
   COL.exec = "#f2c14e";
-  if (typeof ROLE_SHORT === "object") ROLE_SHORT.exec = "Penthouse · comes downstairs sometimes";
+  if (typeof ROLE_SHORT === "object") ROLE_SHORT.exec = "Executive · comes downstairs sometimes";
   chars.exec = { id: "exec", tx: 0, ty: 0, x: 0, y: 0, path: [], moving: false, from: null, goal: null, task: null, face: "W", pose: "stand",
     hidden: true, wait: 0, walkT: 0, bubble: null, emote: null, emoteUntil: 0, jumpUntil: 0, nextErrand: 0, homeKey: null, idleSince: 0, speed: 3.2, placed: false, arrivedAt: 0, who: null };
   ORDER.push("exec");
@@ -53,19 +53,19 @@
   const _amb = amb;
   amb = function (id, msg) {
     if (id === "grok" && chars.grok.upstairs && msg === "heads home") msg = "takes the elevator up to the CEO";
-    if (id === "exec" && msg === "heads home") msg = "heads back up to the penthouse";
+    if (id === "exec" && msg === "heads home") msg = "heads back up to executive";
     _amb(id, msg);
   };
   const _where = whereIs;
   whereIs = function (id) {
     if (id === "grok" && chars.grok.upstairs) return "upstairs with Vance, the CEO";
-    if (id === "exec") return chars.exec.hidden ? "up on the penthouse" : "visiting from the penthouse";
+    if (id === "exec") return chars.exec.hidden ? "up on executive" : "visiting from executive";
     return _where(id);
   };
   const _badge = statusBadge;
   statusBadge = function (id) {
     if (id === "grok" && chars.grok.upstairs) return `<span class="badge b-sit">UPSTAIRS</span>`;
-    if (id === "exec") return chars.exec.hidden ? `<span class="badge b-home">PENTHOUSE</span>` : `<span class="badge b-act">VISITING</span>`;
+    if (id === "exec") return chars.exec.hidden ? `<span class="badge b-home">EXECUTIVE</span>` : `<span class="badge b-act">VISITING</span>`;
     return _badge(id);
   };
 
@@ -88,7 +88,7 @@
     const here = win && win.floor === "main";
     if (!here) {
       if (!c.hidden) {
-        if (!(c.task && c.task.steps.some((s) => s.leave))) setTask("exec", [{ spot: SPOTS.elev_door, dur: 0, say: "BACK UPSTAIRS", leave: true }], "back to the penthouse");
+        if (!(c.task && c.task.steps.some((s) => s.leave))) setTask("exec", [{ spot: SPOTS.elev_door, dur: 0, say: "BACK UPSTAIRS", leave: true }], "back to executive");
         if (c.task) runTask(c);
       }
       return;
@@ -99,14 +99,14 @@
       if (!sp || occ.has(I(sp.x, sp.y))) return;
       c.hidden = false; place(c, sp.x, sp.y); c.face = "W"; c.pose = "stand"; c.task = null;
       const dest = chars.grok && !chars.grok.hidden && !chars.grok.upstairs ? SPOTS.front_grok : SPOTS.center;
-      amb("exec", EXEC.name(win.who) + " comes down from the penthouse");
+      amb("exec", EXEC.name(win.who) + " comes down from executive");
       setTask("exec", [
         { spot: dest, dur: 16, say: pick(EXEC.downLine(win.who)), onArrive: () => {
           if (chars.grok && !chars.grok.hidden) say("grok", "COME IN.", 3);
-          else if (chars.goldie && !chars.goldie.hidden) say("goldie", "PENTHOUSE ON THE FLOOR!", 4);
+          else if (chars.goldie && !chars.goldie.hidden) say("goldie", "EXECUTIVE ON THE FLOOR!", 4);
         } },
         { spot: sp, dur: 0, leave: true },
-      ], "visits from the penthouse");
+      ], "visits from executive");
       return;
     }
     if (c.task) runTask(c);
@@ -133,9 +133,9 @@
       f.style.cssText = "position:fixed;inset:0;z-index:80;background:#100e0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#f2c14e;font-weight:900;letter-spacing:.14em;font-size:15px;text-align:center";
       document.body.appendChild(f);
     }
-    f.innerHTML = "&#9650; PENTHOUSE<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.1em\">CEO AND THE BOARD</small>";
+    f.innerHTML = "&#9650; EXECUTIVE<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.1em\">CEO AND THE BOARD</small>";
     try { sessionStorage.setItem("floorNav", "toPH"); } catch (e) { /* private */ }
-    setTimeout(() => { location.href = "top.html?v=stair2"; }, 420);
+    setTimeout(() => { location.href = "top.html?v=exec1"; }, 420);
   }
   const b = document.getElementById("phBtn"); if (b) b.addEventListener("click", goPH);
   const l = document.getElementById("phLink"); if (l) l.addEventListener("click", goPH);

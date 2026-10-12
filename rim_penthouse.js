@@ -66,33 +66,106 @@ function carpet(x, y, w, h, fill, edge, dot) {
   c.strokeStyle = "rgba(255,255,255,.32)"; c.lineWidth = 0.4; c.strokeRect(x + 4, y + 4, w - 8, h - 8);
   for (let yy = y + 9; yy < y + h - 5; yy += 11) for (let xx = x + 9; xx < x + w - 5; xx += 11) circ(xx, yy, 0.55, dot, { shadow: false, stroke: false, shade: false });
 }
+function gilt(a, b, w, h, fill) {
+  frame(a, b, w, h, fill, "#c79a3a");
+  const c = X(); c.strokeStyle = "#f8e7b0"; c.lineWidth = 0.45; c.strokeRect(a + 1.3, b + 1.3, w - 2.6, h - 2.6);
+}
+function artAbstract(a, b, w, h) {
+  gilt(a, b, w, h, "#1a1208");
+  const c = X(); c.save(); c.beginPath(); c.rect(a + 2, b + 2, w - 4, h - 4); c.clip();
+  poly([a + 4, b + h - 4, a + w * 0.42, b + 4, a + w * 0.58, b + h - 4], "#c79a3a", { lw: 0.25 });
+  poly([a + w * 0.38, b + h - 4, a + w * 0.7, b + 6, a + w - 4, b + h - 4], "#7a1e32", { lw: 0.25 });
+  circ(a + w * 0.78, b + 8, 3.6, "#f2c14e", { shadow: false, lw: 0.25 });
+  c.restore();
+}
+function artCity(a, b, w, h) {
+  gilt(a, b, w, h, "#10243a");
+  const c = X(); c.save(); c.beginPath(); c.rect(a + 2, b + 2, w - 4, h - 4); c.clip();
+  c.fillStyle = "#6eb0e4"; c.fillRect(a + 2, b + 2, w - 4, h * 0.42);
+  c.fillStyle = "#1a4a78"; c.fillRect(a + 2, b + 2 + h * 0.42, w - 4, h * 0.58);
+  box(a + 6, b + 9, 7, h - 14, 0, "#e7c56a", { shadow: false, stroke: false });
+  box(a + 15, b + 12, 9, h - 17, 0, "#c79a3a", { shadow: false, stroke: false });
+  box(a + 26, b + 7, 6, h - 12, 0, "#f6e2a8", { shadow: false, stroke: false });
+  box(a + 34, b + 11, 8, h - 16, 0, "#8d6a2a", { shadow: false, stroke: false });
+  c.fillStyle = "rgba(255,255,255,.35)"; c.fillRect(a + 2, b + h * 0.55, w - 4, 1.2);
+  c.restore();
+}
+function artStill(a, b, w, h) {
+  gilt(a, b, w, h, "#2a160e");
+  const c = X(); c.save(); c.beginPath(); c.rect(a + 2, b + 2, w - 4, h - 4); c.clip();
+  c.fillStyle = "#3a2014"; c.fillRect(a + 2, b + 2, w - 4, h - 4);
+  c.fillStyle = "#5a3018"; c.fillRect(a + 2, b + h * 0.58, w - 4, h * 0.42);
+  box(a + 5, b + h * 0.46, 12, 5, 0.3, "#f2c14e", { lw: 0.2 });
+  box(a + 6, b + h * 0.44, 10, 2, 0.2, "#ffe9a0", { shadow: false, lw: 0.15 });
+  box(a + 22, b + 6, 4.2, 12, 0.3, "#1f6b45", { lw: 0.2 });
+  circ(a + 24.1, b + 5.2, 1.5, "#1f6b45", { shadow: false, lw: 0.15 });
+  box(a + 28, b + 8, 3.2, 10, 0.3, "#7a1e32", { lw: 0.2 });
+  circ(a + w - 12, b + h * 0.48, 3.1, "#a33b3b", { lw: 0.2 });
+  circ(a + w - 7, b + h * 0.54, 2.4, "#c45c28", { lw: 0.2 });
+  c.restore();
+}
+function bookPts() {
+  const j = window.PHBOOK;
+  if (!j || !Array.isArray(j.curve)) return null;
+  const pts = j.curve.map((p) => +p.swing).filter((v) => isFinite(v));
+  return pts.length >= 2 ? pts : null;
+}
+function artBook(a, b, w, h) {
+  const j = window.PHBOOK, sw = j && j.accounts && j.accounts.swing, eq = sw && +sw.equity, start = sw && +sw.starting_cash;
+  const c = X();
+  c.save(); c.beginPath(); c.rect(a + 2, b + 2, w - 4, h - 4); c.clip();
+  c.fillStyle = "#140e08"; c.fillRect(a + 2, b + 2, w - 4, h - 4);
+  const raw = bookPts();
+  let pts = null;
+  if (isFinite(eq) && raw && Math.abs(raw[raw.length - 1] - eq) / Math.max(eq, 1) < 0.25) pts = raw;
+  else if (isFinite(eq) && isFinite(start) && start > 0) pts = [start, eq];
+  if (!pts) { c.restore(); wtext("BOOK", a + w / 2, b + h / 2, { size: 3.4, col: "#e7c56a", align: "center", base: "middle", w: 800 }); return; }
+  const min = Math.min.apply(null, pts), max = Math.max.apply(null, pts);
+  const pad = Math.max(1, (max - min) * 0.45, (eq || max) * 0.0015);
+  const lo = min - pad, span = max + pad - lo;
+  c.strokeStyle = "rgba(231,197,106,.28)"; c.lineWidth = 0.35;
+  c.beginPath(); c.moveTo(a + 4, b + h - 6); c.lineTo(a + w - 4, b + h - 6); c.stroke();
+  c.strokeStyle = pts[pts.length - 1] >= pts[0] ? "#3ddc84" : "#ff5c5c"; c.lineWidth = 1.25; c.beginPath();
+  pts.forEach((v, i) => {
+    const xx = a + 6 + (i / (pts.length - 1)) * (w - 12);
+    const yy = b + h - 6 - ((v - lo) / span) * (h - 14);
+    i ? c.lineTo(xx, yy) : c.moveTo(xx, yy);
+  });
+  c.stroke(); c.restore();
+  wtext(isFinite(eq) ? "$" + Math.round(eq).toLocaleString("en-US") : "SWING", a + w / 2, b + 3.1, { size: 2.7, col: "#f6e2a8", align: "center", base: "top", w: 800, maxW: w - 8, shrink: 2.1 });
+}
 
 function drawStatic() {
   const x = X(), rnd = R_.rng(9091), th = theme();
   planks(16, 48, LW - 32, LH - 64, "#e4c07a", "rgba(80,48,10,.34)", rnd);
-  carpet(tx(1) + 3, tx(3) + 2, tx(6) - 8, tx(5) - 8, "#146b45", "#e7c56a", "#d9ffe6");
-  carpet(tx(19) + 3, tx(3) + 2, tx(6) - 8, tx(5) - 8, "#7a1e32", "#e7c56a", "#f2c14e");
-  carpet(tx(8) + 4, tx(4) + 2, tx(9) - 6, tx(4) + 8, "#1a4a78", "#e7c56a", "#d5e6f8");
-  carpet(tx(9), tx(10) + 2, tx(7), tx(4) - 2, "#0c6a62", "#e7c56a", "#d8fff6");
-  rug(tx(1) + 4, tx(9) + 2, tx(4) - 4, tx(2) + 2, "#243056", "#e7c56a");
-  rug(tx(20) + 4, tx(9) + 2, tx(4), tx(2) + 2, "#c45c28", "#f6e2a8");
+  carpet(32, 50, 80, 74, "#146b45", "#e7c56a", "#d9ffe6");
+  carpet(320, 50, 80, 74, "#7a1e32", "#e7c56a", "#f2c14e");
+  carpet(120, 58, 64, 36, "#1a4a78", "#e7c56a", "#d5e6f8");
+  carpet(200, 58, 48, 44, "#163e68", "#e7c56a", "#d5e6f8");
+  carpet(144, 164, 96, 56, "#0c6a62", "#e7c56a", "#d8fff6");
+  rug(18, 148, 60, 32, "#243056", "#e7c56a");
+  rug(322, 148, 60, 32, "#c45c28", "#f6e2a8");
   x.fillStyle = "#f8efd4"; x.fillRect(0, 0, LW, 48);
   x.fillStyle = "rgba(255,255,255,.22)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
   x.fillStyle = "#e7b23a"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#fff1c2"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(90,60,10,.2)"; x.fillRect(0, 46.6, LW, 1.4);
   const wc = "#e6c98a";
   wallSeg(0, 0, LW, 3.2, "#c79a3a"); wallSeg(0, 0, 16, LH, wc); wallSeg(LW - 16, 0, 16, LH, wc);
   wallSeg(0, LH - 16, tx(15) - 1, 16, wc); wallSeg(tx(18) + 1, LH - 16, LW - tx(18) - 17, 16, wc);
-  frame(132, 6, 40, 28, "#9fc6d8", "#c79a3a");
-  frame(180, 6, 40, 28, "#9fc6d8", "#c79a3a");
-  frame(228, 6, 40, 28, "#9fc6d8", "#c79a3a");
+  artAbstract(20, 7, 50, 26);
+  gilt(78, 8, 34, 24, "#9fc6d8");
+  gilt(120, 6, 74, 28, "#140e08");
+  gilt(202, 8, 34, 24, "#9fc6d8");
+  artCity(244, 7, 52, 26);
+  gilt(304, 8, 34, 24, "#9fc6d8");
+  artStill(346, 7, 50, 26);
   if (th.id) bunting(th.id, 39.2);
   officeGlass(7); officeGlass(18);
   wallSeg(tx(1), tx(8) - 2, tx(6), 11, "#e6c98a");
   wallSeg(tx(19), tx(8) - 2, tx(6), 11, "#e6c98a");
-  box(tx(2) + 6, tx(8) - 8, 36, 7, 1, "#e7c56a", { lw: 0.35 });
-  wtext("CHAIR", tx(2) + 24, tx(8) - 4.6, { size: R_.small() ? 4.6 : 3.4, col: "#3a2a10", align: "center", base: "middle", w: 800, maxW: 34 });
-  box(tx(20) + 4, tx(8) - 8, 32, 7, 1, "#e7c56a", { lw: 0.35 });
-  wtext("CEO", tx(20) + 20, tx(8) - 4.6, { size: R_.small() ? 4.8 : 3.5, col: "#3a2a10", align: "center", base: "middle", w: 800 });
+  box(54, tx(8) - 8, 36, 7, 1, "#e7c56a", { lw: 0.35 });
+  wtext("CHAIR", 72, tx(8) - 4.6, { size: R_.small() ? 4.6 : 3.4, col: "#3a2a10", align: "center", base: "middle", w: 800, maxW: 34 });
+  box(344, tx(8) - 8, 32, 7, 1, "#e7c56a", { lw: 0.35 });
+  wtext("CEO", 360, tx(8) - 4.6, { size: R_.small() ? 4.8 : 3.5, col: "#3a2a10", align: "center", base: "middle", w: 800 });
   const FACE = { vance: 0, mags: 0, wade: Math.PI / 2, priya: -Math.PI / 2, otto: Math.PI, june: 0, hollis: 0 };
   const CCOL = { vance: "#8d2433", mags: "#1f7a4a", wade: "#1f7a4a", priya: "#a33b3b", otto: "#c79a3a", june: "#f2c14e", hollis: "#1e4b7a" };
   for (const id in CHAIRS) { const [cx, cy] = CHAIRS[id]; chair(tx(cx) + 8, tx(cy) + 9, FACE[id] || 0, CCOL[id] || "#c79a3a"); }
@@ -135,12 +208,27 @@ const ART = {
       X().strokeStyle = "#d9ffe4"; X().lineWidth = 0.7; X().beginPath();
       pts.forEach((v, i) => { const xx = px + 14 + i * ((w - 28) / 7), yy = py + 16 - v * 0.7; i ? X().lineTo(xx, yy) : X().moveTo(xx, yy); }); X().stroke(); } },
   bar: { s(f) { const px = tx(f.x), py = tx(f.y), w = tx(f.w);
-      box(px, py - 2, w, 15, 1, "#f6e7c4", { blur: 1.8 }); X().fillStyle = "#e7c56a"; X().fillRect(px, py + 10.5, w, 1.2);
-      box(px + 3, py - 4, 14, 11, 1.4, "#f4f7f8", { lw: 0.3 }); box(px + 5, py - 2.4, 10, 3.4, 0.5, "#d5dde3", { shadow: false, lw: 0.2 });
-      box(px + 20, py + 2, 8, 5, 0.5, "#3f8f4e", { lw: 0.25 }); box(px + 21.2, py + 3.1, 8, 5, 0.5, "#4fa65d", { lw: 0.25 });
-      for (let i = 0; i < 3; i++) mug(px + 34 + i * 4.2, py + 4, ["#fff", "#7a1f2b", "#e7c56a"][i]);
-      wtext("LOUNGE", px + w / 2, py + 8.6, { size: 3.1, col: "#8a6420", align: "center", w: 800, maxW: w - 8 }); },
-    d(f, t) { const px = tx(f.x), py = tx(f.y), x = X(); x.save(); x.globalAlpha = 0.4 + 0.2 * Math.sin(t * 2); ell(px + 10, py - 8 - ((t * 4) % 5), 1.1, 1.6, 0, "#fff", { stroke: false }); x.restore(); } },
+      box(px + 1, py - 12, w - 2, 14, 0.8, "#3a1c10", { blur: 1.6, stroke: "#c79a3a", lw: 0.35 });
+      const cols = ["#7a1f2b", "#1a4a78", "#f2c14e", "#1f6b45", "#c79a3a", "#5a2a6a", "#e7c56a", "#8d2433", "#143d28", "#f6e2a8"];
+      for (let i = 0; i < 10; i++) {
+        const bx = px + 5 + i * ((w - 14) / 10);
+        box(bx, py - 9, 3.1, 8, 0.3, cols[i], { shadow: false, lw: 0.18 });
+        circ(bx + 1.55, py - 10.1, 1.05, cols[i], { shadow: false, lw: 0.12 });
+      }
+      box(px, py + 1, w, 14, 1.1, "#4a2414", { blur: 2.2, oy: 1 });
+      box(px + 1.2, py + 2.2, w - 2.4, 5.5, 0.5, "#6b3418", { shadow: false, lw: 0.25 });
+      X().fillStyle = "#e7c56a"; X().fillRect(px, py + 1, w, 1.35);
+      X().fillStyle = "#8a6420"; X().fillRect(px, py + 13.2, w, 1.1);
+      for (let i = 0; i < 6; i++) {
+        const gx = px + 8 + i * 12;
+        line([gx, py + 5.2, gx + 3.2, py + 5.2], "#d8e6f0", 0.55);
+        line([gx + 0.3, py + 5.2, gx + 0.8, py + 8.4], "#d8e6f0", 0.4);
+        line([gx + 2.9, py + 5.2, gx + 2.4, py + 8.4], "#d8e6f0", 0.4);
+      }
+      wtext("BAR", px + w / 2, py + 11.2, { size: 3.6, col: "#f6e2a8", align: "center", base: "middle", w: 800, maxW: w - 8 }); },
+    d(f, t) { const px = tx(f.x), py = tx(f.y), w = tx(f.w), party = typeof partyOn === "function" && partyOn();
+      if (!party) { circ(px + 18, py - 6, 0.7, "rgba(255,246,200,.7)", { shadow: false, stroke: false, shade: false }); return; }
+      for (let i = 0; i < 8; i++) circ(px + 6 + ((i * 11 + t * 16) % (w - 12)), py - 4 - Math.abs(Math.sin(t * 2.2 + i)) * 5, 0.7, i % 2 ? "#fff6c8" : "#f2c14e", { shadow: false, stroke: false, shade: false }); } },
   couch: { s(f) { const px = tx(f.x), py = tx(f.y), w = tx(f.w);
       box(px, py + 2, w, 22, 3.4, "#e7c56a", { blur: 2.4, oy: 1.2 });
       box(px + 1.5, py + 3, w - 3, 7, 2.4, "#f6e2a4", { shadow: false, lw: 0.35 });
@@ -172,9 +260,10 @@ const ART = {
       if (theme().id === "halloween") ell(px + 12, py + 12, 2.2, 1.7, 0, "#e8792b", { lw: 0.25 }); } },
 };
 function drawDynamic(t) {
-  windowGlass(132, 6, 40, 28, t);
-  windowGlass(180, 6, 40, 28, t + 1.7);
-  windowGlass(228, 6, 40, 28, t + 3.1);
+  windowGlass(78, 8, 34, 24, t);
+  windowGlass(202, 8, 34, 24, t + 1.7);
+  windowGlass(304, 8, 34, 24, t + 3.1);
+  artBook(120, 6, 74, 28);
   for (const lx of [4, 12, 22]) box(tx(lx) + 5, 45, 6, 3, 1, "#c79a3a", { shadow: false, lw: 0.25 });
   for (const f of FURN) { const fn = ART[f.type]; if (fn && fn.d) try { fn.d(f, t); } catch (e) { /* decor */ } }
 }
@@ -199,7 +288,7 @@ R_.pawnHook = function (c, k, hx, hy, r, view, dir) {
 };
 R_.floor = {
   drawStatic, drawDynamic, drawPost,
-  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["stair2", th.k, th.weather, th.id, th.party || "", e].join("|"); },
+  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec1", th.k, th.weather, th.id, th.party || "", e].join("|"); },
 };
 layout();
 })();
