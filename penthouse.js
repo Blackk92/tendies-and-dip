@@ -66,7 +66,7 @@ F("mdesk", 3, 5, 3, 1); F("plant", 1, 3, 1, 1, { big: 1 });
 F("sdesk", 2, 10, 2, 1, { who: "hollis" }); F("sdesk", 21, 10, 2, 1, { who: "june" });
 F("couch", 8, 4, 3, 1); F("bull", 13, 4, 2, 2);
 F("btable", 10, 11, 4, 2); F("bar", 19, 13, 5, 1);
-F("plant", 8, 14); F("plant", 1, 15, 1, 1, { big: 1 });
+F("pool", 1, 14, 5, 2); F("plant", 8, 14);
 
 const SPOTS = {};
 function S_(key, x, y, face = "S", pose = "stand") { SPOTS[key] = { key, x, y, face, pose }; }
@@ -311,6 +311,10 @@ function drawFurn(f, t) {
     R(g, px + 6, py - 10, 12, 9, "#d6d3d1"); R(g, px + 8, py - 8, 8, 4, "#1c1917");
     if (Math.floor(t * 2) % 2) R(g, px + 10, py - 14, 1, 3, "rgba(255,255,255,.7)");
     ptextC(g, "BOARD BAR", px + 24, py + 4, "#f2c14e", 1);
+  } else if (f.type === "pool") {
+    R(g, px, py, f.w * TS, f.h * TS, "#4a2414");
+    R(g, px + 4, py + 4, f.w * TS - 8, f.h * TS - 8, "#147a45");
+    ptextC(g, "POOL", px + f.w * TS / 2, py + 10, "#f6e2a8", 1);
   } else if (f.type === "shelf") {
     R(g, px + 1, py - 16, 14, 32, "#4a3020");
     for (let i = 0; i < 4; i++) R(g, px + 3, py - 12 + i * 7, 10, 4, ["#7f1d1d", "#1e3a5f", "#14532d", "#a16207"][i]);
@@ -468,7 +472,7 @@ function fadeTo(href, nav, html) {
 }
 function goFloor(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
-  fadeTo("index.html?v=exec1", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
+  fadeTo("index.html?v=exec2", "fromPH", "&#9660; TRADING FLOOR<small style=\"color:#e7c56a;font-size:11px;letter-spacing:.08em\">ONE FLIGHT DOWN</small>");
 }
 $("downBtn").addEventListener("click", goFloor);
 cv.addEventListener("click", (ev) => {

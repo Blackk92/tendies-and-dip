@@ -1797,7 +1797,7 @@ function riFade(top, sub, start) {
 function goB1(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
   const f = riFade("&#9660; GOING DOWN", "RESEARCH INC. &middot; B1", "0"); f.offsetWidth; f.style.opacity = "1";
-  setTimeout(() => { location.href = "b1.html?v=exec1"; }, 500);
+  setTimeout(() => { location.href = "b1.html?v=exec2"; }, 500);
 }
 (function () {
   const b = document.getElementById("b1Btn"); if (b) b.addEventListener("click", goB1);

@@ -62,9 +62,9 @@ function officeGlass(wx) {
 function carpet(x, y, w, h, fill, edge, dot) {
   box(x, y, w, h, 0, fill, { shadow: false, shade: false, stroke: false });
   const c = X();
-  c.strokeStyle = edge; c.lineWidth = 1.15; c.strokeRect(x + 2, y + 2, w - 4, h - 4);
-  c.strokeStyle = "rgba(255,255,255,.32)"; c.lineWidth = 0.4; c.strokeRect(x + 4, y + 4, w - 8, h - 8);
-  for (let yy = y + 9; yy < y + h - 5; yy += 11) for (let xx = x + 9; xx < x + w - 5; xx += 11) circ(xx, yy, 0.55, dot, { shadow: false, stroke: false, shade: false });
+  c.strokeStyle = edge; c.lineWidth = 2.4; c.strokeRect(x + 1.3, y + 1.3, w - 2.6, h - 2.6);
+  c.strokeStyle = "rgba(255,246,220,.7)"; c.lineWidth = 0.7; c.strokeRect(x + 4.2, y + 4.2, w - 8.4, h - 8.4);
+  for (let yy = y + 9; yy < y + h - 5; yy += 11) for (let xx = x + 9; xx < x + w - 5; xx += 11) circ(xx, yy, 0.6, dot, { shadow: false, stroke: false, shade: false });
 }
 function gilt(a, b, w, h, fill) {
   frame(a, b, w, h, fill, "#c79a3a");
@@ -137,19 +137,20 @@ function artBook(a, b, w, h) {
 
 function drawStatic() {
   const x = X(), rnd = R_.rng(9091), th = theme();
-  planks(16, 48, LW - 32, LH - 64, "#e4c07a", "rgba(80,48,10,.34)", rnd);
-  carpet(32, 50, 80, 74, "#146b45", "#e7c56a", "#d9ffe6");
-  carpet(320, 50, 80, 74, "#7a1e32", "#e7c56a", "#f2c14e");
-  carpet(120, 58, 64, 36, "#1a4a78", "#e7c56a", "#d5e6f8");
-  carpet(200, 58, 48, 44, "#163e68", "#e7c56a", "#d5e6f8");
-  carpet(144, 164, 96, 56, "#0c6a62", "#e7c56a", "#d8fff6");
-  rug(18, 148, 60, 32, "#243056", "#e7c56a");
-  rug(322, 148, 60, 32, "#c45c28", "#f6e2a8");
-  x.fillStyle = "#f8efd4"; x.fillRect(0, 0, LW, 48);
-  x.fillStyle = "rgba(255,255,255,.22)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
-  x.fillStyle = "#e7b23a"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#fff1c2"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(90,60,10,.2)"; x.fillRect(0, 46.6, LW, 1.4);
-  const wc = "#e6c98a";
-  wallSeg(0, 0, LW, 3.2, "#c79a3a"); wallSeg(0, 0, 16, LH, wc); wallSeg(LW - 16, 0, 16, LH, wc);
+  planks(16, 48, LW - 32, LH - 64, "#9c7650", "rgba(50,30,14,.35)", rnd);
+  carpet(32, 50, 80, 74, "#0f8a52", "#f6e2a8", "#e7fff2");
+  carpet(320, 50, 80, 74, "#f4e7c8", "#6e2436", "#e7c56a");
+  carpet(120, 58, 64, 36, "#1d4ed8", "#f6e2a8", "#dbe7ff");
+  carpet(200, 58, 48, 44, "#10243a", "#f6e2a8", "#9bb4d6");
+  carpet(144, 164, 96, 56, "#0f9d8e", "#f6e2a8", "#e7fff8");
+  carpet(16, 218, 88, 44, "#141c2e", "#f6e2a8", "#9bb0d4");
+  carpet(18, 148, 60, 32, "#1e3fbf", "#f6e2a8", "#dbe6ff");
+  carpet(322, 148, 60, 32, "#e36a2c", "#fff1c8", "#ffe0c4");
+  x.fillStyle = "#6e2436"; x.fillRect(0, 0, LW, 48);
+  x.fillStyle = "rgba(255,220,180,.07)"; for (let a = 0; a < LW; a += 12) x.fillRect(a, 3, 0.5, 33);
+  x.fillStyle = "#4a1c28"; x.fillRect(0, 36, LW, 12); x.fillStyle = "#e7c56a"; x.fillRect(0, 36, LW, 1.6); x.fillStyle = "rgba(0,0,0,.28)"; x.fillRect(0, 46.6, LW, 1.4);
+  const wc = "#642433";
+  wallSeg(0, 0, LW, 3.2, "#3a1520"); wallSeg(0, 0, 16, LH, wc); wallSeg(LW - 16, 0, 16, LH, wc);
   wallSeg(0, LH - 16, tx(15) - 1, 16, wc); wallSeg(tx(18) + 1, LH - 16, LW - tx(18) - 17, 16, wc);
   artAbstract(20, 7, 50, 26);
   gilt(78, 8, 34, 24, "#9fc6d8");
@@ -160,8 +161,8 @@ function drawStatic() {
   artStill(346, 7, 50, 26);
   if (th.id) bunting(th.id, 39.2);
   officeGlass(7); officeGlass(18);
-  wallSeg(tx(1), tx(8) - 2, tx(6), 11, "#e6c98a");
-  wallSeg(tx(19), tx(8) - 2, tx(6), 11, "#e6c98a");
+  wallSeg(tx(1), tx(8) - 2, tx(6), 11, wc);
+  wallSeg(tx(19), tx(8) - 2, tx(6), 11, wc);
   box(54, tx(8) - 8, 36, 7, 1, "#e7c56a", { lw: 0.35 });
   wtext("CHAIR", 72, tx(8) - 4.6, { size: R_.small() ? 4.6 : 3.4, col: "#3a2a10", align: "center", base: "middle", w: 800, maxW: 34 });
   box(344, tx(8) - 8, 32, 7, 1, "#e7c56a", { lw: 0.35 });
@@ -258,6 +259,17 @@ const ART = {
       for (let i = 0; i < 3; i++) box(px + 2.4, py + 0.6 + i * 4, 11.2, 3.1, 0.3, i === 1 ? "#ffe08a" : "#f2c14e", { shadow: false, lw: 0.2 }); } },
   plant: { s(f) { const px = tx(f.x), py = tx(f.y); plant(px + 8, py + 8, f.big ? 2.1 : 1.6, "#3f8f4e", "#e7c56a");
       if (theme().id === "halloween") ell(px + 12, py + 12, 2.2, 1.7, 0, "#e8792b", { lw: 0.25 }); } },
+  pool: { s(f) { const px = tx(f.x), py = tx(f.y), w = tx(f.w), h = tx(f.h);
+      box(px, py, w, h, 2.2, "#4a2414", { blur: 2.2, oy: 1.1 });
+      box(px + 2.2, py + 2.2, w - 4.4, h - 4.4, 1.2, "#6b3418", { shadow: false, lw: 0.3 });
+      box(px + 4.5, py + 4.5, w - 9, h - 9, 1, "#147a45", { shadow: false, stroke: "#0c4a28", lw: 0.4 });
+      const pockets = [[4.2, 4.2], [w / 2, 3.4], [w - 4.2, 4.2], [4.2, h - 4.2], [w / 2, h - 3.4], [w - 4.2, h - 4.2]];
+      for (const [dx, dy] of pockets) circ(px + dx, py + dy, 2.15, "#140e0c", { shadow: false, lw: 0.25, stroke: "#e7c56a" });
+      const balls = [[14, 12, "#f2c14e"], [22, 18, "#c4313a"], [30, 11, "#f6f1e4"], [38, 17, "#1a4a78"], [46, 12, "#e07a2f"], [54, 18, "#111"], [62, 13, "#7a1e32"]];
+      for (const [dx, dy, col] of balls) circ(px + dx, py + dy, 1.85, col, { lw: 0.22 });
+      line([px + 10, py + h - 6, px + w - 12, py + 7], "#d7b56a", 0.7);
+      line([px + 12, py + h - 5, px + w - 8, py + 9], "#6b3a1e", 0.45);
+      wtext("POOL", px + w / 2, py + h / 2 + 0.4, { size: 3.2, col: "rgba(255,246,220,.8)", align: "center", base: "middle", w: 800, maxW: w - 16 }); } },
 };
 function drawDynamic(t) {
   windowGlass(78, 8, 34, 24, t);
@@ -288,7 +300,7 @@ R_.pawnHook = function (c, k, hx, hy, r, view, dir) {
 };
 R_.floor = {
   drawStatic, drawDynamic, drawPost,
-  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec1", th.k, th.weather, th.id, th.party || "", e].join("|"); },
+  staticKey: () => { const th = theme(); const e = (typeof promoView !== "undefined" && promoView && promoView.executive && promoView.executive.bot) || ""; return ["exec2", th.k, th.weather, th.id, th.party || "", e].join("|"); },
 };
 layout();
 })();
