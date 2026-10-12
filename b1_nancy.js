@@ -49,7 +49,7 @@ const N = {
   report: ["You rang, boss?", "Report, as asked", "Here's the macro brief", "Earnings calendar, boss", "Hunch confirmed? Kidding"],
   reply: ["Perfect. As I suspected.", "Leave it on the desk, dear.", "Hm. I already knew. Thanks!", "Wonderful. Not a word.", "Splendid. Off you go."],
   phone: ["Hello? Yes, buy. I mean, bye.", "My broker? Never heard of him.", "Tell Jefe I'll be up later"],
-  up: { lunch: "Team lunch upstairs. Back soon", jefe: "Meeting with El Jefe, dears" },
+  up: { lunch: "Team lunch upstairs. Back soon", jefe: "Meeting with El Jefe, dears", chair: "The Chair sent for me. Penthouse." },
   back: ["Back! Jefe sends his regards", "Lovely lunch. Back to work", "Did I miss anything? No."],
 };
 const _line = line;
@@ -63,6 +63,7 @@ function upNow() {
   const day = dayKey(), h = e.h, ls = 11.9 + fnv(day + ":lt") * 0.15;
   if (h >= ls + 0.02 && h < ls + 0.13) return { why: "lunch" };
   const mt = meetH(day); if (h >= mt - 0.004 && h < mt + 0.06) return { why: "jefe" };
+  if (window.EXEC && EXEC.chairNow()) return { why: "chair" };
   return null;
 }
 
@@ -118,8 +119,8 @@ const _status = status;
 status = function (id) {
   if (id !== "nancy") return _status(id);
   const c = chars.nancy;
-  if (c.hidden) return ["UPSTAIRS", c.upWhy === "jefe" ? "meeting El Jefe" : c.upWhy === "lunch" ? "team lunch" : "trading floor"];
-  if (c.task && c.task.label === "goingup") return ["HEADING UP", c.upWhy === "jefe" ? "to El Jefe" : "to team lunch"];
+  if (c.hidden) return ["UPSTAIRS", c.upWhy === "jefe" ? "meeting El Jefe" : c.upWhy === "chair" ? "meeting the Chair" : c.upWhy === "lunch" ? "team lunch" : "upstairs"];
+  if (c.task && c.task.label === "goingup") return ["HEADING UP", c.upWhy === "jefe" ? "to El Jefe" : c.upWhy === "chair" ? "to the penthouse" : "to team lunch"];
   if (atSpot(c, home("nancy"))) return ["IN OFFICE", "corner office"];
   return ["ON B1", areaOf(c.tx, c.ty)];
 };

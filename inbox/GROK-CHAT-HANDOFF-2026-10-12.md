@@ -107,3 +107,16 @@ Drift is not hired, so do not put on an earnings-drift trade just because the ca
 6. Push a fresh snapshot when the engine is actually looping.
 
 Grok chat cannot run this floor. Do not wait for it to send orders.
+
+## GUI added after this note (do not delete it)
+
+Ryan asked for a penthouse. It is cosmetic. It does not read or write the book.
+
+Keep these files if your disk tree is older than this commit. Pull them from GitHub before a full-tree snapshot push, or the site loses the top floor:
+
+- `penthouse.html`, `penthouse.js`
+- `exec_clock.js`, `exec_main.js`, `exec_b1.js`
+- the PH buttons and script tags in `index.html` and `b1.html`
+- the Chair trip in `b1_nancy.js` (`EXEC.chairNow`)
+
+Do not revert them. Do not put them in `state.json`. El Jefe meets Vance (CEO). Nancy meets Mags (board chair). One board member sometimes comes downstairs. Lower floors still run seasons and office parties.
