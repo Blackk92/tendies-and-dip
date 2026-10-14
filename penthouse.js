@@ -489,6 +489,5 @@ cv.addEventListener("click", (ev) => {
     $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">On the executive floor.</div>`;
     $("card").classList.remove("hidden"); return;
   }
-  for (const h of HOT) if (h.id === "floor" && lx >= h.x && lx <= h.x + h.w && ly >= h.y && ly <= h.y + h.h) return goFloor();
   $("card").classList.add("hidden"); selected = null;
 });
