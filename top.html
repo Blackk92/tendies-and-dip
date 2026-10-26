@@ -41,6 +41,17 @@ summary::-webkit-details-marker{display:none}
 .grow{flex:1;min-width:0}
 .mut{color:var(--dim)}
 .up{color:var(--up)}.dn{color:var(--dn)}
+#rpt{border:2px solid #6b5428;background:#14110c;margin:0 0 8px;box-shadow:3px 3px 0 #000}
+#rpt .rh{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;padding:7px 9px;background:linear-gradient(#2a2014,#1c1810);border-bottom:2px solid #6b5428}
+#rpt .rh b{color:var(--gold);font-size:14px;letter-spacing:.04em}
+#rpt .rh .mut{font-size:10px}
+#rpt .rb{padding:4px 9px 8px;line-height:1.5;font-size:12px;overflow-wrap:anywhere}
+#rpt h4{margin:8px 0 2px;font-size:10px;letter-spacing:.12em;color:var(--gold)}
+#rpt ul{margin:0;padding-left:15px}
+#rpt li{margin:1px 0}
+#rpt .txt{white-space:pre-wrap}
+#rpt .sal{margin-top:8px;padding:4px 6px;border:1px dashed #3a5a8a;color:#9cc3ff;font-size:11px}
+#rpt .ft{margin-top:6px;font-size:10px;color:var(--dim)}
 footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
 #card{position:fixed;z-index:50;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(380px,calc(100vw - 20px));max-height:70vh;overflow:auto;
   background:#fbf3dc;color:#1d1a12;border:3px solid #1d1a12;box-shadow:5px 5px 0 #000;padding:10px 12px}
@@ -65,6 +76,7 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
     <div id="floorBtns"><a id="downBtn" href="index.html?v=exec5">TRADING &#9660;</a><button id="zoomBtn" type="button">ZOOM</button></div>
   </section>
   <aside id="panel">
+    <section id="rpt" aria-label="Latest daily report"><div class="rh"><b id="rptTitle">&#128202; DAILY REPORT</b><span class="mut" id="rptUpd"></span></div><div class="rb" id="rptBody">loading...</div></section>
     <details open><summary>TODAY</summary><div class="sec" id="agenda">loading...</div></details>
     <details open><summary>WHO'S HERE</summary><div class="sec" id="roster"></div></details>
     <details><summary>THE BOARD</summary><div class="sec" id="board"></div></details>
@@ -79,5 +91,6 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
 <script src="penthouse.js?v=exec5"></script>
 <script src="rim_common.js?v=exec5"></script>
 <script src="rim_penthouse.js?v=exec5"></script>
+<script src="daily_report_panel.js?v=rpt1"></script>
 </body>
 </html>
