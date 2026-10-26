@@ -1,0 +1,50 @@
+{
+ "date": "2026-10-23",
+ "title": "📊 Daily Report: Fri Oct 23, 2026",
+ "source": "seed",
+ "sections": [
+  {
+   "h": "BOOK vs INDY",
+   "lines": [
+    "Swing book closed at $19,079.79, +$74.93 today.",
+    "Week W43 closed -$412.19: strategy bots -$75.38 vs Monday base, FAIL on the weekly rule (second losing week after W42's -$62.76); CORE QQQ -$336.81.",
+    "Indy (SPY buy-and-hold) $19,547.68, +$3.08 today.",
+    "Since the merge: book -4.70% vs Indy -2.37%, behind SPY by about $466."
+   ]
+  },
+  {
+   "h": "WHO TRADED",
+   "lines": [
+    "No bots traded today (gate open, but no setup met the entry rules).",
+    "4 position(s) open: Trek MPC, Trek NOW, Rota VEEV, Rota ACN.",
+    "Active: Trek, Rota, Sunny; the rest are benched."
+   ]
+  },
+  {
+   "h": "CORE QQQ",
+   "lines": [
+    "CORE QQQ holds about $17,185 (90% of the book). Trend filter ON.",
+    "Core P&L -$822.59 since start, -$336.81 this week."
+   ]
+  },
+  {
+   "h": "RESEARCH INC. ANALYST NOTE",
+   "lines": [
+    "Selling spread past tech today: Dow -1.25%, S&P 500 -0.5%, Nasdaq -0.2%. Chips steadied, but staples and financials slipped, and the S&P and Nasdaq posted a second straight losing week.",
+    "SpaceX's talks to lease about 80,000 cell sites for a fourth carrier crushed telcos (T and TMUS each about -8%), so our telco avoid held. Towers were the read-through again (CCI +9%, AMT +4%), but both faded hard from the open, leaving this morning's CCI idea about 5% under its entry.",
+    "Oil kept climbing (Brent near $116 on Houthi strikes on Saudi sites) and energy hit a record. Our SLB idea rose about 6% from the open, and LMT added another 2.5% to about $605.",
+    "Weekly hit rate: 7 up, 7 down, 3 flat across this week's 17 calls marked to today's close. Energy, defense, and clean earnings beats worked; re-adds after big pops and gap chases did not.",
+    "Next week is the big one: V and AMT Tuesday, MSFT, GOOGL and the Fed decision Wednesday, AMZN Thursday, XOM Friday morning."
+   ]
+  },
+  {
+   "h": "SERVICES",
+   "lines": [
+    "All services running; engine state last written after the close (weekly result recorded 4:17 PM ET)."
+   ]
+  }
+ ],
+ "salmon": "Salmon (mascot joke, not a trader): TSLA to $2600 a share!",
+ "floor_url": "https://blackk92.github.io/tendies-and-dip/",
+ "generated_at_et": "Mon Oct 26, 2026 3:54 PM ET"
+}
