@@ -229,7 +229,7 @@ if (MAIN) {
   });
 } else {
   wrapDraw("desk", (f) => deskClutter(f.who, f.x * TS, f.y * TS));
-  wrapDraw("ndesk", (f) => {   // Nancy: pearls dish + stock-chart mug
+  wrapDraw("ndesk", (f) => {   // Pelosi: pearls dish + stock-chart mug
     const px = f.x * TS, py = f.y * TS, p = P(px + 2, py + 8, 1), ev = events();
     p(0, -2, 7, 2, "#e5e7eb"); p(1, -3, 5, 1, "#f3f4f6"); for (let i = 0; i < 4; i++) p(1 + i, -3 + (i % 2), 1, 1, "#fffaf0");
     const m = P(px + 14, py + 7, 1); m(0, -4, 3, 4, "#ffffff"); m(3, -3, 1, 2, "#ffffff"); m(0, -2, 1, 1, "#16a34a"); m(1, -3, 1, 1, "#16a34a"); m(2, -4, 1, 1, "#16a34a");

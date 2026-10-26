@@ -257,7 +257,7 @@ R_.drawPawn = drawPawn; R_.lookOf = lookOf;
 const FONT = '"Segoe UI","DejaVu Sans","Helvetica Neue",Arial,sans-serif';
 const KEEP = new Set(["SPY", "QQQ", "IWM", "IPO", "CPI", "FOMC", "ET", "AM", "PM", "RI", "B1", "OK", "PNL", "ETF", "VWAP", "RSI", "RSI2", "ATR", "OOS", "IS", "R&D", "BB", "AI", "BTC", "USD", "NYSE", "CEO", "EPS", "GDP", "FED", "OR", "TV", "DJ", "VIP", "PB&J", "BLT", "NFL", "MVP", "ATH", "YOLO", "LOL", "HODL", "FOMO", "IV", "DD", "TA", "PDT", "EOD", "ASAP", "NAV", "UP", "Q1", "Q2", "Q3", "Q4"]);
 let NAMES = null;
-function names() { if (NAMES) return NAMES; NAMES = new Set(); for (const id in CAST) for (const w of String(CAST[id].name || "").split(/\s+/)) if (w) NAMES.add(w.toUpperCase()); for (const w of ["NANCY", "KEVIN", "JEFE", "GOLDIE", "FRIDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "SATURDAY", "SUNDAY", "OCTOBER", "DECEMBER", "NOVEMBER", "JANUARY", "HALLOWEEN", "THANKSGIVING", "CHRISTMAS"]) NAMES.add(w); return NAMES; }
+function names() { if (NAMES) return NAMES; NAMES = new Set(); for (const id in CAST) for (const w of String(CAST[id].name || "").split(/\s+/)) if (w) NAMES.add(w.toUpperCase()); for (const w of ["PELOSI", "KEVIN", "JEFE", "GOLDIE", "FRIDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "SATURDAY", "SUNDAY", "OCTOBER", "DECEMBER", "NOVEMBER", "JANUARY", "HALLOWEEN", "THANKSGIVING", "CHRISTMAS"]) NAMES.add(w); return NAMES; }
 function tickSet() { const s = new Set(); for (const src of [typeof S !== "undefined" ? S : null, typeof ST !== "undefined" ? ST : null]) for (const tk of (src && src.tickers) || []) s.add(String(tk.symbol).toUpperCase()); return s; }
 function niceCase(txt) {
   const s = String(txt || ""); if (/[a-z]/.test(s)) return s;   // already mixed case

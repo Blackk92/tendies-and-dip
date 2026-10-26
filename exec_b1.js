@@ -1,6 +1,6 @@
 "use strict";
 /* Research Inc. add-on: a board member sometimes comes down the stairs.
-   Nancy's trip up to the Chair is scheduled in b1_nancy.js via EXEC.chairNow. */
+   Pelosi's trip up to the Chair is scheduled in b1_nancy.js via EXEC.chairNow. */
 (function () {
   if (!window.EXEC || typeof window.__b1 !== "object" || typeof director !== "function") return;
   const LOOK = {
