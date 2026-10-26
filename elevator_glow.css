@@ -1,0 +1,10 @@
+/* Floor-navigation buttons (stairs/elevator): gentle pulsing glow so they read as clickable. 2026-10-26.
+   Same 1.8 s ease-in-out loop as the in-scene stairs (rim_common.js). Static glow with prefers-reduced-motion. */
+@keyframes tdpNavPulse{0%,100%{box-shadow:0 0 3px 1px rgba(255,214,110,.45),0 0 0 0 rgba(255,255,255,0);filter:brightness(1)}
+  50%{box-shadow:0 0 10px 3px rgba(255,214,110,.85),0 0 4px 1px rgba(255,255,255,.55);filter:brightness(1.18)}}
+#phBtn,#b1Btn,#upBtn,#upBtn2,#downBtn{cursor:pointer;animation:tdpNavPulse 1.8s ease-in-out infinite}
+#phBtn:hover,#b1Btn:hover,#upBtn:hover,#upBtn2:hover,#downBtn:hover,
+#phBtn:active,#b1Btn:active,#upBtn:active,#upBtn2:active,#downBtn:active,
+#phBtn:focus-visible,#b1Btn:focus-visible,#upBtn:focus-visible,#upBtn2:focus-visible,#downBtn:focus-visible{
+  animation:none;box-shadow:0 0 14px 4px rgba(255,220,120,.95),0 0 6px 2px rgba(255,255,255,.8);filter:brightness(1.25)}
+@media (prefers-reduced-motion:reduce){#phBtn,#b1Btn,#upBtn,#upBtn2,#downBtn{animation:none;box-shadow:0 0 7px 2px rgba(255,214,110,.7)}}
