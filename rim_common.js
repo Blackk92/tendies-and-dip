@@ -419,21 +419,39 @@ function stairSign(a, b, w, h, lines, arrowUp, t) {   // cyan clickable stair si
 // Stairs live in the south wall, like the original flight. One opening per destination.
 // Trading floor has two side by side (up to the penthouse, down to research).
 // The other floors have the one flight that actually connects.
+// Elevator/stair affordance (2026-10-26): soft gold/white outer glow + brightness pulse on a 1.8 s ease-in-out loop,
+// arrow nudges toward its floor, stronger glow on hover or tap. prefers-reduced-motion: static glow, no motion.
+const RM_Q = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : null;
+R_.press = null;
+cv.addEventListener("pointerdown", (ev) => { const r = cv.getBoundingClientRect(); R_.press = { x: (ev.clientX - r.left) * (cv.width / r.width) / SC, y: (ev.clientY - r.top) * (cv.height / r.height) / SC, until: performance.now() + 600 }; });
+const pressIn = (a, b, w, h) => !!R_.press && performance.now() < R_.press.until && R_.press.x >= a && R_.press.x <= a + w && R_.press.y >= b && R_.press.y <= b + h;
+R_.stairPulse = (tile) => {   // 0..1, eased (cosine) 1.8 s loop; constant when reduced motion is on
+  if (RM_Q && RM_Q.matches) return 0.6;
+  return 0.5 - 0.5 * Math.cos((performance.now() / 1000 / 1.8 + (tile || 0) * 0.07) * Math.PI * 2);
+};
 function wallStair(s, t) {
   const x0 = s.tile * 16, y0 = LH - 16, w = 48, gold = s.kind !== "cyan";
-  const hov = R_.hoverIn(x0, y0 - 11, w, 27);
-  const pulse = 0.35 + 0.3 * Math.sin(t * 3 + s.tile);
+  const hov = R_.hoverIn(x0, y0 - 16, w, 32) || pressIn(x0, y0 - 16, w, 32);
+  const p = R_.stairPulse(s.tile), pulse = 0.4 + 0.6 * p, k = R_.k || 1;
   const treads = gold ? ["#fff6d4", "#f6d36a", "#e0a83a", "#c48a22"] : ["#e9fbff", "#8fd4de", "#2f8f9c", "#14606c"];
   const edge = gold ? "#6b4a12" : "#08343a";
+  // outer glow around the whole opening (sign + steps): gold on gold stairs, warm white on the cyan one
+  x.save(); x.shadowColor = (gold ? "rgba(255,214,110," : "rgba(255,248,225,") + (hov ? 1 : pulse) + ")";
+  x.shadowBlur = (hov ? 16 : 4 + 11 * p) * k; x.strokeStyle = (gold ? "rgba(255,226,140," : "rgba(240,252,255,") + (hov ? 1 : 0.3 + 0.6 * p) + ")";
+  x.lineWidth = hov ? 1.5 : 0.8 + 0.6 * p; rr(x0 + 0.6, y0 - 11.6, w - 1.2, 28, 2); x.stroke(); x.stroke(); x.restore();
   for (let i = 0; i < 4; i++) box(x0 + 3, y0 + 1 + i * 3.6, 42, 3.2, 0.35, treads[i], { shadow: false, lw: 0.28, stroke: edge });
   line([x0 + 1.2, y0 - 2, x0 + 1.2, LH], gold ? "#e7c56a" : "#7ec8d4", 1.6);
   line([x0 + w - 1.2, y0 - 2, x0 + w - 1.2, LH], gold ? "#e7c56a" : "#7ec8d4", 1.6);
   const py = y0 - 10, fill = gold ? (hov ? "#ffe7a0" : "#f2c14e") : (hov ? "#218c99" : "#14606c");
   const ink = gold ? "#3a2a10" : "#f4feff";
-  x.save(); x.shadowColor = (gold ? "rgba(242,193,78," : "rgba(63,208,220,") + (hov ? 0.9 : pulse) + ")"; x.shadowBlur = (hov ? 5 : 2.5) * (R_.k || 1);
+  x.save(); x.shadowColor = (gold ? "rgba(242,193,78," : "rgba(63,208,220,") + (hov ? 0.95 : pulse) + ")"; x.shadowBlur = (hov ? 7 : 2.5 + 2.5 * p) * k;
   rr(x0 + 2, py, 44, 9, 1.2); x.fillStyle = fill; x.fill(); x.restore();
   box(x0 + 2, py, 44, 9, 1.1, fill, { shadow: false, lw: hov ? 0.7 : 0.4, stroke: edge });
-  x.save(); x.translate(x0 + 8, py + 4.5); if (s.dir === "down") x.rotate(Math.PI); icoArrowUp(0, 0, 0.48, ink); x.restore();
+  // brightness pulse on the sign and the steps
+  x.save(); x.globalCompositeOperation = "lighter"; x.fillStyle = "rgba(255,250,235," + (hov ? 0.26 : 0.03 + 0.2 * p) + ")";
+  rr(x0 + 2, py, 44, 9, 1.2); x.fill(); x.fillRect(x0 + 3, y0 + 1, 42, 14.4); x.restore();
+  const nud = (hov ? 0.6 : 0.6 * p) * (s.dir === "down" ? 1 : -1);   // arrow nudges toward its floor
+  x.save(); x.translate(x0 + 8, py + 4.5 + nud); if (s.dir === "down") x.rotate(Math.PI); icoArrowUp(0, 0, hov ? 0.56 : 0.5, ink); x.restore();
   wtext(s.label, x0 + 27, py + 4.6, { size: 2.7, col: ink, align: "center", base: "middle", w: 800, maxW: 32, shrink: 2.05 });
 }
 function drawWallStairs(t) { for (const s of R_.stairs || []) wallStair(s, t); }
