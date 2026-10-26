@@ -1,0 +1,86 @@
+{
+  "_note": "Salmon (office mascot) voice lines. Comedy only: not a trader, never trades, not financial advice. Used by salmon.js (trading floor) and bin/daily_report.py (the CEO-floor report's joke line). Replies from other characters must be plain ASCII, max 46 chars (pixel bubble font).",
+  "general": [
+    "TESLA!", "TERAFAB!", "$2600 DIAMOND HANDS 💎🙌", "Only Tesla and SpaceX!", "TSLA to $2600 a share!",
+    "Funding secured 🚀", "Sell? Never heard of her", "Elon time: it's coming. Later. 😅",
+    "Starship goes up, I go up 🚀", "Optimus will fetch my coffee soon 🤖", "Robotaxi picked me up. In a dream",
+    "Neuralink, read my mind: BUY", "Boring Co. is anything but boring", "xAI + Grok = favorite coworker",
+    "I'm not a trader, I'm a believer", "Mars needs mascots too 🔴", "Cybertruck is my spirit vehicle",
+    "Stop loss? I only do start gains", "Full self-driving portfolio", "Occupy Mars. Hold TSLA.",
+    "Gigafactory of conviction 🏭", "Terafab is gonna be HUGE", "Every green candle is a launch",
+    "I don't sell. I collect.", "Price target: $2,600. Not a cent less", "Ludicrous mode: ON",
+    "🚀 is my love language", "Catch the booster, catch the vibes", "Not financial advice. Just vibes ✨",
+    "My other suit is a spacesuit", "I framed a post from X. It's art", "Simp? I prefer 'super fan'",
+    "Hyperloop to the break room when?", "Selling is just buying in reverse. Ew", "One stock. One dream. One mascot."
+  ],
+  "red": [
+    "Discount Tesla! 🛒", "Red day = TSLA on sale", "Buying the dip. And the dip's dip.", "This is fine. Diamond hands 💎",
+    "Dips are just Starship staging", "Zoom out! Mars is far away", "More shares please 🙏 (paper ones)",
+    "Paper hands fold. I hold."
+  ],
+  "green": [
+    "$2600 is inevitable 📈", "Green day! Elon time is NOW", "Still not selling. Not even close",
+    "Up? Buy more. Obviously.", "Next stop: orbit 🚀"
+  ],
+  "closed": [
+    "Market's closed. Still holding 💎", "After hours? Rockets never sleep", "Dreaming of Starship launches 🌙",
+    "Refreshing X for launch news...", "Pre-market can't come soon enough"
+  ],
+  "coreUp": ["CORE QQQ uptrend? Tesla's in there 😎", "QQQ trending up. Tesla energy"],
+  "coreDown": ["QQQ under trend? TSLA will carry it", "Trend filter off? My conviction isn't"],
+  "trade": ["{SYM}? Should've been TSLA", "Nice fill! Now do TSLA", "{SYM} is cool. TSLA is cooler"],
+  "tradeSell": ["Sold?! I could never 😱", "Selling {SYM}? Couldn't be me"],
+  "closer": ["Diamond hands 💎🙌", "You'll see. $2600!", "Sell? Never heard of her", "I'll take that as a buy 🚀",
+    "Elon time. It's coming 🚀", "Funding secured. Emotionally."],
+  "pitch": {
+    "_any": ["{B}! TSLA to $2600, you in?", "{B}, have you heard about Tesla?", "{B}, Starship launch party later?"],
+    "trek": ["Trek! TSLA's trend goes to Mars!", "Trek, saddle up on Tesla!"],
+    "rota": ["Rota, rotate everything into TSLA!", "Rota! Best sector? Tesla sector."],
+    "sunny": ["Sunny! TSLA had red days. Your fave!", "Sunny, sign-imbalance this: BUY TSLA"],
+    "knobs": ["Knobs, backtest TSLA to $2600!", "Knobs, tune me a Starship strategy"],
+    "pixel": ["Pixel, is the TSLA feed live?!", "Pixel, refresh TSLA again please"],
+    "grok": ["Jefe! Put the whole ranch in TSLA!", "Boss, risk cap exemption for Tesla?"],
+    "goldie": ["Goldie, plaque for Elon fan of the week?", "Goldie, is TSLA award eligible?"],
+    "zip": ["Kevin! TSLA collab video? 🎥", "Kevin, say it with me: $2600!"],
+    "indy": ["Indy, swap that SPY for TSLA?", "Indy, index funds can't go to Mars"],
+    "nancy": ["Pelosi! Any Tesla hunches? 👀", "Pelosi, is Starship on your list?"],
+    "scoop": ["Scoop! Any Starship news? Early?"],
+    "tape": ["Tape, how's TSLA's tape? Up?"],
+    "beats": ["Beats, when's Tesla earnings?!"],
+    "sage": ["Sage, analyst note on Optimus?"],
+    "proof": ["Proof, grade my TSLA call: A+?"]
+  },
+  "reply": {
+    "_any": ["Paper only, Salmon", "Okay that's actually funny", "Not financial advice, right?", "Big same. Kind of",
+      "Salmon, you need a stop loss", "Hard pass. Nice suit though"],
+    "trek": ["Show me a 20-day high first", "Trend's my friend. Elon's yours", "Trailing stop says hi, Salmon"],
+    "rota": ["Rank fell? Bye bye. Even Tesla", "Top 3 relative strength only", "Sector speed dating. TSLA gets one date"],
+    "sunny": ["Most down days? Okay, listening", "Above SMA200 first, Salmon", "Weekly board decides. Not vibes"],
+    "knobs": ["Out of sample or it didn't happen", "One stock, n=1. That's overfit", "Hold forever = big drawdown"],
+    "pixel": ["Bars are fresh. Still not 2600", "Same price as 1 second ago", "I ping, therefore I am. Calm down"],
+    "grok": ["No hail marys on my ranch, amigo", "Risk first, rockets second", "Stop on every trade. Even yours"],
+    "goldie": ["Mascots aren't eligible, hon", "Cute suit. Still no plaque, sugar", "I judge fair. You're not on the board"],
+    "zip": ["TSLA to zero! No wait, 2600!", "Thumbnail: shocked face + rocket", "100% sure. Which way? Both"],
+    "indy": ["TSLA's already in SPY, buddy", "Buy. Hold. Nap. Diversified", "My index has Tesla. And 499 more"],
+    "nancy": ["Just a hunch, sweetie. Not that one", "I don't recall, dear", "Lovely mascot. Off you go"],
+    "scoop": ["Launch date TBD. Again", "No early news. Promise"],
+    "tape": ["Tape's mixed. Your mood isn't", "Volume's fine. Calm down"],
+    "beats": ["Calendar's on B1. Check it", "Earnings soon. Probably"],
+    "sage": ["Risk first, Salmon. Always", "Signals live on B1. Not hype"],
+    "proof": ["Calls get graded Friday. Yours too", "Vibes don't count as data"],
+    "dip": ["I buy dips. Even chips. Not TSLA", "Oversold? Over here! Kidding"],
+    "drift": ["Earnings gap? Then I drift in", "Post-earnings vibes only"],
+    "owl": ["Still no sell? It's late, Salmon", "Night owl says: hold that thought"]
+  },
+  "heckle": {
+    "_any": ["Salmon, ever sold anything?", "Salmon, what's the target again?", "Nice suit, Salmon", "Salmon, did Starship launch?"],
+    "zip": ["Salmon! Crash incoming. Sell TSLA!"],
+    "knobs": ["Salmon, where's your backtest?"],
+    "indy": ["Salmon, try an index fund"],
+    "grok": ["Salmon, no rockets near my desk"],
+    "goldie": ["Salmon, sign the visitor log, hon"],
+    "nancy": ["Who let the fish in, dear?"]
+  },
+  "heckleBack": ["Never. Not until $2600 💎", "$2,600. Write it down!", "Starship: soon™ 🚀", "Thanks! Tailored on Mars 😎",
+    "Selling is for paper hands", "Index? I AM the index. Of Tesla."]
+}

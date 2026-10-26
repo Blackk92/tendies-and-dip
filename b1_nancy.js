@@ -1,9 +1,9 @@
 "use strict";
-/* Research Inc. B1 - NANCY'S CORNER OFFICE (additive add-on; b1.js is Research Inc.'s and is not edited).
+/* Research Inc. B1 - PELOSI'S CORNER OFFICE (additive add-on; b1.js is Research Inc.'s and is not edited).
    Loaded after b1.js. Cosmetic only, client-side, zero tokens, reads nothing new.
    - Boss's glass corner office in the bottom-right corner (the nicest spot on B1: two real walls, glass on the other two,
      big plant, rug, bookshelf). The archive cabinets that stood there move to the west side (same spots, same use).
-   - Nancy mostly stays on B1: calls staff into her office, strolls to the boards/coffee now and then.
+   - Pelosi mostly stays on B1: calls staff into her office, strolls to the boards/coffee now and then.
    - She goes up the stairs only for team lunch (~noon ET) and her daily meeting with El Jefe; the date-seeded schedule
      is identical to the trading floor's (social.js), so both views agree. */
 (function () {
@@ -21,7 +21,7 @@ F("nglassH", 19, 12, 2, 1); F("nglassH", 22, 12, 3, 1); F("nglassV", 19, 13, 1, 
 F("ndesk", 21, 15, 2, 1); F("nshelf", 24, 13, 1, 2); F("nplant", 20, 13);
 S_("chair_nancy", 21, 14, "S", "sit"); seat[I(21, 14)] = 1; CHAIRS.nancy = [21, 14];
 S_("front_nancy", 22, 16, "N"); S_("visit_nancy", 23, 15, "W"); S_("ndoor", 21, 11, "S");
-AREAS.unshift([20, 12, 24, 16, "Nancy's corner office"], [5, 12, 8, 13, "the archive"]);
+AREAS.unshift([20, 12, 24, 16, "Pelosi's corner office"], [5, 12, 8, 13, "the archive"]);
 
 // ---------------------------------------------------------------- cast
 const PASTEL = ["#f7b8d0", "#b8d8f7", "#c8f7c5", "#f7e3b8", "#d9c2f7", "#f7c9b8"];
@@ -32,13 +32,13 @@ function look() {           // same daily look as upstairs: pastel suit (same se
   if (m === 10) { const p = d === 31 ? 1 : d >= 24 ? 0.25 : 0.12; if (fnv(day + ":nancy:cost") < p) costume = ["witch", "pumpkin", "horns", "catears", "vampire"][Math.floor(fnv(day + ":nancy:ck") * 5)]; }
   return { shirt: sh, pants: wd === 5 ? "#3b5b8c" : sh, blazer: wd !== 5, costume };
 }
-CAST.nancy = { name: "NANCY", desk: "Boss · corner office", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", long: 1 };
+CAST.nancy = { name: "PELOSI", desk: "Boss · corner office", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", long: 1 };
 COL.nancy = "#f7a8c8";
 ORDER.push("nancy");
 chars.nancy = { id: "nancy", tx: 0, ty: 0, x: 0, y: 0, path: [], moving: false, from: null, goal: null, task: null, face: "S", pose: "stand",
   hidden: true, wait: 0, walkT: 0, bubble: null, emote: null, emoteUntil: 0, jumpUntil: 0, nextErrand: 0, homeKey: null, speed: 3.2, trip: null, carry: false };
 trips.nancy = [];
-UPSTAIRS.nancy = "NANCY";
+UPSTAIRS.nancy = "PELOSI";
 
 const N = {
   line: ["Oh, I just had a feeling.", "Lucky guess, dear.", "Just a hunch, sweetie.", "I simply read the newspaper. Early.",
@@ -79,7 +79,7 @@ function errandN(c) {
     if (!sp) return;
     say("nancy", N.call[o] || "My office, please.", 4);
     setTask(o, [{ spot: sp, dur: 8, say: pick(N.report), onArrive: () => setTimeoutSim(() => say("nancy", pick(N.reply), 3.5), 2.4) }, { spot: home(o), dur: 0 }], "boss");
-    amb(o, "is called into Nancy's office");
+    amb(o, "is called into Pelosi's office");
   } else if (r < 0.72) {     // a stroll around B1
     const k = freeSpot(["ideas_1", "ideas_2", "earn_1", "earn_2", "coffee_1", "coffee_2", "coffee_3", "huddle_3", "score_1"], "nancy");
     if (!k) return;

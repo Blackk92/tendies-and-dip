@@ -1,7 +1,7 @@
 "use strict";
 /* Tendies and Dip - OFFICE LIFE add-on (cosmetic only, 100% client-side, zero tokens, never writes engine state).
    Loaded after floor2d.js; wraps a few of its functions instead of editing them (Research Inc.'s additions stay intact).
-   - Meet Kevin (display name for bot id "zip"); Nancy runs Research Inc. from her corner office on B1 (b1_nancy.js) and only
+   - Meet Kevin (display name for bot id "zip"); Pelosi runs Research Inc. from her corner office on B1 (b1_nancy.js) and only
      comes up the Research Inc. stairs for team lunch or her daily meeting with El Jefe (same date-seeded schedule on both floors)
    - RimWorld-style relationships: directional opinions -100..+100, Friend/Rival/Crush/Lovers (PG), saved per viewer (localStorage)
    - Chats at the coffee machine / copier / water cooler / desks via the existing A* (no clipping), 2-3 bubbles max
@@ -47,20 +47,20 @@ const L = {
     "Hold on, live stream starting", "The Fed is about to pivot. Today. Maybe", "Confidently wrong is still confident",
     "If I'm wrong I'll double down", "Recession by lunch. Rally by 3", "Bench is a bull flag, trust me",
     "New video: Why I was right (I wasn't)"],
-  kevinAsk: ["Nancy! Any tips? Asking for a friend", "Nancy, what are you buying? Just curious", "Nancy, quick collab? Huge audience",
-    "Psst, Nancy. NVDA or no?", "Nancy, can I see your watchlist? Pls", "Nancy, I'll trade you a shoutout"],
+  kevinAsk: ["Pelosi! Any tips? Asking for a friend", "Pelosi, what are you buying? Just curious", "Pelosi, quick collab? Huge audience",
+    "Psst, Pelosi. NVDA or no?", "Pelosi, can I see your watchlist? Pls", "Pelosi, I'll trade you a shoutout"],
   nancyIgnore: ["...", "Who let you in, dear?", "Mm-hm. Bye now.", "I don't recall.", "No comment, sweetie.",
     "Is someone talking? Odd.", "Lovely weather, isn't it?", "Lucky guess, dear. Go away."],
   kevinAfter: ["I'll take that as a buy signal", "She's definitely bullish then", "Noted. Going all in", "That's basically a yes"],
   nancy: ["Oh, I just had a feeling about NVDA.", "My husband's portfolio? Never heard of it.", "Lucky guess, dear.",
     "Just a hunch, sweetie.", "Timing? I don't know what you mean.", "I simply read the newspaper. Early.",
     "Calls? Like on the phone? Cute.", "Coincidence is my favorite indicator", "Research Inc., my office. Now, please.",
-    "I'm a long-term investor. Ish.", "Pearls stay on. Risk stays off.", "Nobody beats Nancy. Lovingly.",
-    "My index fund is called Nancy", "I'll wait for the dip I know about. Ha!", "Disclosure? Darling, it's paper money",
+    "I'm a long-term investor. Ish.", "Pearls stay on. Risk stays off.", "Nobody beats Pelosi. Lovingly.",
+    "My index fund is called Pelosi", "I'll wait for the dip I know about. Ha!", "Disclosure? Darling, it's paper money",
     "Every trade is a hunch, dear", "Perfectly timed, as usual", "I just like the stock, sweetie"],
   nancyCall: ["Sage, dear? A moment, please.", "Beats! Earnings chat. Now.", "Tape, come up. Bring charts.",
     "Scoop, any news? Early news?", "Proof, grade my hunches."],
-  riToNancy: ["You rang, boss?", "Report for Nancy, as asked", "Here's the macro brief", "Earnings calendar, boss",
+  riToNancy: ["You rang, boss?", "Report for Pelosi, as asked", "Here's the macro brief", "Earnings calendar, boss",
     "Hunch confirmed? Kidding"],
   nancyRiReply: ["Perfect. As I suspected.", "Leave it on the desk, dear.", "Hm. I already knew. Thanks!",
     "Wonderful. Not a word.", "Splendid. Off you go."],
@@ -73,7 +73,7 @@ const L = {
     "I hear {B} cried at the copier", "Psst. Knobs is up for an award", "Hall of Fame is monthly only, hon",
     "Scores update at the close, sugar", "{LEADER} keeps asking about trophies", "I judge fair. Mostly.",
     "New dress, same strict judging", "Somebody's getting a plaque Friday", "El Jefe can win too. Don't tell him",
-    "Pixel's clean sessions add up!", "Nancy? Not eligible. She asked"],
+    "Pixel's clean sessions add up!", "Pelosi? Not eligible. She asked"],
   knobs: ["Out of sample or it didn't happen", "Walk-forward, never walk back", "That's overfit and you know it",
     "Sharpe ratio is my love language", "I tuned the coffee to 92 C", "Parameter grid: plus or minus one step",
     "Your idea needs more trades", "Profit factor 1.1 or bust", "I don't reward trade count. Ever",
@@ -130,7 +130,7 @@ const L = {
          "Burgers: generational entry point", "Food prices crash next week. Trust me", "Subscribe for lunch hot takes"],
        lunchTalk: ["Lunch together? Love this team", "Pass the napkins, {B}", "No trading talk at lunch. Kidding", "Who's on dishes? Not me",
          "Market's open, mouth's full", "Team lunch > solo lunch", "{B}, try this one!", "Save some for Pixel", "Best part of the day",
-         "Nancy brought her own pearls. Classy", "Goldie, does lunch count for awards?", "Don't drop crumbs on the bull", "The engine trades. We eat"],
+         "Pelosi brought her own pearls. Classy", "Goldie, does lunch count for awards?", "Don't drop crumbs on the bull", "The engine trades. We eat"],
        lunchCall: ["Lunch is here! {FOOD}!", "{FOOD} time, everyone!", "Break room! {FOOD}!", "Come and get it! {FOOD}!"],
        lunchOrder: ["Ordered {FOOD} for the team", "Lunch order in: {FOOD}", "{FOOD} on the way, hon"],
        courier: ["{FOOD} for Tendies and Dip!", "Delivery! {FOOD}!", "Order for the office!", "Big order! Enjoy!"],
@@ -172,7 +172,7 @@ const LINE_COUNT = Object.values(L).reduce((n, a) => n + (Array.isArray(a) ? a.l
 
 // ---------------------------------------------------------------- cast + map additions
 Object.assign(CAST.zip, { name: "MEET KEVIN", hair: "#2b1a10", shirt: "#1f2937", pants: "#111827", acc: "kevin" }); delete CAST.zip.spiky;
-CAST.nancy = { name: "NANCY", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", acc: "pearls", long: 1 };
+CAST.nancy = { name: "PELOSI", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", acc: "pearls", long: 1 };
 CAST.courier = { name: "DELIVERY", skin: "#c68642", hair: "#1b1b1b", shirt: "#ef3e36", pants: "#2b2d42", acc: "courier" };
 COL.nancy = "#f7a8c8"; COL.courier = "#ef3e36";
 ROLE_SHORT.zip = "swing: 52-week-high leaders";
@@ -658,7 +658,7 @@ director = function (c) {
   if (c.id === "nancy") return nancyVisit(c);
   _director(c);
 };
-// ---- Nancy: lives on B1; up the Research Inc. stairs only for team lunch or her daily El Jefe meeting.
+// ---- Pelosi: lives on B1; up the Research Inc. stairs only for team lunch or her daily El Jefe meeting.
 //      Meeting time = same date seed as b1_nancy.js (10:00-15:15 ET, never over lunch).
 const RI_STAIR_KEYS = ["ri_stairs", "ri_stairs_2", "ri_stairs_3"];
 function nancyMeetH(day) { let mt = 10 + fnv(day + ":nj") * 5.25; if (Math.abs(mt - 12.05) < 0.5) mt += 1.2; return mt; }
@@ -693,7 +693,7 @@ function nancyMeet() {
   if (!vis("grok")) return;
   faceEach("nancy", "grok");
   talk("nancy", spick(["Jefe, dear. Quick word.", "Research says hi, Jefe.", "Lovely tape today, Jefe.", "Just a hunch for you, Jefe."]), 4.6);
-  setTimeoutSim(() => talk("grok", spick(["Weekly rule stands, jefa.", "Risk first, Nancy. Always.", "Gracias. No hail marys.", "Below Monday? Half size."]), 4.6), 3);
+  setTimeoutSim(() => talk("grok", spick(["Weekly rule stands, jefa.", "Risk first, Pelosi. Always.", "Gracias. No hail marys.", "Below Monday? Half size."]), 4.6), 3);
   setTimeoutSim(() => talk("nancy", spick(L.nancy), 4.6), 7);
   nudge("nancy", "grok", 3); nudge("grok", "nancy", 3);
 }
@@ -821,6 +821,7 @@ window.__social = {
   addOutfitHook(f) { OUTFIT_HOOKS.push(f); outfitDay = null; },
   addLineHook(f) { LINE_HOOKS.push(f); },
   talk: (id, text, secs) => talk(id, text, secs),
+  log: (id, text, kind) => logLine(id, String(text || "").slice(0, 80), kind),   // salmon.js: his lines in Office Chatter
   fill: (s, a, b) => fill(s, a, b),
   activeBubbles: () => activeBubbles(),
   LINE_COUNT, soc: () => SOC, outfitOf, mutual, labelOf, lunch: () => lunch, foodOf, startLunch: (f) => startLunch(f || foodOf(dayKey())),

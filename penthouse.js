@@ -1,6 +1,6 @@
 "use strict";
 /* Penthouse. CEO, board chair, three directors. Same 26x18 pixel office as the floors below.
-   El Jefe and Nancy arrive on the shared EXEC clock. Holidays, weather, and the odd party are date-seeded. */
+   El Jefe and Pelosi arrive on the shared EXEC clock. Holidays, weather, and the odd party are date-seeded. */
 const TS = 16, GW = 26, GH = 18, LW = GW * TS, LH = GH * TS;
 const $ = (id) => document.getElementById(id);
 const cv = $("cv");
@@ -86,7 +86,7 @@ const CAST = {
   hollis: { name: "HOLLIS", role: "Chair secretary", skin: "#f6dccb", hair: "#6b4423", shirt: "#1e4b7a", pants: "#1e4b7a", tie: "#e7c56a", acc: "pearls" },
   june: { name: "JUNE", role: "CEO secretary", skin: "#f1c9a5", hair: "#3a2618", shirt: "#f2c14e", pants: "#f6edd4", tie: "#7a1f2b" },
   grok: { name: "EL JEFE", role: "Floor boss", skin: "#e0ac69", hair: "#3a2a1a", shirt: "#23232b", pants: "#1c1917", tie: "#f2c14e", acc: "jefe" },
-  nancy: { name: "NANCY", role: "Research Inc.", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", long: 1, acc: "pearls" },
+  nancy: { name: "PELOSI", role: "Research Inc.", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", long: 1, acc: "pearls" },
 };
 const COL = { vance: "#f2c14e", mags: "#93c5fd", wade: "#4ade80", priya: "#fca5a5", otto: "#d4d4d8", hollis: "#7eb6e0", june: "#f2c14e", grok: "#f2c14e", nancy: "#f7a8c8" };
 const ORDER = RES.concat(SEC, ["grok", "nancy"]);
@@ -385,8 +385,8 @@ function renderPanel() {
   $("themePill").textContent = th.party && partyOn() ? th.party.toUpperCase() : th.id.toUpperCase();
   $("agenda").innerHTML =
     `<div>CEO ← El Jefe <b>${a.ceo}</b> ${EXEC.ceoNow() ? '<b class="up">NOW</b>' : ""}</div>` +
-    `<div>Chair ← Nancy <b>${a.chair}</b> ${EXEC.chairNow() ? '<b class="up">NOW</b>' : ""}</div>` +
-    `<div>Nancy also sees El Jefe downstairs <b>${a.jefe}</b></div>` +
+    `<div>Chair ← Pelosi <b>${a.chair}</b> ${EXEC.chairNow() ? '<b class="up">NOW</b>' : ""}</div>` +
+    `<div>Pelosi also sees El Jefe downstairs <b>${a.jefe}</b></div>` +
     `<div>Downstairs visit <b>${a.down}</b> ${EXEC.downNow() ? '<b class="up">NOW</b>' : ""}</div>` +
     `<div class="mut">${th.weather}${th.party ? " · " + th.party + " late day" : ""} · ${a.day}</div>`;
   $("roster").innerHTML = ORDER.map((id) => {

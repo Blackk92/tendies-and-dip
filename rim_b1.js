@@ -27,7 +27,7 @@ function drawStatic() {
   box(tx(4) + 4, tx(12) + 4, tx(5) - 8, tx(2) - 7, 1, "#5d503f", { shadow: false, shade: false, stroke: "rgba(0,0,0,.35)", lw: 0.3 });
   rug(tx(1) + 2, tx(4) + 3, tx(5) - 3, tx(5) - 5, "#6e4a78", "#e6bde9");   // game corner rug with confetti dots
   for (let i = 0; i < 26; i++) circ(tx(1) + 5 + rnd() * (tx(5) - 12), tx(4) + 6 + rnd() * (tx(5) - 12), 0.55, ["#f7e08a", "#8fd3e8", "#f4a6c0"][i % 3], { shadow: false, stroke: false, shade: false });
-  // Nancy's corner office: pale oak, lilac rug with gold edge, door threshold
+  // Pelosi's corner office: pale oak, lilac rug with gold edge, door threshold
   planks(tx(20), tx(13), tx(5), tx(4), "#e3cfb2", "rgba(120,90,50,.25)", rnd);
   rug(tx(20) + 6, tx(14) + 2, tx(4) - 4, tx(3) - 6, "#cdb0da", "#c79a3a");
   box(tx(21) + 2, tx(12) + 3, 12, 11, 0.8, "#cdb98f", { shadow: false, lw: 0.3 });
@@ -51,7 +51,7 @@ function drawStatic() {
   box(310, 32.5, 50, 1.6, 0.5, "#7a8288", { shadow: false, lw: 0.2 });
   circ(394, 18, 6.2, "#efe8d2", { lw: 0.6 });   // wall clock (hands in dynamic)
   frame(20, LH - 13, 148, 9, "#0b0f12", "#2b2b2b");   // LED strip, left of the stair
-  frame(tx(21) + 1, LH - 12, 46, 7, "#c79a3a", "#7a5a12"); wtext("N. OFFICE", tx(21) + 24, LH - 8.5, { size: 4.2, col: "#5a1e3a", align: "center", base: "middle", w: 800, maxW: 42 });   // Nancy's brass plaque
+  frame(tx(21) + 1, LH - 12, 46, 7, "#c79a3a", "#7a5a12"); wtext("PELOSI", tx(21) + 24, LH - 8.5, { size: 4.2, col: "#5a1e3a", align: "center", base: "middle", w: 800, maxW: 42 });   // Pelosi's brass plaque
   // wall art: small framed prints on the side walls
   frame(3, 70, 9, 13, "#e9c46a", "#4a3a2c"); poly([4.5, 81, 7.5, 74, 10.5, 81], "#2a9d8f", { lw: 0.25 });
   frame(LW - 12, 100, 9, 13, "#f4a6c0", "#4a3a2c"); circ(LW - 7.5, 106.5, 2.4, "#e76f51", { lw: 0.25, shadow: false });
