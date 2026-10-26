@@ -37,7 +37,7 @@ a{color:var(--gold)}
 #floorWrap{position:relative;background:#070a09;display:flex;justify-content:center;align-items:center;overflow:hidden}
 #floorWrap.zoomed{justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch}
 #cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;touch-action:manipulation;cursor:pointer;flex:none}
-#floorBtns{position:absolute;right:6px;top:6px;display:flex;gap:6px}
+#floorBtns{position:static;display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:0 0 auto}   /* floor + zoom buttons live in the header now: nothing overlays the scene */
 #floorBtns button{font:inherit;font-size:10px;font-weight:800;color:var(--ink);background:#1b2722cc;border:1px solid #3a5045;padding:3px 7px}
 #panel{background:var(--panel);padding:6px 8px 20px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right));
   padding-bottom:max(20px,env(safe-area-inset-bottom))}
@@ -89,7 +89,7 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
 
 /* ---- Research Inc. B1 additions (cyan RI accent) */
 :root{--ri:#00e5ff}
-@media (max-width:759px), (max-aspect-ratio:1/1){#floorBtns{top:auto;bottom:6px;right:auto;left:6px}}   /* phones: keep the wall boards and Nancy's office plaque visible */
+#upBtn2{display:none}   /* header already has the ▲ TRADING FLOOR link; the duplicate stays in the DOM for b1.js */
 .logo.ri{background:var(--ri);color:#03262c;border-color:#007a88}
 .brand b.ri{color:var(--ri)}
 .pill.b1{color:#03262c;background:var(--ri);border-color:#bff8ff}
@@ -126,11 +126,11 @@ summary{color:var(--ri)}
   <div class="stats"><span>NEXT <b id="nextShift">-</b></span><span id="countdown" class="mut"></span><span>SIGNALS <b id="sigUpd">-</b></span></div>
   <span id="clock">--:--:-- ET</span>
   <a class="upbtn" id="upBtn" href="index.html?v=exec5">&#9650; TRADING FLOOR</a>
+  <div id="floorBtns"><button id="upBtn2" class="up" type="button">TRADING &#9650;</button><button id="zoomBtn" type="button">ZOOM</button></div>
 </header>
 <div id="ticker"><div id="tickInner">loading tape...</div></div>
 <div id="main">
-  <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Research Inc. B1 office"></canvas>
-    <div id="floorBtns"><button id="upBtn2" class="up" type="button">TRADING &#9650;</button><button id="zoomBtn" type="button">ZOOM</button></div></section>
+  <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Research Inc. B1 office"></canvas></section>
   <aside id="panel">
     <details open id="s-note"><summary>ANALYST NOTE <span class="cnt" id="c-note"></span></summary><div class="sec" id="note"></div></details>
     <details open id="s-shifts"><summary>SHIFT SCHEDULE (ET) <span class="cnt" id="c-shifts"></span></summary><div class="sec" id="shifts"></div></details>

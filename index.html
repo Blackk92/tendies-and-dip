@@ -40,7 +40,7 @@ a{color:var(--gold)}
 #floorWrap{position:relative;background:#070a09;display:flex;justify-content:center;align-items:center;overflow:hidden}
 #floorWrap.zoomed{justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch}
 #cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;touch-action:manipulation;cursor:pointer;flex:none}
-#floorBtns{position:absolute;right:6px;top:6px;display:flex;gap:6px}
+#floorBtns{position:static;display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:0 0 auto}   /* floor + zoom buttons live in the header now: nothing overlays the scene */
 #floorBtns button{font:inherit;font-size:10px;font-weight:800;color:var(--ink);background:#1b2722cc;border:1px solid #3a5045;padding:3px 7px}
 #panel{background:var(--panel);padding:6px 8px 20px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right));
   padding-bottom:max(20px,env(safe-area-inset-bottom))}
@@ -99,11 +99,11 @@ footer{color:var(--dim);font-size:10px;padding:8px 2px;line-height:1.5}
   <span id="age" class="age">loading...</span>
   <div class="stats"><span>NAV <b id="nav">-</b></span><span>DAY <b id="dpl">-</b></span><span>WK <b id="wpl">-</b></span><span id="fri" class="mut"></span></div>
   <span id="clock">--:--:-- ET</span>
+  <div id="floorBtns"><button id="b1Btn" type="button" title="Stairs down to Research" style="color:#03262c;background:#00e5ffdd;border-color:#bff8ff">RESEARCH &#9660;</button><button id="phBtn" type="button" title="Stairs up to Executive" style="color:#1a1205;background:#f2c14edd;border-color:#7a5a12">EXECUTIVE &#9650;</button><button id="zoomBtn" type="button">ZOOM</button></div>
 </header>
 <div id="ticker"><div id="tickInner">loading tape...</div></div>
 <div id="main">
-  <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Trading floor"></canvas>
-    <div id="floorBtns"><button id="b1Btn" type="button" title="Stairs down to Research" style="color:#03262c;background:#00e5ffdd;border-color:#bff8ff">RESEARCH &#9660;</button><button id="phBtn" type="button" title="Stairs up to Executive" style="color:#1a1205;background:#f2c14edd;border-color:#7a5a12">EXECUTIVE &#9650;</button><button id="zoomBtn" type="button">ZOOM</button></div></section>
+  <section id="floorWrap"><canvas id="cv" width="416" height="288" aria-label="Trading floor"></canvas></section>
   <aside id="panel">
     <details open id="s-desks"><summary>DESKS <span class="cnt" id="c-desks"></span></summary><div class="sec" id="desks"></div></details>
     <details open id="s-squawk"><summary>SQUAWK <span class="cnt" id="c-squawk"></span></summary><div class="sec" id="squawk"></div></details>
