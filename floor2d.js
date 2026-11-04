@@ -166,7 +166,7 @@ const DISP = (id) => (CAST[id] ? CAST[id].name : String(id || "?").toUpperCase()
 
 // ============================================================== Research Inc. (the floor below): visiting staff
 // They live downstairs and only come up the stairs (bottom edge) to deliver research, visit or meet, driven by
-// /research_events.json (= Research Inc. event log, see floor_event.py). Team mark: cyan lanyard + "RI" tag.
+// /research_events.json (Research Inc. floor events). Team mark: cyan lanyard + "RI" tag.
 const RI_TAG = "#00e5ff";
 const RI = {
   scoop: { desk: "News Desk", lines: ["HI ALL", "FRESH COFFEE UP HERE?", "NICE FLOOR"] },
