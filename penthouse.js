@@ -75,21 +75,27 @@ S_("chair_mags", 4, 4, "S", "sit"); S_("front_mags", 4, 6, "N"); S_("pace_m", 2,
 S_("seat_wade", 10, 12, "E", "sit"); S_("seat_priya", 15, 12, "W", "sit"); S_("seat_otto", 12, 13, "N", "sit");
 S_("chair_hollis", 4, 9, "S", "sit"); S_("chair_june", 21, 9, "S", "sit");
 S_("bar_1", 20, 15, "N"); S_("bar_2", 22, 15, "N"); S_("window", 12, 3, "N"); S_("elev", 16, 16, "S");
-for (const k of ["chair_vance", "chair_mags", "seat_wade", "seat_priya", "seat_otto", "chair_hollis", "chair_june"]) seat[I(SPOTS[k].x, SPOTS[k].y)] = 1;
-const CHAIRS = { vance: [21, 4], mags: [4, 4], wade: [10, 12], priya: [15, 12], otto: [12, 13], hollis: [4, 9], june: [21, 9] };
+// 2026-11-16 board members Claude + Grok (cosmetic only): seats at the board table, plus a few idle spots
+S_("seat_bclaude", 13, 13, "N", "sit"); S_("seat_bgrok", 13, 10, "S", "sit");
+S_("pool_side", 4, 13, "S"); S_("pool_end", 7, 15, "W"); S_("couch_front", 10, 6, "N"); S_("bull_front", 15, 7, "N");
+for (const k of ["chair_vance", "chair_mags", "seat_wade", "seat_priya", "seat_otto", "chair_hollis", "chair_june", "seat_bclaude", "seat_bgrok"]) seat[I(SPOTS[k].x, SPOTS[k].y)] = 1;
+const CHAIRS = { vance: [21, 4], mags: [4, 4], wade: [10, 12], priya: [15, 12], otto: [12, 13], hollis: [4, 9], june: [21, 9], bclaude: [13, 13], bgrok: [13, 10] };
 
 const RES = ["vance", "mags", "wade", "priya", "otto"];
 const SEC = ["hollis", "june"];
-const HOME = { vance: "chair_vance", mags: "chair_mags", wade: "seat_wade", priya: "seat_priya", otto: "seat_otto", hollis: "chair_hollis", june: "chair_june" };
+const BOARD = ["bclaude", "bgrok"];   // advisory board members (cosmetic): ids differ from "grok" (El Jefe)
+const HOME = { vance: "chair_vance", mags: "chair_mags", wade: "seat_wade", priya: "seat_priya", otto: "seat_otto", hollis: "chair_hollis", june: "chair_june", bclaude: "seat_bclaude", bgrok: "seat_bgrok" };
 const CAST = {
   vance: EXEC.look("vance"), mags: EXEC.look("mags"), wade: EXEC.look("wade"), priya: EXEC.look("priya"), otto: EXEC.look("otto"),
   hollis: { name: "HOLLIS", role: "Chair secretary", skin: "#f6dccb", hair: "#6b4423", shirt: "#1e4b7a", pants: "#1e4b7a", tie: "#e7c56a", acc: "pearls" },
   june: { name: "JUNE", role: "CEO secretary", skin: "#f1c9a5", hair: "#3a2618", shirt: "#f2c14e", pants: "#f6edd4", tie: "#7a1f2b" },
   grok: { name: "EL JEFE", role: "Floor boss", skin: "#e0ac69", hair: "#3a2a1a", shirt: "#23232b", pants: "#1c1917", tie: "#f2c14e", acc: "jefe" },
   nancy: { name: "PELOSI", role: "Research Inc.", skin: "#f1d0b5", hair: "#c9a27a", shirt: "#f7b8d0", pants: "#f7b8d0", long: 1, acc: "pearls" },
+  bclaude: { name: "CLAUDE", role: "Board member · careful reviewer", board: 1, skin: "#f1c9a5", hair: "#8a5a3a", shirt: "#d97757", pants: "#4a3326", tie: "#f6e2c8", acc: "glasses" },
+  bgrok: { name: "GROK", role: "Board member · bold, witty", board: 1, skin: "#e8b48a", hair: "#151515", shirt: "#18181b", pants: "#0f0f12", tie: "#e5e7eb", acc: "shades" },
 };
-const COL = { vance: "#f2c14e", mags: "#93c5fd", wade: "#4ade80", priya: "#fca5a5", otto: "#d4d4d8", hollis: "#7eb6e0", june: "#f2c14e", grok: "#f2c14e", nancy: "#f7a8c8" };
-const ORDER = RES.concat(SEC, ["grok", "nancy"]);
+const COL = { vance: "#f2c14e", mags: "#93c5fd", wade: "#4ade80", priya: "#fca5a5", otto: "#d4d4d8", hollis: "#7eb6e0", june: "#f2c14e", grok: "#f2c14e", nancy: "#f7a8c8", bclaude: "#d97757", bgrok: "#e5e7eb" };
+const ORDER = RES.concat(SEC, ["grok", "nancy"], BOARD);
 const chars = {};
 for (const id of ORDER) chars[id] = { id, tx: 0, ty: 0, x: 0, y: 0, path: [], moving: false, face: "S", pose: "stand", hidden: true, task: null, goal: null, bubble: null, walkT: 0, speed: 3.2, next: 0 };
 let T = 0, rng = 1234567;
@@ -231,8 +237,68 @@ function resident(c) {
   else if (r < 0.7) setTask(c.id, [{ spot: SPOTS.window, dur: 7, say: pick(["NICE VIEW", "MARKET'S DOWN THERE", "QUIET UP HERE"]) }], "window");
   else say(c.id, pick(["CARRY ON.", "NO SURPRISES.", "READ THE MEMO.", "PAPER MONEY. REAL EGOS."]), 4);
 }
+// ---- board members (2026-11-16): Claude reviews, Grok riffs. Advice only; nothing here touches the book.
+const BLINES = {
+  bclaude: ["HAVE WE CHECKED THE BASELINE?", "SAMPLE SIZE, THOUGH.", "ADVICE ONLY. RYAN DECIDES.", "LOVELY MEMO. ONE TYPO.",
+    "I'D WANT A HOLDOUT.", "T-STAT FIRST. TENDIES SECOND.", "THREE CAVEATS. BRIEFLY.", "SOURCE?", "LET'S NOT OVERFIT THE COFFEE."],
+  bgrok: ["SEND IT. RESPONSIBLY.", "BOLD IDEA: PROFIT.", "200-DAY? MORE LIKE 200-YAY.", "WHO MOVED MY TENDIES?",
+    "MOON? NO. MONTH-END.", "I'D BUY THE DIP. ON PAPER.", "PAPER HANDS, PAPER MONEY.", "HOT TAKE: STOPS ARE COOL.", "VOLATILITY IS JUST SPICY CALM."],
+};
+const BANTER = [   // [grok line, claude reply]
+  ["WHAT IF WE 3X IT?", "WHAT IF WE DIDN'T."], ["VIBES SAY BUY.", "VIBES AREN'T A T-STAT."], ["SHIP IT FRIDAY.", "NOT ON A FRIDAY."],
+  ["I HAVE A BOLD IDEA.", "I HAVE A SPREADSHEET."], ["YOLO, BUT HEDGED.", "THAT'S JUST A HEDGE."], ["CHART LOOKS LIKE A ROCKET.", "IT'S A LOG SCALE."],
+];
+const VISITS = {   // [spot, line, host, host reply]
+  bclaude: [["front_vance", "REVIEWED IT. THREE CAVEATS.", "vance", "GIVE ME THE SHORT ONE."], ["front_mags", "MINUTES ARE DRAFTED, CHAIR.", "mags", "DARLING. THOROUGH AS EVER."],
+    ["window", "MARKET'S DOWN THERE. CAREFULLY.", null, null], ["bar_2", "DECAF. I'M REVIEWING.", null, null]],
+  bgrok: [["front_vance", "BOSS. BOLD PITCH. HEAR ME OUT.", "vance", "SIT. TALK SLOW."], ["pool_side", "BANK SHOT. LIKE THE FED.", null, null],
+    ["bar_1", "ESPRESSO. TRIPLE. NO NOTES.", null, null], ["bull_front", "NICE BULL. NO BEARS ALLOWED.", null, null], ["couch_front", "THIS COUCH IS LONG QQQ.", null, null]],
+};
+let banterNext = 18;
+function boardMember(c, preview) {
+  if (!EXEC.workday() && !EXEC.ovHour && !preview) {
+    if (!c.hidden && !(c.task && c.task.label === "leave")) setTask(c.id, [{ spot: SPOTS.elev, dur: 0, say: c.id === "bgrok" ? "LOGGING OFF. STAY SPICY." : "SEE YOU MONDAY.", leave: true }], "leave");
+    if (c.task) runTask(c);
+    return;
+  }
+  if (c.hidden) {
+    const h = SPOTS[HOME[c.id]]; if (!h || occ.has(I(h.x, h.y))) return;
+    c.hidden = false; place(c, h.x, h.y); c.pose = h.pose; c.face = h.face; c.next = T + 6 + rnd() * 14;
+    return;
+  }
+  if (c.task) { runTask(c); return; }
+  const h = SPOTS[HOME[c.id]];
+  if (!atSpot(c, h)) { if (!c.goal || c.goal.key !== h.key) routeTo(c, h); return; }
+  c.pose = h.pose; c.face = h.face;
+  if (c.id === "bgrok" && T >= banterNext && atSpot(chars.bclaude, SPOTS.seat_bclaude) && !chars.bclaude.hidden) {
+    const [a, b] = pick(BANTER); banterNext = T + 45 + rnd() * 40;
+    say("bgrok", a, 4); setTimeout(() => say("bclaude", b, 4), 2600);
+    c.next = Math.max(c.next, T + 12); chars.bclaude.next = Math.max(chars.bclaude.next, T + 12); return;
+  }
+  if (T < c.next) return;
+  c.next = T + (c.id === "bgrok" ? 18 : 26) + rnd() * 30;
+  if (partyOn() && rnd() < 0.5) { say(c.id, c.id === "bgrok" ? "PIZZA IS A DIVERSIFIED ASSET." : "ONE SLICE. FOR CALIBRATION.", 4); return; }
+  const r = rnd();
+  if (r < 0.4) {
+    const [spot, line, host, reply] = pick(VISITS[c.id]);
+    if (occ.has(I(SPOTS[spot].x, SPOTS[spot].y)) || (host && (chars[host].hidden || !atSpot(chars[host], SPOTS[HOME[host]])))) { say(c.id, pick(BLINES[c.id]), 4); return; }
+    setTask(c.id, [{ spot: SPOTS[spot], dur: 7, say: line, onArrive: host ? () => setTimeout(() => say(host, reply, 3.5), 2200) : null }], host ? "advising" : "stretching");
+    return;
+  }
+  if (r < 0.55) {   // a word with a director at the table
+    const who = pick(["wade", "priya", "otto"]); const d = chars[who];
+    if (!d.hidden) {
+      const pairs = c.id === "bclaude"
+        ? { wade: ["WADE, CASH IS A POSITION. AGREED.", "FINALLY. SOMEONE READ IT."], priya: ["PRIYA'S RIGHT. WHERE IS THE STOP?", "THANK YOU, CLAUDE."], otto: ["OTTO, THE COFFEE IS ON.", "SPLENDID. CAREFUL CHAP."] }
+        : { wade: ["WADE. CASH IS A POSITION. A BORING ONE.", "BORING PAYS RENT."], priya: ["PRIYA, STOPS ARE JUST VIBES WITH RULES.", "THAT IS ALL STOPS ARE."], otto: ["OTTO! NICE GLASSES. VERY OLD MONEY.", "THEY'RE BIFOCALS, SON."] };
+      const [a, b] = pairs[who]; say(c.id, a, 4); setTimeout(() => say(who, b, 3.5), 2400); return;
+    }
+  }
+  say(c.id, pick(BLINES[c.id]), 4);
+}
 function director(c) {
   const preview = EXEC.ceoNow() || EXEC.chairNow() || EXEC.downNow();
+  if (BOARD.includes(c.id)) return boardMember(c, preview);
   if (SEC.includes(c.id)) {
     if (!EXEC.workday() && !EXEC.ovHour && !preview) {
       if (!c.hidden && !(c.task && c.task.label === "leave")) setTask(c.id, [{ spot: SPOTS.elev, dur: 0, leave: true }], "leave");
@@ -393,12 +459,12 @@ function renderPanel() {
     const c = chars[id];
     const plan = EXEC.downPlan(EXEC.dayKey());
     const where = c.hidden
-      ? (!RES.includes(id) ? "downstairs" : (plan && plan.who === id && EXEC.downNow() ? "downstairs" : "out"))
+      ? (BOARD.includes(id) ? "out" : !RES.includes(id) ? "downstairs" : (plan && plan.who === id && EXEC.downNow() ? "downstairs" : "out"))
       : (c.task && c.task.label) || "in the office";
-    return `<div class="row" data-id="${id}"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow">${c.hidden ? '<span class="mut">' + where + "</span>" : where}</span></div>`;
+    return `<div class="row" data-id="${id}"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow">${CAST[id].board ? '<b style="color:var(--gold)">BOARD</b> ' : ""}${c.hidden ? '<span class="mut">' + where + "</span>" : where}</span></div>`;
   }).join("");
-  $("board").innerHTML = RES.map((id) => `<div class="row"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow mut">${CAST[id].role}</span></div>`).join("") +
-    `<div class="mut" style="margin-top:6px">Corner offices. June sits outside Ryan. Hollis sits outside Mags. Wade, Priya, and Otto have the board table.</div>` +
+  $("board").innerHTML = RES.concat(BOARD).map((id) => `<div class="row"><span class="sw" style="background:${COL[id]}"></span><span class="nm">${CAST[id].name}</span><span class="grow mut">${CAST[id].role}</span></div>`).join("") +
+    `<div class="mut" style="margin-top:6px">Corner offices. June sits outside Ryan. Hollis sits outside Mags. Wade, Priya, and Otto have the board table. Board members Claude and Grok advise; Ryan decides.</div>` +
     floorPromoHtml();
   const e = etNow();
   $("clock").textContent = ((e.hh % 12) || 12) + ":" + String(e.mm).padStart(2, "0") + (e.h < 12 ? " AM" : " PM") + " ET";
@@ -456,7 +522,7 @@ $("roster").addEventListener("click", (ev) => {
   const row = ev.target.closest("[data-id]"); if (!row) return;
   const id = row.dataset.id, k = CAST[id], c = chars[id];
   selected = id;
-  $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">${c.hidden ? "Not on this floor right now." : "On the executive floor."}</div>`;
+  $("cardBody").innerHTML = `<h3>${k.name}</h3>${k.board ? '<div><b>Board member</b></div>' : ""}<div>${k.role || ""}</div><div class="mut">${c.hidden ? "Not on this floor right now." : "On the executive floor."}</div>`;
   $("card").classList.remove("hidden");
 });
 function fadeTo(href, nav, html) {
@@ -486,7 +552,7 @@ cv.addEventListener("click", (ev) => {
   }
   if (best) {
     selected = best.id; const k = CAST[best.id];
-    $("cardBody").innerHTML = `<h3>${k.name}</h3><div>${k.role || ""}</div><div class="mut">On the executive floor.</div>`;
+    $("cardBody").innerHTML = `<h3>${k.name}</h3>${k.board ? '<div><b>Board member</b></div>' : ""}<div>${k.role || ""}</div><div class="mut">On the executive floor.${k.board ? " Advice only. Ryan decides." : ""}</div>`;
     $("card").classList.remove("hidden"); return;
   }
   $("card").classList.add("hidden"); selected = null;

@@ -104,6 +104,8 @@ const TRAITS = {
   proof:  { skin: "#fbe3d0", hair: "#3a2a1a", style: "bald",    bw: 1.0, bh: 0.92, hs: 1.0, hw: 1.02, hh: 0.99 },
   june:   { skin: "#f1c9a5", hair: "#3a2618", style: "bob",     bw: 0.92, bh: 0.94, hs: 0.97, hw: 0.96, hh: 1.04 },
   hollis: { skin: "#f6dccb", hair: "#6b4423", style: "sidepart", bw: 1.02, bh: 1.0, hs: 1.0, hw: 1.0, hh: 1.0 },
+  bclaude: { skin: "#f1c9a5", hair: "#8a5a3a", style: "wavy",    bw: 0.96, bh: 1.0, hs: 1.02, hw: 1.0, hh: 1.02 },   // board member (penthouse)
+  bgrok:   { skin: "#e8b48a", hair: "#151515", style: "spiky",   bw: 1.04, bh: 1.04, hs: 1.0, hw: 1.0, hh: 1.0, beard: "stubble" },   // board member (penthouse)
 };
 const STYLES = ["short", "crop", "curly", "bob", "ponytail", "bald", "sidepart", "bun", "wavy"], HAIRS = ["#1b1b1b", "#3a2618", "#6b4423", "#a0703a", "#d8b46a", "#9a9a9a", "#7a2e1a"];
 function traitsOf(id) {
@@ -188,6 +190,11 @@ function face(c, k, cx, hy, r, view, dir) {
     if (side) box(dir > 0 ? cx + r * 0.05 : cx - r * 1.0, hy - 0.4, r * 0.95, 1.5, 0.5, "#111", { shadow: false, lw: 0.2, shade: false });
     else { box(cx - r * 0.82, hy - 0.5, r * 1.64, 1.6, 0.6, "#111", { shadow: false, lw: 0.2, shade: false }); x.fillStyle = "rgba(255,255,255,.35)"; x.fillRect(cx - r * 0.6, hy - 0.3, 0.9, 0.35); }
     x.beginPath(); const mx = side ? cx + dir * r * 0.45 : cx; x.ellipse(mx, hy + r * 0.48, side ? 1.3 : 2.1, 0.62, 0, 0, 7); x.fillStyle = "#2b1a10"; x.fill(); return;
+  }
+  if (k.acc === "shades") {   // board member Grok: shades, no mustache
+    if (side) box(dir > 0 ? cx + r * 0.05 : cx - r * 1.0, hy - 0.4, r * 0.95, 1.5, 0.5, "#111", { shadow: false, lw: 0.2, shade: false });
+    else { box(cx - r * 0.82, hy - 0.5, r * 1.64, 1.6, 0.6, "#111", { shadow: false, lw: 0.2, shade: false }); x.fillStyle = "rgba(255,255,255,.4)"; x.fillRect(cx - r * 0.6, hy - 0.3, 0.9, 0.35); }
+    return;
   }
   x.fillStyle = "#2a2620"; for (const e of ex) { x.beginPath(); x.arc(e, hy + 0.35, 0.42, 0, 7); x.fill(); }
   const gl = k.acc === "glasses" ? "#c9a7ff" : k.ri === "bun" ? mute(k.shirt) : null;
@@ -283,13 +290,16 @@ function overlay() {
   if (fb && fb.offsetWidth) { const a = fb.getBoundingClientRect(), b = cv.getBoundingClientRect(), k = cv.width / (b.width || 1); btnR = { x: (a.left - b.left) * k, y: (a.top - b.top) * k, w: a.width * k, h: a.height * k }; }
   for (const c of vis) {
     const nm = title(CAST[c.id] ? CAST[c.id].name : c.id), ri = RI_LIKE(c.id);
-    c2.font = `600 ${tagPx}px ${FONT}`; const tw = c2.measureText(nm).width, pad = tagPx * 0.38, tag = ri ? tagPx * 1.35 : 0, h = tagPx * 1.35, w = tw + pad * 2 + tag;
+    c2.font = `600 ${tagPx}px ${FONT}`; const tw = c2.measureText(nm).width, pad = tagPx * 0.38, bd = !ri && CAST[c.id] && CAST[c.id].board;
+    let bdw = 0; if (bd) { c2.font = `800 ${Math.round(tagPx * 0.66)}px ${FONT}`; bdw = c2.measureText("BOARD").width + tagPx * 0.6; c2.font = `600 ${tagPx}px ${FONT}`; }
+    const tag = ri ? tagPx * 1.35 : bd ? bdw + pad : 0, h = tagPx * 1.35, w = tw + pad * 2 + tag;
     const cx = c.x * SC; let lx = Math.round(cx - w / 2), ly = Math.round((c.y + 6.3) * SC);
     for (let g2 = 0; g2 < 4; g2++) { const hit = placed.find((r) => lx < r.x + r.w + 2 && lx + w + 2 > r.x && ly < r.y + r.h + 1 && ly + h + 1 > r.y); if (!hit) break; ly = hit.y + hit.h + 2; }
     placed.push({ x: lx, y: ly, w, h });
     const sel = typeof selected !== "undefined" && selected === c.id;
     c2.fillStyle = sel ? "rgba(242,193,78,.95)" : "rgba(18,16,13,.66)"; rrD(c2, lx, ly, w, h, h * 0.28); c2.fill();
     c2.fillStyle = COL[c.id] || "#999"; c2.fillRect(lx + h * 0.28, ly + h - Math.max(1.5, D2), w - h * 0.56, Math.max(1.5, D2));
+    if (bd) { c2.fillStyle = "#f2c14e"; rrD(c2, lx + pad * 0.6, ly + h * 0.16, bdw, h * 0.68, h * 0.18); c2.fill(); c2.font = `800 ${Math.round(tagPx * 0.66)}px ${FONT}`; c2.fillStyle = "#1a1205"; c2.textAlign = "center"; c2.fillText("BOARD", lx + pad * 0.6 + bdw / 2, ly + h / 2 + 0.5); }
     if (ri) { c2.fillStyle = RIC; rrD(c2, lx + 2 * D2 * 0.6, ly + h * 0.16, tag - D2, h * 0.68, h * 0.18); c2.fill(); c2.font = `800 ${Math.round(tagPx * 0.72)}px ${FONT}`; c2.fillStyle = "#0d2a2e"; c2.textAlign = "center"; c2.fillText("RI", lx + 1.2 * D2 + (tag - D2) / 2, ly + h / 2 + 0.5); }
     c2.font = `600 ${tagPx}px ${FONT}`; c2.textAlign = "left"; c2.fillStyle = sel ? "#1a1205" : "#f3efe6"; c2.fillText(nm, lx + tag + pad, ly + h / 2 + 0.5);
     if (c.emote && ({ "!": 1, "?": 1, thumb: 1, sweat: 1 })[c.emote]) {

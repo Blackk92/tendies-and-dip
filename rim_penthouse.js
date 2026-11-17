@@ -167,8 +167,8 @@ function drawStatic() {
   wtext("CHAIR", 72, tx(8) - 4.6, { size: R_.small() ? 4.6 : 3.4, col: "#3a2a10", align: "center", base: "middle", w: 800, maxW: 34 });
   box(326, tx(8) - 8, 36, 7, 1, "#e7c56a", { lw: 0.35 });
   wtext("CEO", 344, tx(8) - 4.6, { size: R_.small() ? 4.8 : 3.5, col: "#3a2a10", align: "center", base: "middle", w: 800 });
-  const FACE = { vance: 0, mags: 0, wade: Math.PI / 2, priya: -Math.PI / 2, otto: Math.PI, june: 0, hollis: 0 };
-  const CCOL = { vance: "#8d2433", mags: "#1f7a4a", wade: "#1f7a4a", priya: "#a33b3b", otto: "#c79a3a", june: "#f2c14e", hollis: "#1e4b7a" };
+  const FACE = { vance: 0, mags: 0, wade: Math.PI / 2, priya: -Math.PI / 2, otto: Math.PI, june: 0, hollis: 0, bclaude: Math.PI, bgrok: 0 };
+  const CCOL = { vance: "#8d2433", mags: "#1f7a4a", wade: "#1f7a4a", priya: "#a33b3b", otto: "#c79a3a", june: "#f2c14e", hollis: "#1e4b7a", bclaude: "#d97757", bgrok: "#3f3f46" };
   for (const id in CHAIRS) { const [cx, cy] = CHAIRS[id]; chair(tx(cx) + 8, tx(cy) + 9, FACE[id] || 0, CCOL[id] || "#c79a3a"); }
   for (const f of FURN) { const fn = ART[f.type]; try { if (fn && fn.s) fn.s(f); } catch (e) { console.warn("rim ph", f.type, e); } }
 }
